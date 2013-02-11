@@ -1,0 +1,11 @@
+celery
+Django
+django-celery
+django-tastypie
+fluent-logger
+MySQL-python
+pycrypto
+python-memcached
+pyYAML
+slumber
+south
