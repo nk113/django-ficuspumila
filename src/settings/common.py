@@ -50,7 +50,7 @@ WSGI_APPLICATION = 'wsgi.local.application'
 # core.common
 API_VERSION = 'v1'
 IPINFODB_API_URL = 'http://api.ipinfodb.com/v3/ip-country/'
-IPINFODB_API_KEY = 'a1b1ce36d81cf0cbadc82f5f087584a7bdd8f21212f87c63de2236acd47b5bef'
+IPINFODB_API_KEY = '-- must be overwriten --'
 
 
 # apps
