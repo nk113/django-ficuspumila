@@ -35,7 +35,10 @@ class CountryResource(Resource):
         cache = SimpleCache()
         filtering = {
             'name': ('exact', 'startswith',),
+            'name_caps': ('exact', 'startswith',),
             'alpha2': ('exact',),
+            'alpha3': ('exact',),
+            'numeric': ('exact',),
         }
 
 
@@ -51,10 +54,10 @@ class CurrencyResource(Resource):
         }
 
 
-def get_urls():
+def get():
     api = Api(api_name='common')
     api.register(CountryResource())
     api.register(CurrencyResource())
     return api.urls
 
-urls = get_urls()
+urls = get()

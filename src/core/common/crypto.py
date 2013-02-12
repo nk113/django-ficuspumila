@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
+import os
+
 from binascii import hexlify, unhexlify
 from Crypto.Cipher import AES
 from django.utils.importlib import import_module
-
-from lib import crypto
 
 
 ALGORITHMS = ('AES',)
@@ -41,19 +41,19 @@ class _AES(object):
         return 'AES'
 
     def generate_key(self):
-        key = crypto.pool.get_bytes(32)
+        key = os.urandom(32)
         if self.hex: key = hexlify(key)
         return key
 
     def generate_iv(self):
-        iv = crypto.pool.get_bytes(AES.block_size)
+        iv = os.urandom(AES.block_size)
         if self.hex: iv = hexlify(iv)
         return iv
 
     def encrypt(self, text):
         encrypted = AES.new(self.key,
                             AES.MODE_CBC,
-                            self.iv).encrypt(crypto.appendPadding(AES.block_size,
+                            self.iv).encrypt(self.add_padding(AES.block_size,
                                                                   text))
 
         if self.hex:
@@ -65,7 +65,35 @@ class _AES(object):
         if self.hex:
             encrypted = unhexlify(encrypted)
 
-            return crypto.removePadding(AES.block_size,
-                                        (AES.new(self.key,
-                                                 AES.MODE_CBC,
-                                                 self.iv).decrypt(encrypted)))
+            return self.remove_padding(AES.block_size,
+                                       (AES.new(self.key,
+                                                AES.MODE_CBC,
+                                                self.iv).decrypt(encrypted)))
+
+    def nr_pad_bytes(self, blocksize, size):
+        '''
+        Returns number of required pad bytes for block of size.
+        '''
+        if not (0 < blocksize < 255):
+            raise Exception('Blocksize must be between 0 and 255.')
+        return blocksize - (size % blocksize)
+
+    def add_padding(self, blocksize, s):
+        '''
+        Adds rfc 1423 padding to string.
+
+        RFC 1423 algorithm adds 1 up to blocksize padding bytes to string s. Each 
+        padding byte contains the number of padding bytes.
+        '''
+        n = self.nr_pad_bytes(blocksize, len(s))
+        return s + (chr(n) * n)
+
+    def remove_padding(self, blocksize, s):
+        '''
+        Removes rfc 1423 padding from string.
+        '''
+        # last byte contains number of padding bytes
+        n = ord(s[-1])
+        if n > blocksize or n > len(s):
+            raise Exception('Invalid padding.')
+        return s[:-n]
