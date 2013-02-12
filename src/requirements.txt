@@ -7,5 +7,5 @@ MySQL-python
 pycrypto
 python-memcached
 pyYAML
-slumber
 south
+tastypie-queryset-client

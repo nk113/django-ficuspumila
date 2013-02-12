@@ -10,8 +10,8 @@ from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 
 from .crypto import Transcoder
+from .cache import cache
 from .utils import (
-    cache,
     generate_hmac_digest,
     get_default_language_code,
 )

@@ -47,16 +47,18 @@ SYNCDB_ALLOWED = ('south',)
 WSGI_APPLICATION = 'wsgi.local.application'
 
 
-# core.common
-API_VERSION = 'v1'
-IPINFODB_API_URL = 'http://api.ipinfodb.com/v3/ip-country/'
-IPINFODB_API_KEY = '-- must be overwriten --'
-
-
 # apps
 INSTALLED_APPS += (
     'django.contrib.admin',
 )
+
+# core.common
+API_VERSION = 'v1'
+API_PATH = 'api/%s/' % API_VERSION
+API_URL = '-- must be overwritten --'
+API_PROXY = True
+IPINFODB_API_URL = 'http://api.ipinfodb.com/v3/ip-country/'
+IPINFODB_API_KEY = '-- must be overwriten --'
 
 
 # core.content
