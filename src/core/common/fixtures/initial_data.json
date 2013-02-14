@@ -2,7 +2,7 @@
   {
     "fields": {
       "alpha3": "AND", 
-      "area": "468", 
+      "area": 468, 
       "capital": "Andorra la Vella", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -26,7 +26,7 @@
   {
     "fields": {
       "alpha3": "ARE", 
-      "area": "82880", 
+      "area": 82880, 
       "capital": "Abu Dhabi", 
       "continent": "AS", 
       "currency_code": "AED", 
@@ -50,7 +50,7 @@
   {
     "fields": {
       "alpha3": "AFG", 
-      "area": "647500", 
+      "area": 647500, 
       "capital": "Kabul", 
       "continent": "AS", 
       "currency_code": "AFN", 
@@ -74,7 +74,7 @@
   {
     "fields": {
       "alpha3": "ATG", 
-      "area": "443", 
+      "area": 443, 
       "capital": "St. John's", 
       "continent": "NA", 
       "currency_code": "XCD", 
@@ -98,7 +98,7 @@
   {
     "fields": {
       "alpha3": "AIA", 
-      "area": "102", 
+      "area": 102, 
       "capital": "The Valley", 
       "continent": "NA", 
       "currency_code": "XCD", 
@@ -122,7 +122,7 @@
   {
     "fields": {
       "alpha3": "ALB", 
-      "area": "28748", 
+      "area": 28748, 
       "capital": "Tirana", 
       "continent": "EU", 
       "currency_code": "ALL", 
@@ -146,7 +146,7 @@
   {
     "fields": {
       "alpha3": "ARM", 
-      "area": "29800", 
+      "area": 29800, 
       "capital": "Yerevan", 
       "continent": "AS", 
       "currency_code": "AMD", 
@@ -170,14 +170,14 @@
   {
     "fields": {
       "alpha3": "ANT", 
-      "area": "960", 
+      "area": 960, 
       "capital": "Willemstad", 
       "continent": "NA", 
       "currency_code": "ANG", 
       "currency_name": "Guilder", 
       "equivalent_fips_code": "", 
       "fips": "NT", 
-      "geonameid": "", 
+      "geonameid": null, 
       "languages": "nl-AN,en,es", 
       "name": "Netherlands Antilles", 
       "neighbours": "GP", 
@@ -194,7 +194,7 @@
   {
     "fields": {
       "alpha3": "AGO", 
-      "area": "1246700", 
+      "area": 1246700, 
       "capital": "Luanda", 
       "continent": "AF", 
       "currency_code": "AOA", 
@@ -218,7 +218,7 @@
   {
     "fields": {
       "alpha3": "ATA", 
-      "area": "14000000", 
+      "area": 14000000, 
       "capital": "", 
       "continent": "AN", 
       "currency_code": "", 
@@ -242,7 +242,7 @@
   {
     "fields": {
       "alpha3": "ARG", 
-      "area": "2766890", 
+      "area": 2766890, 
       "capital": "Buenos Aires", 
       "continent": "SA", 
       "currency_code": "ARS", 
@@ -266,7 +266,7 @@
   {
     "fields": {
       "alpha3": "ASM", 
-      "area": "199", 
+      "area": 199, 
       "capital": "Pago Pago", 
       "continent": "OC", 
       "currency_code": "USD", 
@@ -290,7 +290,7 @@
   {
     "fields": {
       "alpha3": "AUT", 
-      "area": "83858", 
+      "area": 83858, 
       "capital": "Vienna", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -314,7 +314,7 @@
   {
     "fields": {
       "alpha3": "AUS", 
-      "area": "7686850", 
+      "area": 7686850, 
       "capital": "Canberra", 
       "continent": "OC", 
       "currency_code": "AUD", 
@@ -338,7 +338,7 @@
   {
     "fields": {
       "alpha3": "ABW", 
-      "area": "193", 
+      "area": 193, 
       "capital": "Oranjestad", 
       "continent": "NA", 
       "currency_code": "AWG", 
@@ -362,7 +362,7 @@
   {
     "fields": {
       "alpha3": "ALA", 
-      "area": "", 
+      "area": null, 
       "capital": "Mariehamn", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -386,7 +386,7 @@
   {
     "fields": {
       "alpha3": "AZE", 
-      "area": "86600", 
+      "area": 86600, 
       "capital": "Baku", 
       "continent": "AS", 
       "currency_code": "AZN", 
@@ -410,7 +410,7 @@
   {
     "fields": {
       "alpha3": "BIH", 
-      "area": "51129", 
+      "area": 51129, 
       "capital": "Sarajevo", 
       "continent": "EU", 
       "currency_code": "BAM", 
@@ -434,7 +434,7 @@
   {
     "fields": {
       "alpha3": "BRB", 
-      "area": "431", 
+      "area": 431, 
       "capital": "Bridgetown", 
       "continent": "NA", 
       "currency_code": "BBD", 
@@ -458,7 +458,7 @@
   {
     "fields": {
       "alpha3": "BGD", 
-      "area": "144000", 
+      "area": 144000, 
       "capital": "Dhaka", 
       "continent": "AS", 
       "currency_code": "BDT", 
@@ -482,7 +482,7 @@
   {
     "fields": {
       "alpha3": "BEL", 
-      "area": "30510", 
+      "area": 30510, 
       "capital": "Brussels", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -506,7 +506,7 @@
   {
     "fields": {
       "alpha3": "BFA", 
-      "area": "274200", 
+      "area": 274200, 
       "capital": "Ouagadougou", 
       "continent": "AF", 
       "currency_code": "XOF", 
@@ -530,7 +530,7 @@
   {
     "fields": {
       "alpha3": "BGR", 
-      "area": "110910", 
+      "area": 110910, 
       "capital": "Sofia", 
       "continent": "EU", 
       "currency_code": "BGN", 
@@ -554,7 +554,7 @@
   {
     "fields": {
       "alpha3": "BHR", 
-      "area": "665", 
+      "area": 665, 
       "capital": "Manama", 
       "continent": "AS", 
       "currency_code": "BHD", 
@@ -578,7 +578,7 @@
   {
     "fields": {
       "alpha3": "BDI", 
-      "area": "27830", 
+      "area": 27830, 
       "capital": "Bujumbura", 
       "continent": "AF", 
       "currency_code": "BIF", 
@@ -602,7 +602,7 @@
   {
     "fields": {
       "alpha3": "BEN", 
-      "area": "112620", 
+      "area": 112620, 
       "capital": "Porto-Novo", 
       "continent": "AF", 
       "currency_code": "XOF", 
@@ -626,7 +626,7 @@
   {
     "fields": {
       "alpha3": "BLM", 
-      "area": "21", 
+      "area": 21, 
       "capital": "Gustavia", 
       "continent": "NA", 
       "currency_code": "EUR", 
@@ -650,7 +650,7 @@
   {
     "fields": {
       "alpha3": "BMU", 
-      "area": "53", 
+      "area": 53, 
       "capital": "Hamilton", 
       "continent": "NA", 
       "currency_code": "BMD", 
@@ -674,7 +674,7 @@
   {
     "fields": {
       "alpha3": "BRN", 
-      "area": "5770", 
+      "area": 5770, 
       "capital": "Bandar Seri Begawan", 
       "continent": "AS", 
       "currency_code": "BND", 
@@ -698,7 +698,7 @@
   {
     "fields": {
       "alpha3": "BOL", 
-      "area": "1098580", 
+      "area": 1098580, 
       "capital": "Sucre", 
       "continent": "SA", 
       "currency_code": "BOB", 
@@ -722,7 +722,7 @@
   {
     "fields": {
       "alpha3": "BES", 
-      "area": "", 
+      "area": null, 
       "capital": "", 
       "continent": "NA", 
       "currency_code": "USD", 
@@ -746,7 +746,7 @@
   {
     "fields": {
       "alpha3": "BRA", 
-      "area": "8511965", 
+      "area": 8511965, 
       "capital": "Brasilia", 
       "continent": "SA", 
       "currency_code": "BRL", 
@@ -770,7 +770,7 @@
   {
     "fields": {
       "alpha3": "BHS", 
-      "area": "13940", 
+      "area": 13940, 
       "capital": "Nassau", 
       "continent": "NA", 
       "currency_code": "BSD", 
@@ -794,7 +794,7 @@
   {
     "fields": {
       "alpha3": "BTN", 
-      "area": "47000", 
+      "area": 47000, 
       "capital": "Thimphu", 
       "continent": "AS", 
       "currency_code": "BTN", 
@@ -818,7 +818,7 @@
   {
     "fields": {
       "alpha3": "BVT", 
-      "area": "", 
+      "area": null, 
       "capital": "", 
       "continent": "AN", 
       "currency_code": "NOK", 
@@ -842,7 +842,7 @@
   {
     "fields": {
       "alpha3": "BWA", 
-      "area": "600370", 
+      "area": 600370, 
       "capital": "Gaborone", 
       "continent": "AF", 
       "currency_code": "BWP", 
@@ -866,7 +866,7 @@
   {
     "fields": {
       "alpha3": "BLR", 
-      "area": "207600", 
+      "area": 207600, 
       "capital": "Minsk", 
       "continent": "EU", 
       "currency_code": "BYR", 
@@ -890,7 +890,7 @@
   {
     "fields": {
       "alpha3": "BLZ", 
-      "area": "22966", 
+      "area": 22966, 
       "capital": "Belmopan", 
       "continent": "NA", 
       "currency_code": "BZD", 
@@ -914,7 +914,7 @@
   {
     "fields": {
       "alpha3": "CAN", 
-      "area": "9984670", 
+      "area": 9984670, 
       "capital": "Ottawa", 
       "continent": "NA", 
       "currency_code": "CAD", 
@@ -938,7 +938,7 @@
   {
     "fields": {
       "alpha3": "CCK", 
-      "area": "14", 
+      "area": 14, 
       "capital": "West Island", 
       "continent": "AS", 
       "currency_code": "AUD", 
@@ -962,7 +962,7 @@
   {
     "fields": {
       "alpha3": "COD", 
-      "area": "2345410", 
+      "area": 2345410, 
       "capital": "Kinshasa", 
       "continent": "AF", 
       "currency_code": "CDF", 
@@ -986,7 +986,7 @@
   {
     "fields": {
       "alpha3": "CAF", 
-      "area": "622984", 
+      "area": 622984, 
       "capital": "Bangui", 
       "continent": "AF", 
       "currency_code": "XAF", 
@@ -1010,7 +1010,7 @@
   {
     "fields": {
       "alpha3": "COG", 
-      "area": "342000", 
+      "area": 342000, 
       "capital": "Brazzaville", 
       "continent": "AF", 
       "currency_code": "XAF", 
@@ -1034,7 +1034,7 @@
   {
     "fields": {
       "alpha3": "CHE", 
-      "area": "41290", 
+      "area": 41290, 
       "capital": "Berne", 
       "continent": "EU", 
       "currency_code": "CHF", 
@@ -1058,7 +1058,7 @@
   {
     "fields": {
       "alpha3": "CIV", 
-      "area": "322460", 
+      "area": 322460, 
       "capital": "Yamoussoukro", 
       "continent": "AF", 
       "currency_code": "XOF", 
@@ -1082,7 +1082,7 @@
   {
     "fields": {
       "alpha3": "COK", 
-      "area": "240", 
+      "area": 240, 
       "capital": "Avarua", 
       "continent": "OC", 
       "currency_code": "NZD", 
@@ -1106,7 +1106,7 @@
   {
     "fields": {
       "alpha3": "CHL", 
-      "area": "756950", 
+      "area": 756950, 
       "capital": "Santiago", 
       "continent": "SA", 
       "currency_code": "CLP", 
@@ -1130,7 +1130,7 @@
   {
     "fields": {
       "alpha3": "CMR", 
-      "area": "475440", 
+      "area": 475440, 
       "capital": "Yaounde", 
       "continent": "AF", 
       "currency_code": "XAF", 
@@ -1154,7 +1154,7 @@
   {
     "fields": {
       "alpha3": "CHN", 
-      "area": "9596960", 
+      "area": 9596960, 
       "capital": "Beijing", 
       "continent": "AS", 
       "currency_code": "CNY", 
@@ -1178,7 +1178,7 @@
   {
     "fields": {
       "alpha3": "COL", 
-      "area": "1138910", 
+      "area": 1138910, 
       "capital": "Bogota", 
       "continent": "SA", 
       "currency_code": "COP", 
@@ -1202,7 +1202,7 @@
   {
     "fields": {
       "alpha3": "CRI", 
-      "area": "51100", 
+      "area": 51100, 
       "capital": "San Jose", 
       "continent": "NA", 
       "currency_code": "CRC", 
@@ -1226,14 +1226,14 @@
   {
     "fields": {
       "alpha3": "SCG", 
-      "area": "102350", 
+      "area": 102350, 
       "capital": "Belgrade", 
       "continent": "EU", 
       "currency_code": "RSD", 
       "currency_name": "Dinar", 
       "equivalent_fips_code": "", 
       "fips": "YI", 
-      "geonameid": "", 
+      "geonameid": null, 
       "languages": "cu,hu,sq,sr", 
       "name": "Serbia and Montenegro", 
       "neighbours": "AL,HU,MK,RO,HR,BA,BG", 
@@ -1250,7 +1250,7 @@
   {
     "fields": {
       "alpha3": "CUB", 
-      "area": "110860", 
+      "area": 110860, 
       "capital": "Havana", 
       "continent": "NA", 
       "currency_code": "CUP", 
@@ -1274,7 +1274,7 @@
   {
     "fields": {
       "alpha3": "CPV", 
-      "area": "4033", 
+      "area": 4033, 
       "capital": "Praia", 
       "continent": "AF", 
       "currency_code": "CVE", 
@@ -1298,7 +1298,7 @@
   {
     "fields": {
       "alpha3": "CUW", 
-      "area": "", 
+      "area": null, 
       "capital": " Willemstad", 
       "continent": "NA", 
       "currency_code": "ANG", 
@@ -1322,7 +1322,7 @@
   {
     "fields": {
       "alpha3": "CXR", 
-      "area": "135", 
+      "area": 135, 
       "capital": "Flying Fish Cove", 
       "continent": "AS", 
       "currency_code": "AUD", 
@@ -1346,7 +1346,7 @@
   {
     "fields": {
       "alpha3": "CYP", 
-      "area": "9250", 
+      "area": 9250, 
       "capital": "Nicosia", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -1370,7 +1370,7 @@
   {
     "fields": {
       "alpha3": "CZE", 
-      "area": "78866", 
+      "area": 78866, 
       "capital": "Prague", 
       "continent": "EU", 
       "currency_code": "CZK", 
@@ -1394,7 +1394,7 @@
   {
     "fields": {
       "alpha3": "DEU", 
-      "area": "357021", 
+      "area": 357021, 
       "capital": "Berlin", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -1418,7 +1418,7 @@
   {
     "fields": {
       "alpha3": "DJI", 
-      "area": "23000", 
+      "area": 23000, 
       "capital": "Djibouti", 
       "continent": "AF", 
       "currency_code": "DJF", 
@@ -1442,7 +1442,7 @@
   {
     "fields": {
       "alpha3": "DNK", 
-      "area": "43094", 
+      "area": 43094, 
       "capital": "Copenhagen", 
       "continent": "EU", 
       "currency_code": "DKK", 
@@ -1466,7 +1466,7 @@
   {
     "fields": {
       "alpha3": "DMA", 
-      "area": "754", 
+      "area": 754, 
       "capital": "Roseau", 
       "continent": "NA", 
       "currency_code": "XCD", 
@@ -1490,7 +1490,7 @@
   {
     "fields": {
       "alpha3": "DOM", 
-      "area": "48730", 
+      "area": 48730, 
       "capital": "Santo Domingo", 
       "continent": "NA", 
       "currency_code": "DOP", 
@@ -1514,7 +1514,7 @@
   {
     "fields": {
       "alpha3": "DZA", 
-      "area": "2381740", 
+      "area": 2381740, 
       "capital": "Algiers", 
       "continent": "AF", 
       "currency_code": "DZD", 
@@ -1538,7 +1538,7 @@
   {
     "fields": {
       "alpha3": "ECU", 
-      "area": "283560", 
+      "area": 283560, 
       "capital": "Quito", 
       "continent": "SA", 
       "currency_code": "USD", 
@@ -1562,7 +1562,7 @@
   {
     "fields": {
       "alpha3": "EST", 
-      "area": "45226", 
+      "area": 45226, 
       "capital": "Tallinn", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -1586,7 +1586,7 @@
   {
     "fields": {
       "alpha3": "EGY", 
-      "area": "1001450", 
+      "area": 1001450, 
       "capital": "Cairo", 
       "continent": "AF", 
       "currency_code": "EGP", 
@@ -1610,7 +1610,7 @@
   {
     "fields": {
       "alpha3": "ESH", 
-      "area": "266000", 
+      "area": 266000, 
       "capital": "El-Aaiun", 
       "continent": "AF", 
       "currency_code": "MAD", 
@@ -1634,7 +1634,7 @@
   {
     "fields": {
       "alpha3": "ERI", 
-      "area": "121320", 
+      "area": 121320, 
       "capital": "Asmara", 
       "continent": "AF", 
       "currency_code": "ERN", 
@@ -1658,7 +1658,7 @@
   {
     "fields": {
       "alpha3": "ESP", 
-      "area": "504782", 
+      "area": 504782, 
       "capital": "Madrid", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -1682,7 +1682,7 @@
   {
     "fields": {
       "alpha3": "ETH", 
-      "area": "1127127", 
+      "area": 1127127, 
       "capital": "Addis Ababa", 
       "continent": "AF", 
       "currency_code": "ETB", 
@@ -1706,7 +1706,7 @@
   {
     "fields": {
       "alpha3": "FIN", 
-      "area": "337030", 
+      "area": 337030, 
       "capital": "Helsinki", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -1730,7 +1730,7 @@
   {
     "fields": {
       "alpha3": "FJI", 
-      "area": "18270", 
+      "area": 18270, 
       "capital": "Suva", 
       "continent": "OC", 
       "currency_code": "FJD", 
@@ -1754,7 +1754,7 @@
   {
     "fields": {
       "alpha3": "FLK", 
-      "area": "12173", 
+      "area": 12173, 
       "capital": "Stanley", 
       "continent": "SA", 
       "currency_code": "FKP", 
@@ -1778,7 +1778,7 @@
   {
     "fields": {
       "alpha3": "FSM", 
-      "area": "702", 
+      "area": 702, 
       "capital": "Palikir", 
       "continent": "OC", 
       "currency_code": "USD", 
@@ -1802,7 +1802,7 @@
   {
     "fields": {
       "alpha3": "FRO", 
-      "area": "1399", 
+      "area": 1399, 
       "capital": "Torshavn", 
       "continent": "EU", 
       "currency_code": "DKK", 
@@ -1826,7 +1826,7 @@
   {
     "fields": {
       "alpha3": "FRA", 
-      "area": "547030", 
+      "area": 547030, 
       "capital": "Paris", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -1850,7 +1850,7 @@
   {
     "fields": {
       "alpha3": "GAB", 
-      "area": "267667", 
+      "area": 267667, 
       "capital": "Libreville", 
       "continent": "AF", 
       "currency_code": "XAF", 
@@ -1874,7 +1874,7 @@
   {
     "fields": {
       "alpha3": "GBR", 
-      "area": "244820", 
+      "area": 244820, 
       "capital": "London", 
       "continent": "EU", 
       "currency_code": "GBP", 
@@ -1898,7 +1898,7 @@
   {
     "fields": {
       "alpha3": "GRD", 
-      "area": "344", 
+      "area": 344, 
       "capital": "St. George's", 
       "continent": "NA", 
       "currency_code": "XCD", 
@@ -1922,7 +1922,7 @@
   {
     "fields": {
       "alpha3": "GEO", 
-      "area": "69700", 
+      "area": 69700, 
       "capital": "Tbilisi", 
       "continent": "AS", 
       "currency_code": "GEL", 
@@ -1946,7 +1946,7 @@
   {
     "fields": {
       "alpha3": "GUF", 
-      "area": "91000", 
+      "area": 91000, 
       "capital": "Cayenne", 
       "continent": "SA", 
       "currency_code": "EUR", 
@@ -1970,7 +1970,7 @@
   {
     "fields": {
       "alpha3": "GGY", 
-      "area": "78", 
+      "area": 78, 
       "capital": "St Peter Port", 
       "continent": "EU", 
       "currency_code": "GBP", 
@@ -1994,7 +1994,7 @@
   {
     "fields": {
       "alpha3": "GHA", 
-      "area": "239460", 
+      "area": 239460, 
       "capital": "Accra", 
       "continent": "AF", 
       "currency_code": "GHS", 
@@ -2018,7 +2018,7 @@
   {
     "fields": {
       "alpha3": "GIB", 
-      "area": "6.5", 
+      "area": 7, 
       "capital": "Gibraltar", 
       "continent": "EU", 
       "currency_code": "GIP", 
@@ -2042,7 +2042,7 @@
   {
     "fields": {
       "alpha3": "GRL", 
-      "area": "2166086", 
+      "area": 2166086, 
       "capital": "Nuuk", 
       "continent": "NA", 
       "currency_code": "DKK", 
@@ -2066,7 +2066,7 @@
   {
     "fields": {
       "alpha3": "GMB", 
-      "area": "11300", 
+      "area": 11300, 
       "capital": "Banjul", 
       "continent": "AF", 
       "currency_code": "GMD", 
@@ -2090,7 +2090,7 @@
   {
     "fields": {
       "alpha3": "GIN", 
-      "area": "245857", 
+      "area": 245857, 
       "capital": "Conakry", 
       "continent": "AF", 
       "currency_code": "GNF", 
@@ -2114,7 +2114,7 @@
   {
     "fields": {
       "alpha3": "GLP", 
-      "area": "1780", 
+      "area": 1780, 
       "capital": "Basse-Terre", 
       "continent": "NA", 
       "currency_code": "EUR", 
@@ -2138,7 +2138,7 @@
   {
     "fields": {
       "alpha3": "GNQ", 
-      "area": "28051", 
+      "area": 28051, 
       "capital": "Malabo", 
       "continent": "AF", 
       "currency_code": "XAF", 
@@ -2162,7 +2162,7 @@
   {
     "fields": {
       "alpha3": "GRC", 
-      "area": "131940", 
+      "area": 131940, 
       "capital": "Athens", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -2186,7 +2186,7 @@
   {
     "fields": {
       "alpha3": "SGS", 
-      "area": "3903", 
+      "area": 3903, 
       "capital": "Grytviken", 
       "continent": "AN", 
       "currency_code": "GBP", 
@@ -2210,7 +2210,7 @@
   {
     "fields": {
       "alpha3": "GTM", 
-      "area": "108890", 
+      "area": 108890, 
       "capital": "Guatemala City", 
       "continent": "NA", 
       "currency_code": "GTQ", 
@@ -2234,7 +2234,7 @@
   {
     "fields": {
       "alpha3": "GUM", 
-      "area": "549", 
+      "area": 549, 
       "capital": "Hagatna", 
       "continent": "OC", 
       "currency_code": "USD", 
@@ -2258,7 +2258,7 @@
   {
     "fields": {
       "alpha3": "GNB", 
-      "area": "36120", 
+      "area": 36120, 
       "capital": "Bissau", 
       "continent": "AF", 
       "currency_code": "XOF", 
@@ -2282,7 +2282,7 @@
   {
     "fields": {
       "alpha3": "GUY", 
-      "area": "214970", 
+      "area": 214970, 
       "capital": "Georgetown", 
       "continent": "SA", 
       "currency_code": "GYD", 
@@ -2306,7 +2306,7 @@
   {
     "fields": {
       "alpha3": "HKG", 
-      "area": "1092", 
+      "area": 1092, 
       "capital": "Hong Kong", 
       "continent": "AS", 
       "currency_code": "HKD", 
@@ -2330,7 +2330,7 @@
   {
     "fields": {
       "alpha3": "HMD", 
-      "area": "412", 
+      "area": 412, 
       "capital": "", 
       "continent": "AN", 
       "currency_code": "AUD", 
@@ -2354,7 +2354,7 @@
   {
     "fields": {
       "alpha3": "HND", 
-      "area": "112090", 
+      "area": 112090, 
       "capital": "Tegucigalpa", 
       "continent": "NA", 
       "currency_code": "HNL", 
@@ -2378,7 +2378,7 @@
   {
     "fields": {
       "alpha3": "HRV", 
-      "area": "56542", 
+      "area": 56542, 
       "capital": "Zagreb", 
       "continent": "EU", 
       "currency_code": "HRK", 
@@ -2402,7 +2402,7 @@
   {
     "fields": {
       "alpha3": "HTI", 
-      "area": "27750", 
+      "area": 27750, 
       "capital": "Port-au-Prince", 
       "continent": "NA", 
       "currency_code": "HTG", 
@@ -2426,7 +2426,7 @@
   {
     "fields": {
       "alpha3": "HUN", 
-      "area": "93030", 
+      "area": 93030, 
       "capital": "Budapest", 
       "continent": "EU", 
       "currency_code": "HUF", 
@@ -2450,7 +2450,7 @@
   {
     "fields": {
       "alpha3": "IDN", 
-      "area": "1919440", 
+      "area": 1919440, 
       "capital": "Jakarta", 
       "continent": "AS", 
       "currency_code": "IDR", 
@@ -2474,7 +2474,7 @@
   {
     "fields": {
       "alpha3": "IRL", 
-      "area": "70280", 
+      "area": 70280, 
       "capital": "Dublin", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -2498,7 +2498,7 @@
   {
     "fields": {
       "alpha3": "ISR", 
-      "area": "20770", 
+      "area": 20770, 
       "capital": "Jerusalem", 
       "continent": "AS", 
       "currency_code": "ILS", 
@@ -2522,7 +2522,7 @@
   {
     "fields": {
       "alpha3": "IMN", 
-      "area": "572", 
+      "area": 572, 
       "capital": "Douglas, Isle of Man", 
       "continent": "EU", 
       "currency_code": "GBP", 
@@ -2546,7 +2546,7 @@
   {
     "fields": {
       "alpha3": "IND", 
-      "area": "3287590", 
+      "area": 3287590, 
       "capital": "New Delhi", 
       "continent": "AS", 
       "currency_code": "INR", 
@@ -2570,7 +2570,7 @@
   {
     "fields": {
       "alpha3": "IOT", 
-      "area": "60", 
+      "area": 60, 
       "capital": "Diego Garcia", 
       "continent": "AS", 
       "currency_code": "USD", 
@@ -2594,7 +2594,7 @@
   {
     "fields": {
       "alpha3": "IRQ", 
-      "area": "437072", 
+      "area": 437072, 
       "capital": "Baghdad", 
       "continent": "AS", 
       "currency_code": "IQD", 
@@ -2618,7 +2618,7 @@
   {
     "fields": {
       "alpha3": "IRN", 
-      "area": "1648000", 
+      "area": 1648000, 
       "capital": "Tehran", 
       "continent": "AS", 
       "currency_code": "IRR", 
@@ -2642,7 +2642,7 @@
   {
     "fields": {
       "alpha3": "ISL", 
-      "area": "103000", 
+      "area": 103000, 
       "capital": "Reykjavik", 
       "continent": "EU", 
       "currency_code": "ISK", 
@@ -2666,7 +2666,7 @@
   {
     "fields": {
       "alpha3": "ITA", 
-      "area": "301230", 
+      "area": 301230, 
       "capital": "Rome", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -2690,7 +2690,7 @@
   {
     "fields": {
       "alpha3": "JEY", 
-      "area": "116", 
+      "area": 116, 
       "capital": "Saint Helier", 
       "continent": "EU", 
       "currency_code": "GBP", 
@@ -2714,7 +2714,7 @@
   {
     "fields": {
       "alpha3": "JAM", 
-      "area": "10991", 
+      "area": 10991, 
       "capital": "Kingston", 
       "continent": "NA", 
       "currency_code": "JMD", 
@@ -2738,7 +2738,7 @@
   {
     "fields": {
       "alpha3": "JOR", 
-      "area": "92300", 
+      "area": 92300, 
       "capital": "Amman", 
       "continent": "AS", 
       "currency_code": "JOD", 
@@ -2762,7 +2762,7 @@
   {
     "fields": {
       "alpha3": "JPN", 
-      "area": "377835", 
+      "area": 377835, 
       "capital": "Tokyo", 
       "continent": "AS", 
       "currency_code": "JPY", 
@@ -2786,7 +2786,7 @@
   {
     "fields": {
       "alpha3": "KEN", 
-      "area": "582650", 
+      "area": 582650, 
       "capital": "Nairobi", 
       "continent": "AF", 
       "currency_code": "KES", 
@@ -2810,7 +2810,7 @@
   {
     "fields": {
       "alpha3": "KGZ", 
-      "area": "198500", 
+      "area": 198500, 
       "capital": "Bishkek", 
       "continent": "AS", 
       "currency_code": "KGS", 
@@ -2834,7 +2834,7 @@
   {
     "fields": {
       "alpha3": "KHM", 
-      "area": "181040", 
+      "area": 181040, 
       "capital": "Phnom Penh", 
       "continent": "AS", 
       "currency_code": "KHR", 
@@ -2858,7 +2858,7 @@
   {
     "fields": {
       "alpha3": "KIR", 
-      "area": "811", 
+      "area": 811, 
       "capital": "Tarawa", 
       "continent": "OC", 
       "currency_code": "AUD", 
@@ -2882,7 +2882,7 @@
   {
     "fields": {
       "alpha3": "COM", 
-      "area": "2170", 
+      "area": 2170, 
       "capital": "Moroni", 
       "continent": "AF", 
       "currency_code": "KMF", 
@@ -2906,7 +2906,7 @@
   {
     "fields": {
       "alpha3": "KNA", 
-      "area": "261", 
+      "area": 261, 
       "capital": "Basseterre", 
       "continent": "NA", 
       "currency_code": "XCD", 
@@ -2930,7 +2930,7 @@
   {
     "fields": {
       "alpha3": "PRK", 
-      "area": "120540", 
+      "area": 120540, 
       "capital": "Pyongyang", 
       "continent": "AS", 
       "currency_code": "KPW", 
@@ -2954,7 +2954,7 @@
   {
     "fields": {
       "alpha3": "KOR", 
-      "area": "98480", 
+      "area": 98480, 
       "capital": "Seoul", 
       "continent": "AS", 
       "currency_code": "KRW", 
@@ -2978,7 +2978,7 @@
   {
     "fields": {
       "alpha3": "KWT", 
-      "area": "17820", 
+      "area": 17820, 
       "capital": "Kuwait City", 
       "continent": "AS", 
       "currency_code": "KWD", 
@@ -3002,7 +3002,7 @@
   {
     "fields": {
       "alpha3": "CYM", 
-      "area": "262", 
+      "area": 262, 
       "capital": "George Town", 
       "continent": "NA", 
       "currency_code": "KYD", 
@@ -3026,7 +3026,7 @@
   {
     "fields": {
       "alpha3": "KAZ", 
-      "area": "2717300", 
+      "area": 2717300, 
       "capital": "Astana", 
       "continent": "AS", 
       "currency_code": "KZT", 
@@ -3050,7 +3050,7 @@
   {
     "fields": {
       "alpha3": "LAO", 
-      "area": "236800", 
+      "area": 236800, 
       "capital": "Vientiane", 
       "continent": "AS", 
       "currency_code": "LAK", 
@@ -3074,7 +3074,7 @@
   {
     "fields": {
       "alpha3": "LBN", 
-      "area": "10400", 
+      "area": 10400, 
       "capital": "Beirut", 
       "continent": "AS", 
       "currency_code": "LBP", 
@@ -3098,7 +3098,7 @@
   {
     "fields": {
       "alpha3": "LCA", 
-      "area": "616", 
+      "area": 616, 
       "capital": "Castries", 
       "continent": "NA", 
       "currency_code": "XCD", 
@@ -3122,7 +3122,7 @@
   {
     "fields": {
       "alpha3": "LIE", 
-      "area": "160", 
+      "area": 160, 
       "capital": "Vaduz", 
       "continent": "EU", 
       "currency_code": "CHF", 
@@ -3146,7 +3146,7 @@
   {
     "fields": {
       "alpha3": "LKA", 
-      "area": "65610", 
+      "area": 65610, 
       "capital": "Colombo", 
       "continent": "AS", 
       "currency_code": "LKR", 
@@ -3170,7 +3170,7 @@
   {
     "fields": {
       "alpha3": "LBR", 
-      "area": "111370", 
+      "area": 111370, 
       "capital": "Monrovia", 
       "continent": "AF", 
       "currency_code": "LRD", 
@@ -3194,7 +3194,7 @@
   {
     "fields": {
       "alpha3": "LSO", 
-      "area": "30355", 
+      "area": 30355, 
       "capital": "Maseru", 
       "continent": "AF", 
       "currency_code": "LSL", 
@@ -3218,7 +3218,7 @@
   {
     "fields": {
       "alpha3": "LTU", 
-      "area": "65200", 
+      "area": 65200, 
       "capital": "Vilnius", 
       "continent": "EU", 
       "currency_code": "LTL", 
@@ -3242,7 +3242,7 @@
   {
     "fields": {
       "alpha3": "LUX", 
-      "area": "2586", 
+      "area": 2586, 
       "capital": "Luxembourg", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -3266,7 +3266,7 @@
   {
     "fields": {
       "alpha3": "LVA", 
-      "area": "64589", 
+      "area": 64589, 
       "capital": "Riga", 
       "continent": "EU", 
       "currency_code": "LVL", 
@@ -3290,7 +3290,7 @@
   {
     "fields": {
       "alpha3": "LBY", 
-      "area": "1759540", 
+      "area": 1759540, 
       "capital": "Tripolis", 
       "continent": "AF", 
       "currency_code": "LYD", 
@@ -3314,7 +3314,7 @@
   {
     "fields": {
       "alpha3": "MAR", 
-      "area": "446550", 
+      "area": 446550, 
       "capital": "Rabat", 
       "continent": "AF", 
       "currency_code": "MAD", 
@@ -3338,7 +3338,7 @@
   {
     "fields": {
       "alpha3": "MCO", 
-      "area": "1.95", 
+      "area": 2, 
       "capital": "Monaco", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -3362,7 +3362,7 @@
   {
     "fields": {
       "alpha3": "MDA", 
-      "area": "33843", 
+      "area": 33843, 
       "capital": "Chisinau", 
       "continent": "EU", 
       "currency_code": "MDL", 
@@ -3386,7 +3386,7 @@
   {
     "fields": {
       "alpha3": "MNE", 
-      "area": "14026", 
+      "area": 14026, 
       "capital": "Podgorica", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -3410,7 +3410,7 @@
   {
     "fields": {
       "alpha3": "MAF", 
-      "area": "53", 
+      "area": 53, 
       "capital": "Marigot", 
       "continent": "NA", 
       "currency_code": "EUR", 
@@ -3434,7 +3434,7 @@
   {
     "fields": {
       "alpha3": "MDG", 
-      "area": "587040", 
+      "area": 587040, 
       "capital": "Antananarivo", 
       "continent": "AF", 
       "currency_code": "MGA", 
@@ -3458,7 +3458,7 @@
   {
     "fields": {
       "alpha3": "MHL", 
-      "area": "181.3", 
+      "area": 182, 
       "capital": "Majuro", 
       "continent": "OC", 
       "currency_code": "USD", 
@@ -3482,7 +3482,7 @@
   {
     "fields": {
       "alpha3": "MKD", 
-      "area": "25333", 
+      "area": 25333, 
       "capital": "Skopje", 
       "continent": "EU", 
       "currency_code": "MKD", 
@@ -3506,7 +3506,7 @@
   {
     "fields": {
       "alpha3": "MLI", 
-      "area": "1240000", 
+      "area": 1240000, 
       "capital": "Bamako", 
       "continent": "AF", 
       "currency_code": "XOF", 
@@ -3530,7 +3530,7 @@
   {
     "fields": {
       "alpha3": "MMR", 
-      "area": "678500", 
+      "area": 678500, 
       "capital": "Nay Pyi Taw", 
       "continent": "AS", 
       "currency_code": "MMK", 
@@ -3554,7 +3554,7 @@
   {
     "fields": {
       "alpha3": "MNG", 
-      "area": "1565000", 
+      "area": 1565000, 
       "capital": "Ulan Bator", 
       "continent": "AS", 
       "currency_code": "MNT", 
@@ -3578,7 +3578,7 @@
   {
     "fields": {
       "alpha3": "MAC", 
-      "area": "254", 
+      "area": 254, 
       "capital": "Macao", 
       "continent": "AS", 
       "currency_code": "MOP", 
@@ -3602,7 +3602,7 @@
   {
     "fields": {
       "alpha3": "MNP", 
-      "area": "477", 
+      "area": 477, 
       "capital": "Saipan", 
       "continent": "OC", 
       "currency_code": "USD", 
@@ -3626,7 +3626,7 @@
   {
     "fields": {
       "alpha3": "MTQ", 
-      "area": "1100", 
+      "area": 1100, 
       "capital": "Fort-de-France", 
       "continent": "NA", 
       "currency_code": "EUR", 
@@ -3650,7 +3650,7 @@
   {
     "fields": {
       "alpha3": "MRT", 
-      "area": "1030700", 
+      "area": 1030700, 
       "capital": "Nouakchott", 
       "continent": "AF", 
       "currency_code": "MRO", 
@@ -3674,7 +3674,7 @@
   {
     "fields": {
       "alpha3": "MSR", 
-      "area": "102", 
+      "area": 102, 
       "capital": "Plymouth", 
       "continent": "NA", 
       "currency_code": "XCD", 
@@ -3698,7 +3698,7 @@
   {
     "fields": {
       "alpha3": "MLT", 
-      "area": "316", 
+      "area": 316, 
       "capital": "Valletta", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -3722,7 +3722,7 @@
   {
     "fields": {
       "alpha3": "MUS", 
-      "area": "2040", 
+      "area": 2040, 
       "capital": "Port Louis", 
       "continent": "AF", 
       "currency_code": "MUR", 
@@ -3746,7 +3746,7 @@
   {
     "fields": {
       "alpha3": "MDV", 
-      "area": "300", 
+      "area": 300, 
       "capital": "Male", 
       "continent": "AS", 
       "currency_code": "MVR", 
@@ -3770,7 +3770,7 @@
   {
     "fields": {
       "alpha3": "MWI", 
-      "area": "118480", 
+      "area": 118480, 
       "capital": "Lilongwe", 
       "continent": "AF", 
       "currency_code": "MWK", 
@@ -3794,7 +3794,7 @@
   {
     "fields": {
       "alpha3": "MEX", 
-      "area": "1972550", 
+      "area": 1972550, 
       "capital": "Mexico City", 
       "continent": "NA", 
       "currency_code": "MXN", 
@@ -3818,7 +3818,7 @@
   {
     "fields": {
       "alpha3": "MYS", 
-      "area": "329750", 
+      "area": 329750, 
       "capital": "Kuala Lumpur", 
       "continent": "AS", 
       "currency_code": "MYR", 
@@ -3842,7 +3842,7 @@
   {
     "fields": {
       "alpha3": "MOZ", 
-      "area": "801590", 
+      "area": 801590, 
       "capital": "Maputo", 
       "continent": "AF", 
       "currency_code": "MZN", 
@@ -3866,7 +3866,7 @@
   {
     "fields": {
       "alpha3": "NAM", 
-      "area": "825418", 
+      "area": 825418, 
       "capital": "Windhoek", 
       "continent": "AF", 
       "currency_code": "NAD", 
@@ -3890,7 +3890,7 @@
   {
     "fields": {
       "alpha3": "NCL", 
-      "area": "19060", 
+      "area": 19060, 
       "capital": "Noumea", 
       "continent": "OC", 
       "currency_code": "XPF", 
@@ -3914,7 +3914,7 @@
   {
     "fields": {
       "alpha3": "NER", 
-      "area": "1267000", 
+      "area": 1267000, 
       "capital": "Niamey", 
       "continent": "AF", 
       "currency_code": "XOF", 
@@ -3938,7 +3938,7 @@
   {
     "fields": {
       "alpha3": "NFK", 
-      "area": "34.6", 
+      "area": 35, 
       "capital": "Kingston", 
       "continent": "OC", 
       "currency_code": "AUD", 
@@ -3962,7 +3962,7 @@
   {
     "fields": {
       "alpha3": "NGA", 
-      "area": "923768", 
+      "area": 923768, 
       "capital": "Abuja", 
       "continent": "AF", 
       "currency_code": "NGN", 
@@ -3986,7 +3986,7 @@
   {
     "fields": {
       "alpha3": "NIC", 
-      "area": "129494", 
+      "area": 129494, 
       "capital": "Managua", 
       "continent": "NA", 
       "currency_code": "NIO", 
@@ -4010,7 +4010,7 @@
   {
     "fields": {
       "alpha3": "NLD", 
-      "area": "41526", 
+      "area": 41526, 
       "capital": "Amsterdam", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -4034,7 +4034,7 @@
   {
     "fields": {
       "alpha3": "NOR", 
-      "area": "324220", 
+      "area": 324220, 
       "capital": "Oslo", 
       "continent": "EU", 
       "currency_code": "NOK", 
@@ -4058,7 +4058,7 @@
   {
     "fields": {
       "alpha3": "NPL", 
-      "area": "140800", 
+      "area": 140800, 
       "capital": "Kathmandu", 
       "continent": "AS", 
       "currency_code": "NPR", 
@@ -4082,7 +4082,7 @@
   {
     "fields": {
       "alpha3": "NRU", 
-      "area": "21", 
+      "area": 21, 
       "capital": "Yaren", 
       "continent": "OC", 
       "currency_code": "AUD", 
@@ -4106,7 +4106,7 @@
   {
     "fields": {
       "alpha3": "NIU", 
-      "area": "260", 
+      "area": 260, 
       "capital": "Alofi", 
       "continent": "OC", 
       "currency_code": "NZD", 
@@ -4130,7 +4130,7 @@
   {
     "fields": {
       "alpha3": "NZL", 
-      "area": "268680", 
+      "area": 268680, 
       "capital": "Wellington", 
       "continent": "OC", 
       "currency_code": "NZD", 
@@ -4154,7 +4154,7 @@
   {
     "fields": {
       "alpha3": "OMN", 
-      "area": "212460", 
+      "area": 212460, 
       "capital": "Muscat", 
       "continent": "AS", 
       "currency_code": "OMR", 
@@ -4178,7 +4178,7 @@
   {
     "fields": {
       "alpha3": "PAN", 
-      "area": "78200", 
+      "area": 78200, 
       "capital": "Panama City", 
       "continent": "NA", 
       "currency_code": "PAB", 
@@ -4202,7 +4202,7 @@
   {
     "fields": {
       "alpha3": "PER", 
-      "area": "1285220", 
+      "area": 1285220, 
       "capital": "Lima", 
       "continent": "SA", 
       "currency_code": "PEN", 
@@ -4226,7 +4226,7 @@
   {
     "fields": {
       "alpha3": "PYF", 
-      "area": "4167", 
+      "area": 4167, 
       "capital": "Papeete", 
       "continent": "OC", 
       "currency_code": "XPF", 
@@ -4250,7 +4250,7 @@
   {
     "fields": {
       "alpha3": "PNG", 
-      "area": "462840", 
+      "area": 462840, 
       "capital": "Port Moresby", 
       "continent": "OC", 
       "currency_code": "PGK", 
@@ -4274,7 +4274,7 @@
   {
     "fields": {
       "alpha3": "PHL", 
-      "area": "300000", 
+      "area": 300000, 
       "capital": "Manila", 
       "continent": "AS", 
       "currency_code": "PHP", 
@@ -4298,7 +4298,7 @@
   {
     "fields": {
       "alpha3": "PAK", 
-      "area": "803940", 
+      "area": 803940, 
       "capital": "Islamabad", 
       "continent": "AS", 
       "currency_code": "PKR", 
@@ -4322,7 +4322,7 @@
   {
     "fields": {
       "alpha3": "POL", 
-      "area": "312685", 
+      "area": 312685, 
       "capital": "Warsaw", 
       "continent": "EU", 
       "currency_code": "PLN", 
@@ -4346,7 +4346,7 @@
   {
     "fields": {
       "alpha3": "SPM", 
-      "area": "242", 
+      "area": 242, 
       "capital": "Saint-Pierre", 
       "continent": "NA", 
       "currency_code": "EUR", 
@@ -4370,7 +4370,7 @@
   {
     "fields": {
       "alpha3": "PCN", 
-      "area": "47", 
+      "area": 47, 
       "capital": "Adamstown", 
       "continent": "OC", 
       "currency_code": "NZD", 
@@ -4394,7 +4394,7 @@
   {
     "fields": {
       "alpha3": "PRI", 
-      "area": "9104", 
+      "area": 9104, 
       "capital": "San Juan", 
       "continent": "NA", 
       "currency_code": "USD", 
@@ -4418,7 +4418,7 @@
   {
     "fields": {
       "alpha3": "PSE", 
-      "area": "5970", 
+      "area": 5970, 
       "capital": "East Jerusalem", 
       "continent": "AS", 
       "currency_code": "ILS", 
@@ -4442,7 +4442,7 @@
   {
     "fields": {
       "alpha3": "PRT", 
-      "area": "92391", 
+      "area": 92391, 
       "capital": "Lisbon", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -4466,7 +4466,7 @@
   {
     "fields": {
       "alpha3": "PLW", 
-      "area": "458", 
+      "area": 458, 
       "capital": "Melekeok", 
       "continent": "OC", 
       "currency_code": "USD", 
@@ -4490,7 +4490,7 @@
   {
     "fields": {
       "alpha3": "PRY", 
-      "area": "406750", 
+      "area": 406750, 
       "capital": "Asuncion", 
       "continent": "SA", 
       "currency_code": "PYG", 
@@ -4514,7 +4514,7 @@
   {
     "fields": {
       "alpha3": "QAT", 
-      "area": "11437", 
+      "area": 11437, 
       "capital": "Doha", 
       "continent": "AS", 
       "currency_code": "QAR", 
@@ -4538,7 +4538,7 @@
   {
     "fields": {
       "alpha3": "REU", 
-      "area": "2517", 
+      "area": 2517, 
       "capital": "Saint-Denis", 
       "continent": "AF", 
       "currency_code": "EUR", 
@@ -4562,7 +4562,7 @@
   {
     "fields": {
       "alpha3": "ROU", 
-      "area": "237500", 
+      "area": 237500, 
       "capital": "Bucharest", 
       "continent": "EU", 
       "currency_code": "RON", 
@@ -4586,7 +4586,7 @@
   {
     "fields": {
       "alpha3": "SRB", 
-      "area": "88361", 
+      "area": 88361, 
       "capital": "Belgrade", 
       "continent": "EU", 
       "currency_code": "RSD", 
@@ -4610,7 +4610,7 @@
   {
     "fields": {
       "alpha3": "RUS", 
-      "area": "17100000", 
+      "area": 17100000, 
       "capital": "Moscow", 
       "continent": "EU", 
       "currency_code": "RUB", 
@@ -4634,7 +4634,7 @@
   {
     "fields": {
       "alpha3": "RWA", 
-      "area": "26338", 
+      "area": 26338, 
       "capital": "Kigali", 
       "continent": "AF", 
       "currency_code": "RWF", 
@@ -4658,7 +4658,7 @@
   {
     "fields": {
       "alpha3": "SAU", 
-      "area": "1960582", 
+      "area": 1960582, 
       "capital": "Riyadh", 
       "continent": "AS", 
       "currency_code": "SAR", 
@@ -4682,7 +4682,7 @@
   {
     "fields": {
       "alpha3": "SLB", 
-      "area": "28450", 
+      "area": 28450, 
       "capital": "Honiara", 
       "continent": "OC", 
       "currency_code": "SBD", 
@@ -4706,7 +4706,7 @@
   {
     "fields": {
       "alpha3": "SYC", 
-      "area": "455", 
+      "area": 455, 
       "capital": "Victoria", 
       "continent": "AF", 
       "currency_code": "SCR", 
@@ -4730,7 +4730,7 @@
   {
     "fields": {
       "alpha3": "SDN", 
-      "area": "1861484", 
+      "area": 1861484, 
       "capital": "Khartoum", 
       "continent": "AF", 
       "currency_code": "SDG", 
@@ -4754,7 +4754,7 @@
   {
     "fields": {
       "alpha3": "SWE", 
-      "area": "449964", 
+      "area": 449964, 
       "capital": "Stockholm", 
       "continent": "EU", 
       "currency_code": "SEK", 
@@ -4778,7 +4778,7 @@
   {
     "fields": {
       "alpha3": "SGP", 
-      "area": "692.7", 
+      "area": 693, 
       "capital": "Singapur", 
       "continent": "AS", 
       "currency_code": "SGD", 
@@ -4802,7 +4802,7 @@
   {
     "fields": {
       "alpha3": "SHN", 
-      "area": "410", 
+      "area": 410, 
       "capital": "Jamestown", 
       "continent": "AF", 
       "currency_code": "SHP", 
@@ -4826,7 +4826,7 @@
   {
     "fields": {
       "alpha3": "SVN", 
-      "area": "20273", 
+      "area": 20273, 
       "capital": "Ljubljana", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -4850,7 +4850,7 @@
   {
     "fields": {
       "alpha3": "SJM", 
-      "area": "62049", 
+      "area": 62049, 
       "capital": "Longyearbyen", 
       "continent": "EU", 
       "currency_code": "NOK", 
@@ -4874,7 +4874,7 @@
   {
     "fields": {
       "alpha3": "SVK", 
-      "area": "48845", 
+      "area": 48845, 
       "capital": "Bratislava", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -4898,7 +4898,7 @@
   {
     "fields": {
       "alpha3": "SLE", 
-      "area": "71740", 
+      "area": 71740, 
       "capital": "Freetown", 
       "continent": "AF", 
       "currency_code": "SLL", 
@@ -4922,7 +4922,7 @@
   {
     "fields": {
       "alpha3": "SMR", 
-      "area": "61.2", 
+      "area": 62, 
       "capital": "San Marino", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -4946,7 +4946,7 @@
   {
     "fields": {
       "alpha3": "SEN", 
-      "area": "196190", 
+      "area": 196190, 
       "capital": "Dakar", 
       "continent": "AF", 
       "currency_code": "XOF", 
@@ -4970,7 +4970,7 @@
   {
     "fields": {
       "alpha3": "SOM", 
-      "area": "637657", 
+      "area": 637657, 
       "capital": "Mogadishu", 
       "continent": "AF", 
       "currency_code": "SOS", 
@@ -4994,7 +4994,7 @@
   {
     "fields": {
       "alpha3": "SUR", 
-      "area": "163270", 
+      "area": 163270, 
       "capital": "Paramaribo", 
       "continent": "SA", 
       "currency_code": "SRD", 
@@ -5018,7 +5018,7 @@
   {
     "fields": {
       "alpha3": "SSD", 
-      "area": "644329", 
+      "area": 644329, 
       "capital": "Juba", 
       "continent": "AF", 
       "currency_code": "SSP", 
@@ -5042,7 +5042,7 @@
   {
     "fields": {
       "alpha3": "STP", 
-      "area": "1001", 
+      "area": 1001, 
       "capital": "Sao Tome", 
       "continent": "AF", 
       "currency_code": "STD", 
@@ -5066,7 +5066,7 @@
   {
     "fields": {
       "alpha3": "SLV", 
-      "area": "21040", 
+      "area": 21040, 
       "capital": "San Salvador", 
       "continent": "NA", 
       "currency_code": "USD", 
@@ -5090,7 +5090,7 @@
   {
     "fields": {
       "alpha3": "SXM", 
-      "area": "", 
+      "area": null, 
       "capital": "Philipsburg", 
       "continent": "NA", 
       "currency_code": "ANG", 
@@ -5114,7 +5114,7 @@
   {
     "fields": {
       "alpha3": "SYR", 
-      "area": "185180", 
+      "area": 185180, 
       "capital": "Damascus", 
       "continent": "AS", 
       "currency_code": "SYP", 
@@ -5138,7 +5138,7 @@
   {
     "fields": {
       "alpha3": "SWZ", 
-      "area": "17363", 
+      "area": 17363, 
       "capital": "Mbabane", 
       "continent": "AF", 
       "currency_code": "SZL", 
@@ -5162,7 +5162,7 @@
   {
     "fields": {
       "alpha3": "TCA", 
-      "area": "430", 
+      "area": 430, 
       "capital": "Cockburn Town", 
       "continent": "NA", 
       "currency_code": "USD", 
@@ -5186,7 +5186,7 @@
   {
     "fields": {
       "alpha3": "TCD", 
-      "area": "1284000", 
+      "area": 1284000, 
       "capital": "N'Djamena", 
       "continent": "AF", 
       "currency_code": "XAF", 
@@ -5210,7 +5210,7 @@
   {
     "fields": {
       "alpha3": "ATF", 
-      "area": "7829", 
+      "area": 7829, 
       "capital": "Port-aux-Francais", 
       "continent": "AN", 
       "currency_code": "EUR", 
@@ -5234,7 +5234,7 @@
   {
     "fields": {
       "alpha3": "TGO", 
-      "area": "56785", 
+      "area": 56785, 
       "capital": "Lome", 
       "continent": "AF", 
       "currency_code": "XOF", 
@@ -5258,7 +5258,7 @@
   {
     "fields": {
       "alpha3": "THA", 
-      "area": "514000", 
+      "area": 514000, 
       "capital": "Bangkok", 
       "continent": "AS", 
       "currency_code": "THB", 
@@ -5282,7 +5282,7 @@
   {
     "fields": {
       "alpha3": "TJK", 
-      "area": "143100", 
+      "area": 143100, 
       "capital": "Dushanbe", 
       "continent": "AS", 
       "currency_code": "TJS", 
@@ -5306,7 +5306,7 @@
   {
     "fields": {
       "alpha3": "TKL", 
-      "area": "10", 
+      "area": 10, 
       "capital": "", 
       "continent": "OC", 
       "currency_code": "NZD", 
@@ -5330,7 +5330,7 @@
   {
     "fields": {
       "alpha3": "TLS", 
-      "area": "15007", 
+      "area": 15007, 
       "capital": "Dili", 
       "continent": "OC", 
       "currency_code": "USD", 
@@ -5354,7 +5354,7 @@
   {
     "fields": {
       "alpha3": "TKM", 
-      "area": "488100", 
+      "area": 488100, 
       "capital": "Ashgabat", 
       "continent": "AS", 
       "currency_code": "TMT", 
@@ -5378,7 +5378,7 @@
   {
     "fields": {
       "alpha3": "TUN", 
-      "area": "163610", 
+      "area": 163610, 
       "capital": "Tunis", 
       "continent": "AF", 
       "currency_code": "TND", 
@@ -5402,7 +5402,7 @@
   {
     "fields": {
       "alpha3": "TON", 
-      "area": "748", 
+      "area": 748, 
       "capital": "Nuku'alofa", 
       "continent": "OC", 
       "currency_code": "TOP", 
@@ -5426,7 +5426,7 @@
   {
     "fields": {
       "alpha3": "TUR", 
-      "area": "780580", 
+      "area": 780580, 
       "capital": "Ankara", 
       "continent": "AS", 
       "currency_code": "TRY", 
@@ -5450,7 +5450,7 @@
   {
     "fields": {
       "alpha3": "TTO", 
-      "area": "5128", 
+      "area": 5128, 
       "capital": "Port of Spain", 
       "continent": "NA", 
       "currency_code": "TTD", 
@@ -5474,7 +5474,7 @@
   {
     "fields": {
       "alpha3": "TUV", 
-      "area": "26", 
+      "area": 26, 
       "capital": "Funafuti", 
       "continent": "OC", 
       "currency_code": "AUD", 
@@ -5498,7 +5498,7 @@
   {
     "fields": {
       "alpha3": "TWN", 
-      "area": "35980", 
+      "area": 35980, 
       "capital": "Taipei", 
       "continent": "AS", 
       "currency_code": "TWD", 
@@ -5522,7 +5522,7 @@
   {
     "fields": {
       "alpha3": "TZA", 
-      "area": "945087", 
+      "area": 945087, 
       "capital": "Dodoma", 
       "continent": "AF", 
       "currency_code": "TZS", 
@@ -5546,7 +5546,7 @@
   {
     "fields": {
       "alpha3": "UKR", 
-      "area": "603700", 
+      "area": 603700, 
       "capital": "Kiev", 
       "continent": "EU", 
       "currency_code": "UAH", 
@@ -5570,7 +5570,7 @@
   {
     "fields": {
       "alpha3": "UGA", 
-      "area": "236040", 
+      "area": 236040, 
       "capital": "Kampala", 
       "continent": "AF", 
       "currency_code": "UGX", 
@@ -5594,7 +5594,7 @@
   {
     "fields": {
       "alpha3": "UMI", 
-      "area": "0", 
+      "area": 0, 
       "capital": "", 
       "continent": "OC", 
       "currency_code": "USD", 
@@ -5618,7 +5618,7 @@
   {
     "fields": {
       "alpha3": "USA", 
-      "area": "9629091", 
+      "area": 9629091, 
       "capital": "Washington", 
       "continent": "NA", 
       "currency_code": "USD", 
@@ -5642,7 +5642,7 @@
   {
     "fields": {
       "alpha3": "URY", 
-      "area": "176220", 
+      "area": 176220, 
       "capital": "Montevideo", 
       "continent": "SA", 
       "currency_code": "UYU", 
@@ -5666,7 +5666,7 @@
   {
     "fields": {
       "alpha3": "UZB", 
-      "area": "447400", 
+      "area": 447400, 
       "capital": "Tashkent", 
       "continent": "AS", 
       "currency_code": "UZS", 
@@ -5690,7 +5690,7 @@
   {
     "fields": {
       "alpha3": "VAT", 
-      "area": "0.44", 
+      "area": 1, 
       "capital": "Vatican City", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -5714,7 +5714,7 @@
   {
     "fields": {
       "alpha3": "VCT", 
-      "area": "389", 
+      "area": 389, 
       "capital": "Kingstown", 
       "continent": "NA", 
       "currency_code": "XCD", 
@@ -5738,7 +5738,7 @@
   {
     "fields": {
       "alpha3": "VEN", 
-      "area": "912050", 
+      "area": 912050, 
       "capital": "Caracas", 
       "continent": "SA", 
       "currency_code": "VEF", 
@@ -5762,7 +5762,7 @@
   {
     "fields": {
       "alpha3": "VGB", 
-      "area": "153", 
+      "area": 153, 
       "capital": "Road Town", 
       "continent": "NA", 
       "currency_code": "USD", 
@@ -5786,7 +5786,7 @@
   {
     "fields": {
       "alpha3": "VIR", 
-      "area": "352", 
+      "area": 352, 
       "capital": "Charlotte Amalie", 
       "continent": "NA", 
       "currency_code": "USD", 
@@ -5810,7 +5810,7 @@
   {
     "fields": {
       "alpha3": "VNM", 
-      "area": "329560", 
+      "area": 329560, 
       "capital": "Hanoi", 
       "continent": "AS", 
       "currency_code": "VND", 
@@ -5834,7 +5834,7 @@
   {
     "fields": {
       "alpha3": "VUT", 
-      "area": "12200", 
+      "area": 12200, 
       "capital": "Port Vila", 
       "continent": "OC", 
       "currency_code": "VUV", 
@@ -5858,7 +5858,7 @@
   {
     "fields": {
       "alpha3": "WLF", 
-      "area": "274", 
+      "area": 274, 
       "capital": "Mata Utu", 
       "continent": "OC", 
       "currency_code": "XPF", 
@@ -5882,7 +5882,7 @@
   {
     "fields": {
       "alpha3": "WSM", 
-      "area": "2944", 
+      "area": 2944, 
       "capital": "Apia", 
       "continent": "OC", 
       "currency_code": "WST", 
@@ -5906,7 +5906,7 @@
   {
     "fields": {
       "alpha3": "XKX", 
-      "area": "", 
+      "area": null, 
       "capital": "Pristina", 
       "continent": "EU", 
       "currency_code": "EUR", 
@@ -5930,7 +5930,7 @@
   {
     "fields": {
       "alpha3": "YEM", 
-      "area": "527970", 
+      "area": 527970, 
       "capital": "Sanaa", 
       "continent": "AS", 
       "currency_code": "YER", 
@@ -5954,7 +5954,7 @@
   {
     "fields": {
       "alpha3": "MYT", 
-      "area": "374", 
+      "area": 374, 
       "capital": "Mamoudzou", 
       "continent": "AF", 
       "currency_code": "EUR", 
@@ -5978,7 +5978,7 @@
   {
     "fields": {
       "alpha3": "ZAF", 
-      "area": "1219912", 
+      "area": 1219912, 
       "capital": "Pretoria", 
       "continent": "AF", 
       "currency_code": "ZAR", 
@@ -6002,7 +6002,7 @@
   {
     "fields": {
       "alpha3": "ZMB", 
-      "area": "752614", 
+      "area": 752614, 
       "capital": "Lusaka", 
       "continent": "AF", 
       "currency_code": "ZMK", 
@@ -6026,7 +6026,7 @@
   {
     "fields": {
       "alpha3": "ZWE", 
-      "area": "390580", 
+      "area": 390580, 
       "capital": "Harare", 
       "continent": "AF", 
       "currency_code": "ZWL", 

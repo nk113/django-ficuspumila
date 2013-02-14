@@ -253,9 +253,9 @@ class Country(Model):
                          blank=True)
     name = models.CharField(max_length=128)
     capital = models.CharField(max_length=128)
-    area = models.IntegerField(
+    area = models.IntegerField(null=True,
                          verbose_name=_(u'Area (in sq km)'))
-    population = models.IntegerField()
+    population = models.IntegerField(null=True)
     continent = models.CharField(max_length=2,
                          choices=CONTINENTS)
     tld = models.CharField(max_length=5,
@@ -272,9 +272,9 @@ class Country(Model):
                          blank=True)
     postal_code_regex = models.CharField(max_length=255,
                          blank=True)
-    languages = models.CharField(max_length=64,
+    languages = models.CharField(max_length=128,
                          blank=True)
-    geonameid = models.IntegerField()
+    geonameid = models.IntegerField(null=True)
     neighbours = models.CharField(max_length=64,
                          blank=True)
     equivalent_fips_code = models.CharField(max_length=2,
@@ -297,7 +297,7 @@ class Country(Model):
             if response.status_code == 200:
                 logger.debug('get_by_ip: %s: %s' % (ip, response.json,))
 
-                return Country.objects.get(alpha2=result.json['countryCode'])
+                return Country.objects.get(alpha2=response.json['countryCode'])
         except Exception, e:
             pass
 

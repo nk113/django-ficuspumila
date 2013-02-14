@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import logging
+import math
 import os
 import requests
 import StringIO
@@ -83,22 +84,27 @@ def _update_country_objects(fixture):
 
     def populate(fixture, row):
         pk_index = cindex(COUNTRY_PK_FIELD)
+
         try:
             del fixture[_findex(fixture, 'common.country', row[pk_index])]
         except IndexError, e:
             pass
-            
+
+        area = int(math.ceil(float(row[cindex('area')]))) if len(row[cindex('area')]) else None
+        population = row[cindex('population')] if len(row[cindex('population')]) else None
+        geonameid = row[cindex('geonameid')] if len(row[cindex('geonameid')]) else None
+
         fixture.append({
             'pk': row[pk_index],
             'model': 'common.country',
             'fields': {
-                'alpha3'  : row[cindex('alpha3')],
-                'numeric3': row[cindex('numeric3')],
-                'fips'    : row[cindex('fips')],
-                'name'    : row[cindex('name')],
-                'capital' : row[cindex('capital')],
-                'area'    : row[cindex('area')],
-                'population'        : row[cindex('population')],
+                'alpha3'    : row[cindex('alpha3')],
+                'numeric3'  : row[cindex('numeric3')],
+                'fips'      : row[cindex('fips')],
+                'name'      : row[cindex('name')],
+                'capital'   : row[cindex('capital')],
+                'area'      : area,
+                'population': population,
                 'continent'         : row[cindex('continent')],
                 'tld'               : row[cindex('tld')],
                 'currency_code'     : row[cindex('currency_code')],
@@ -107,7 +113,7 @@ def _update_country_objects(fixture):
                 'postal_code_format': row[cindex('postal_code_format')],
                 'postal_code_regex' : row[cindex('postal_code_regex')],
                 'languages'         : row[cindex('languages')],
-                'geonameid'         : row[cindex('geonameid')],
+                'geonameid'         : geonameid,
                 'neighbours'        : row[cindex('neighbours')],
                 'equivalent_fips_code': row[cindex('equivalent_fips_code')],
             }
