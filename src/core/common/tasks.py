@@ -20,14 +20,14 @@ logger = logging.getLogger(__name__)
 
 @task(mandatory=True, max_retries=MAX_RETRIES)
 def notify(notifier, event, notification_model):
-    logger.debug('notification urls to proceed: %s' % notifier.notification_url)
+    logger.debug(u'notification urls to proceed: %s' % notifier.notification_url)
 
     success = True
 
     for notification_url in notifier.notification_url.split(';'):
         notification_url = notification_url.strip()
 
-        logger.debug('calling notification receiver: %s' % notification_url)
+        logger.debug(u'calling notification receiver: %s' % notification_url)
 
         try:
             message = json.loads(event.message)
@@ -43,16 +43,16 @@ def notify(notifier, event, notification_model):
                                            '%s%s' % (data['event'],
                                                      data['created_at']))
 
-        result = requests.post(notification_url, json.dumps(data))
-        success = False if result.status_code != 200 else success
+        response = requests.post(notification_url, json.dumps(data))
+        success = False if response.status_code != 200 else success
 
         notification = notification_model(event=event,
                                           url=notification_url,
-                                          status_code=result.status_code,
-                                          content=result.text)
+                                          status_code=response.status_code,
+                                          content=response.text)
         notification.save()
 
-        logger.debug('notified: HTTP %s: notification: %s' % (result.status_code,
+        logger.debug(u'notified: HTTP %s: notification: %s' % (response.status_code,
                                                               notification.id))
 
     if success:

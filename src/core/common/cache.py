@@ -20,8 +20,16 @@ def cache(**decorator_kwargs):
             if keyarg:
                 keyargs.append(keyarg)
 
-            keys = ['%s-' % kwargs.get(keyarg) if kwargs.get(keyarg, None) else '' for keyarg in keyargs]
-            key = ''.join(keys)[:-1]
+            keys = []
+            for keyarg in keyargs:
+                if isinstance(keyarg, int):
+                    try:
+                        keys.append(args[keyarg])
+                    except:
+                        pass
+                if isinstance(keyarg, str):
+                    keys.append('%s' % kwargs.get(keyarg) if kwargs.get(keyarg, None) else '')
+            key = '-'.join(keys)
 
             if len(key) < 1:
                 return func(*args, **kwargs)
@@ -54,8 +62,11 @@ def get_or_set_cache(key, value=None, timeout=60*15, **kwargs):
 
     hash = hashlib.sha1(key).hexdigest()
     stored = djcache.get(hash)
+
     if stored is not None:
+
         logger.debug('found in cache: %s' % key)
+
         return stored
 
     if value:
@@ -63,7 +74,7 @@ def get_or_set_cache(key, value=None, timeout=60*15, **kwargs):
     else:
         return None
 
-    logger.debug('setting cache: %s = %s' % (key, value,))
+    logger.debug('setting cache: %s = %s' % (key, value[:255],))
 
     djcache.set(hash, value, timeout)
     return value

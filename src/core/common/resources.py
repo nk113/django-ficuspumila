@@ -15,10 +15,15 @@ from .models import Country, Currency
 
 logger = logging.getLogger(__name__)
 
+EXACT_IN = ('exact', 'in',)
+EXACT_IN_STARTSWITH = EXACT_IN + ('startswith',)
+EXACT_IN_CONTAINS = EXACT_IN + ('contains',)
+EXACT_IN_GTE_LTE = EXACT_IN + ('gte', 'lte',)
+EXACT_IN_GET_LTE_DATE = EXACT_IN_GTE_LTE + ('date',)
+
 
 class Resource(ModelResource):
-    id = fields.IntegerField(attribute='id',
-                         readonly=True)
+    pass
 
 
 class Meta(object):
@@ -34,30 +39,31 @@ class CountryResource(Resource):
         resource_name = 'country'
         cache = SimpleCache()
         filtering = {
-            'name': ('exact', 'startswith',),
-            'name_caps': ('exact', 'startswith',),
-            'alpha2': ('exact',),
-            'alpha3': ('exact',),
-            'numeric': ('exact',),
-        }
-
-
-class CurrencyResource(Resource):
-
-    class Meta(Meta):
-        queryset = Currency.objects.all()
-        resource_name = 'currency'
-        cache = SimpleCache()
-        filtering = {
-            'name': ('exact', 'startswith',),
-            'code': ('exact',),
+            'alpha2': EXACT_IN,
+            'alpha3': EXACT_IN,
+            'numeric3': EXACT_IN,
+            'fips': EXACT_IN,
+            'name': EXACT_IN_STARTSWITH,
+            'capital': EXACT_IN_STARTSWITH,
+            'area': EXACT_IN_GET_LTE,
+            'population': EXACT_IN_GTE_LTE,
+            'continent': EXACT_IN,
+            'tld': EXACT_IN,
+            'currency_code': EXACT_IN,
+            'currency_name': EXACT_IN_STARTSWITH,
+            'phone': EXACT_IN_STARTSWITH,
+            'postal_code_format': EXACT_IN_STARTSWITH,
+            'postal_code_regex': EXACT_IN_STARTSWITH,
+            'languages': EXACT_IN_CONTAINS,
+            'geonameid': EXACT_IN_GTE_LTE,
+            'neighbours': EXACT_IN_CONTAINS,
+            'equivalent_fips_code': EXACT_IN,
         }
 
 
 def get():
     api = Api(api_name='common')
     api.register(CountryResource())
-    api.register(CurrencyResource())
     return api.urls
 
 urls = get()

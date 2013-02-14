@@ -7,7 +7,7 @@ from django.utils.importlib import import_module
 from queryset_client import Client
 
 from . import models
-
+from .cache import cache
 
 logger = logging.getLogger(__name__)
 
@@ -27,10 +27,17 @@ def get(name):
         return getattr(module, name)
 
 
+class ProxyClient(Client):
+
+    @cache(keyarg=1)
+    def schema(self, model_name=None):
+        return super(ProxyClient, self).schema(model_name)
+
+
 class Proxy(object):
 
     def __init__(self, auth=None, strict_field=True, client=None, **kwargs):
-        self._client = Client('%s%s/' % (settings.API_URL,
+        self._client = ProxyClient('%s%s/' % (settings.API_URL,
                                          self.__module__.split('.')[-2]),
                               auth)
         self._resource = getattr(self._client,
@@ -46,9 +53,4 @@ class CountryProxy(Proxy):
     pass
 
 
-class CurrencyProxy(Proxy):
-    pass
-
-
 Country = get('Country')
-Currency = get('Currency')

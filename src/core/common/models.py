@@ -27,6 +27,10 @@ class Model(models.Model):
 
     objects = import_module('settings.database.managers').Manager()
 
+    def __iter__(self):
+        for i in self._meta.get_all_field_names():
+            yield(i, getattr(self, i))
+
 
 class Localization(Model):
 
@@ -107,8 +111,6 @@ class Event(Model):
         (DEFAULT, 'DEFAULT',)
     )
 
-    id = models.IntegerField(primary_key=True,
-                         verbose_name=_(u'Id of the object'))
     event = models.SmallIntegerField(default=DEFAULT,
                          choices=EVENTS,
                          verbose_name=_(u'Event'))
@@ -125,7 +127,7 @@ class Event(Model):
         return super(Event, self).__init__(*args, **kwargs)
 
     def __unicode__(self):
-        return '%s: %s' % (self.created_at,
+        return u'%s: %s' % (self.created_at,
                            self.get_event_display(),)
 
     def save(self, *args, **kwargs):
@@ -207,6 +209,7 @@ class Service(Notifier):
         abstract = True
 
     user = models.OneToOneField(User,
+                         primary_key=True,
                          verbose_name=_(u'Django auth user'))
     auth_token_key = models.CharField(max_length=64,
                          verbose_name=_(u'Key for the auth token'))
@@ -228,73 +231,81 @@ class Country(Model):
         verbose_name = _(u'Country')
         verbose_name_plural = _(u'Countries')
 
-    name = models.CharField(max_length=80,
-                         verbose_name=_(u'Name'))
-    name_caps = models.CharField(max_length=80,
-                         verbose_name=_(u'Name with capitals'))
+    CONTINENTS = (
+        ('AN', 'Antarctica',),
+        ('AS', 'Asia',),
+        ('EU', 'Europe',),
+        ('NA', 'North America',),
+        ('OC', 'Oceania',),
+        ('SA', 'South America',),
+    )
+
     alpha2 = models.CharField(max_length=2,
-                         unique=True,
+                         primary_key=True,
                          verbose_name=_(u'ISO 3166-1 alpha-2 code'))
     alpha3 = models.CharField(max_length=3,
                          unique=True,
                          verbose_name=_(u'ISO 3166-1 alpha-3 code'))
-    numeric = models.IntegerField(max_length=3,
+    numeric3 = models.CharField(max_length=3,
                          unique=True,
                          verbose_name=_(u'ISO 3166-1 numeric code'))
+    fips = models.CharField(max_length=2,
+                         blank=True)
+    name = models.CharField(max_length=128)
+    capital = models.CharField(max_length=128)
+    area = models.IntegerField(
+                         verbose_name=_(u'Area (in sq km)'))
+    population = models.IntegerField()
+    continent = models.CharField(max_length=2,
+                         choices=CONTINENTS)
+    tld = models.CharField(max_length=5,
+                         blank=True,
+                         verbose_name=_(u'Top level domain'))
+    currency_code = models.CharField(max_length=3,
+                         blank=True,
+                         verbose_name=_(u'ISO 4217 currency code'))
+    currency_name = models.CharField(max_length=16,
+                         blank=True)
+    phone = models.CharField(max_length=16,
+                         blank=True)
+    postal_code_format = models.CharField(max_length=255,
+                         blank=True)
+    postal_code_regex = models.CharField(max_length=255,
+                         blank=True)
+    languages = models.CharField(max_length=64,
+                         blank=True)
+    geonameid = models.IntegerField()
+    neighbours = models.CharField(max_length=64,
+                         blank=True)
+    equivalent_fips_code = models.CharField(max_length=2,
+                         blank=True)
+
 
     def __unicode__(self):
         return '(%s): %s' % (self.alpha2, self.name)
 
     @staticmethod
-    @cache(keyarg='ip')
-    def get_by_ip(**kwargs):
-        ip = kwargs.get('ip', None)
-
-        if not ip:
-            return None
-
-        result = requests.get(settings.IPINFODB_API_URL,
+    @cache(keyarg=0)
+    def get_by_ip(ip):
+        response = requests.get(settings.IPINFODB_API_URL,
                               params={'key': settings.IPINFODB_API_KEY,
                                       'ip': ip,
                                       'format': 'json'})
 
-        logger.debug('get_by_ip: %s: %s' % (ip, result.text,))
-
         try:
-            return Country.objects.get(alpha2=result.json()['countryCode'])
-        except:
-            return None
+            e = None
+            if response.status_code == 200:
+                logger.debug('get_by_ip: %s: %s' % (ip, response.json,))
 
+                return Country.objects.get(alpha2=result.json['countryCode'])
+        except Exception, e:
+            pass
 
-class Currency(Model):
+        logger.debug(u'get_by_ip: failed to retrieve country: %s: HTTP %s: %s: %s' % (
+                         ip,
+                         response.status_code,
+                         response.text,
+                         e))
 
-    class Meta:
-        verbose_name = _(u'Currency')
-        verbose_name_plural = _(u'Currencies')
+        return None
 
-    name = models.CharField(max_length=80,
-                         verbose_name=_(u'Name'))
-    code = models.CharField(max_length=3,
-                         unique=True,
-                         verbose_name=_(u'ISO 4217 code'))
-    decimal_place = models.SmallIntegerField(default=0,
-                         verbose_name=_(u'Decimal place'))
-    price_format = models.CharField(max_length=16,
-                         blank=True,
-                         null=True,
-                         verbose_name=_(u'Price format'))
-
-    def __unicode__(self):
-        return '(%s): %s' % (self.code, self.name)
-
-    def get_formated_price(self, price, code=False):
-        if self.price_format:
-            return (self.price_format % price +
-                    ' (%s)' % self.code if code else '')
-
-        if self.decimal_place == 0:
-            format = '%i' + (' %s' % self.code) 
-        else:
-            format = '%' + ('.%if %s' % (self.decimal_place, self.code))
-
-        return format % price

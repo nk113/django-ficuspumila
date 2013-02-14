@@ -6,6 +6,5 @@ fluent-logger
 MySQL-python
 pycrypto
 python-memcached
-pyYAML
 south
 tastypie-queryset-client

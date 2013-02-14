@@ -43,6 +43,16 @@ DATABASE_ROUTERS = ('settings.database.routers.Default',)
 SYNCDB_ALLOWED = ('south',)
 
 
+# cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'localhost:11211',
+        'TIMEOUT': 60*15,
+    }
+}
+
+
 # wsgi   
 WSGI_APPLICATION = 'wsgi.local.application'
 
@@ -52,6 +62,7 @@ INSTALLED_APPS += (
     'django.contrib.admin',
 )
 
+
 # core.common
 API_VERSION = 'v1'
 API_PATH = 'api/%s/' % API_VERSION
@@ -59,6 +70,7 @@ API_URL = '-- must be overwritten --'
 API_PROXY = True
 IPINFODB_API_URL = 'http://api.ipinfodb.com/v3/ip-country/'
 IPINFODB_API_KEY = '-- must be overwriten --'
+GEONAMES_COUNTRY_INFO = 'http://download.geonames.org/export/dump/countryInfo.txt'
 
 
 # core.content

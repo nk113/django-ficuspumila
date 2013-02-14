@@ -54,7 +54,7 @@ class _AES(object):
         encrypted = AES.new(self.key,
                             AES.MODE_CBC,
                             self.iv).encrypt(self.add_padding(AES.block_size,
-                                                                  text))
+                                                              text))
 
         if self.hex:
             return hexlify(encrypted)
