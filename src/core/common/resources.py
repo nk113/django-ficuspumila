@@ -10,7 +10,7 @@ from tastypie.authorization import Authorization
 from tastypie.cache import SimpleCache
 from tastypie.resources import ModelResource
 
-from .models import Country, Currency
+from .models import Country
 
 
 logger = logging.getLogger(__name__)
@@ -45,7 +45,7 @@ class CountryResource(Resource):
             'fips': EXACT_IN,
             'name': EXACT_IN_STARTSWITH,
             'capital': EXACT_IN_STARTSWITH,
-            'area': EXACT_IN_GET_LTE,
+            'area': EXACT_IN_GTE_LTE,
             'population': EXACT_IN_GTE_LTE,
             'continent': EXACT_IN,
             'tld': EXACT_IN,
