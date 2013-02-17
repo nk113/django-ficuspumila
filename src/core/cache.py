@@ -17,7 +17,7 @@ def cache(**decorator_kwargs):
             keyargs = decorator_kwargs.get('keyargs', [])
             keyarg  = decorator_kwargs.get('keyarg', None)
 
-            if keyarg:
+            if keyarg is not None:
                 keyargs.append(keyarg)
 
             keys = []
@@ -58,14 +58,14 @@ def get_or_set_cache(key, value=None, timeout=60*15, **kwargs):
         key = '%s%s:%s' % (frame.f_globals.get('__name__', ''),
                            ':%s' % lineno if lineno else '', key,)
 
-    logger.debug('cache: %s' % key)
-
     hash = hashlib.sha1(key).hexdigest()
-    stored = djcache.get(hash)
+    stored = djcache.get(hash, None)
 
-    if stored is not None:
+    if stored is None:
+        logger.debug('not in cache (%s)' % key)
 
-        logger.debug('found in cache: %s' % key)
+    else:
+        logger.debug('found in cache (%s)' % key)
 
         return stored
 
@@ -74,7 +74,7 @@ def get_or_set_cache(key, value=None, timeout=60*15, **kwargs):
     else:
         return None
 
-    logger.debug('setting cache: %s = %s' % (key, value[:255],))
+    logger.debug('setting cache (%s -> %s)' % (key, value,))
 
     djcache.set(hash, value, timeout)
     return value

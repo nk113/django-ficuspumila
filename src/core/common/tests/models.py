@@ -21,10 +21,25 @@ class BaseTestCase(TestCase):
 class CountryTestCase(BaseTestCase):
 
     def test_get(self):
-        c = Country.objects.get(name__startswith='Indi')
+        c = Country.objects.get(pk='IN')
 
         self.assertEqual(c.name, 'India')
-        self.assertEqual(c.alpha2, 'IN')
+
+    def test_get_csv_fields(self):
+        c = Country.objects.get(pk='ZW')
+
+        self.assertEqual(type(c.languages) == list, True)
+        self.assertEqual(type(c.neighbours) == list, True)
+
+    def test_set_csv_fields(self):
+        c = Country.objects.get(pk='ZW')
+        c.languages = ['ja',]
+        c.neighbours = ['JP',]
+        c.save()
+
+        self.assertEqual(type(c.languages) == list, True)
+        self.assertEqual(c.languages[0], 'ja')
+        self.assertEqual(c.neighbours[0], 'JP')
 
     def test_get_by_ip(self):
         c = Country.get_by_ip('183.177.146.33')

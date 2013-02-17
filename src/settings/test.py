@@ -14,12 +14,7 @@ DATABASES = {
 # logging
 LOGGING['loggers'] = {
     '': {
-        'handlers': ['console', 'test_log'],
-        'level': 'DEBUG',
-        'propagate': True,
-    },
-    'django.request': {
-        'handlers': [],
+        'handlers': ('console', 'test_log',),
         'level': 'DEBUG',
         'propagate': True,
     },

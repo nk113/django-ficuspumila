@@ -1,0 +1,25 @@
+[
+  {
+    "fields": {
+      "ctime": "2013-02-17T11:55:40Z", 
+      "source": 1, 
+      "source_owner_id": "owner", 
+      "utime": "2013-02-17T11:55:40Z"
+    }, 
+    "model": "content.owner", 
+    "pk": 1
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "hmac_key": "dd811a04aa1c3761906796a129809f8be5b869f701342d5e3fd756adf83fd74c", 
+      "name": "dev", 
+      "notification_url": null, 
+      "token_iv": "0e4e1c9296def7cfbf8bb64e9444261c", 
+      "token_key": "5871124786add4f56217e6655567d1e1a6486a5373c24a6c7edd502c8f439f28", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "content.source", 
+    "pk": 1
+  }
+]

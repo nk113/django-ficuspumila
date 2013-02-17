@@ -63,11 +63,36 @@ INSTALLED_APPS += (
 )
 
 
-# core.common
+# auth
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'core.auth.SSOBackend'
+)
+
+
+# core
 API_VERSION = 'v1'
 API_PATH = 'api/%s/' % API_VERSION
 API_URL = '-- must be overwritten --'
 API_PROXY = True
+SSO_EXPIRATION = 60*2
+SSO_SERVICES = {
+    'source': {
+        'service': 'core.content.models.Source',
+        'user'   : 'core.content.models.Owner',
+    },
+    # 'store': {
+    #     'service': 'core.product.models.Store',
+    #     'user'   : 'core.product.models.Consumer',
+    # },
+    # 'licenser': {
+    #     'service': 'core.playready.models.Lisenser',
+    #     'user'   : 'core.playready.models.Licency',
+    # },
+}
+
+
+# core.common
 IPINFODB_API_URL = 'http://api.ipinfodb.com/v3/ip-country/'
 IPINFODB_API_KEY = '-- must be overwriten --'
 GEONAMES_COUNTRY_INFO = 'http://download.geonames.org/export/dump/countryInfo.txt'
@@ -91,10 +116,10 @@ LOGGING = {
     'disable_existing_loggers': True,
     'formatters': {
         'verbose': {
-            'format': '[%(asctime)s: %(levelname)s/%(name)s(%(process)d.%(thread)d)] %(message)s'
+            'format': '[%(asctime)s: %(levelname)s: %(name)s.%(funcName)s (%(pathname)s l.%(lineno)d): %(process)d.%(thread)d] %(message)s'
         },
         'normal': {
-            'format': '[%(asctime)s: %(levelname)s/%(name)s] %(message)s'
+            'format': '[%(asctime)s: %(levelname)s: %(name)s.%(funcName)s] %(message)s'
         },
         'simple': {
             'format': '[%(asctime)s] %(message)s'
@@ -127,7 +152,7 @@ LOGGING = {
         # },
         'mail_admins': {
             'level': 'ERROR',
-            'filters': ['require_debug_false'],
+            'filters': ('require_debug_false',),
             'class': 'django.utils.log.AdminEmailHandler',
         },
         'django_log': {

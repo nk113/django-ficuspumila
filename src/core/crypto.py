@@ -1,9 +1,13 @@
 # -*- coding: utf-8 -*-
+import logging
 import os
 
 from binascii import hexlify, unhexlify
 from Crypto.Cipher import AES
 from django.utils.importlib import import_module
+
+
+logger = logging.getLogger(__name__)
 
 
 ALGORITHMS = ('AES',)
@@ -19,7 +23,6 @@ class Transcoder(object):
                                      '_%s' % self.algorithm)(*args, **kwargs)
         else:
             raise NotImplementedError()
-
 
 
 class _AES(object):
@@ -51,24 +54,31 @@ class _AES(object):
         return iv
 
     def encrypt(self, text):
-        encrypted = AES.new(self.key,
-                            AES.MODE_CBC,
-                            self.iv).encrypt(self.add_padding(AES.block_size,
-                                                              text))
-
-        if self.hex:
-            return hexlify(encrypted)
-        else:
-            return encrypted
+        try:
+            encrypted = AES.new(self.key,
+                                AES.MODE_CBC,
+                                self.iv).encrypt(self.add_padding(AES.block_size,
+                                                                  text))
+            if self.hex:
+                return hexlify(encrypted)
+            else:
+                return encrypted
+        except Exception, e:
+            logger.exception('failed to encrypt (%s)' % e)
+            raise e
 
     def decrypt(self, encrypted):
-        if self.hex:
-            encrypted = unhexlify(encrypted)
+        try:
+            if self.hex:
+                encrypted = unhexlify(encrypted)
 
             return self.remove_padding(AES.block_size,
                                        (AES.new(self.key,
                                                 AES.MODE_CBC,
                                                 self.iv).decrypt(encrypted)))
+        except Exception, e:
+            logger.exception('failed to decrypt (%s)' % e)
+            raise e
 
     def nr_pad_bytes(self, blocksize, size):
         '''

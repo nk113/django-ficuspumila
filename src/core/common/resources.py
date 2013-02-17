@@ -13,8 +13,6 @@ from tastypie.resources import ModelResource
 from .models import Country
 
 
-logger = logging.getLogger(__name__)
-
 EXACT_IN = ('exact', 'in',)
 EXACT_IN_STARTSWITH = EXACT_IN + ('startswith',)
 EXACT_IN_CONTAINS = EXACT_IN + ('contains',)
@@ -22,11 +20,16 @@ EXACT_IN_GTE_LTE = EXACT_IN + ('gte', 'lte',)
 EXACT_IN_GET_LTE_DATE = EXACT_IN_GTE_LTE + ('date',)
 
 
+logger = logging.getLogger(__name__)
+
+
 class Resource(ModelResource):
+
     pass
 
 
 class Meta(object):
+
     allowed_methods = ('get',)
     authentication = Authentication()
     authorization = Authorization()

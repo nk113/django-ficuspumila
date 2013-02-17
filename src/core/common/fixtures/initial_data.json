@@ -1,10 +1,29 @@
 [
   {
     "fields": {
+      "date_joined": "2013-02-17T03:20:27Z", 
+      "email": "dev@nk113.com", 
+      "first_name": "", 
+      "groups": [], 
+      "is_active": true, 
+      "is_staff": true, 
+      "is_superuser": true, 
+      "last_login": "2013-02-17T03:20:27Z", 
+      "last_name": "", 
+      "password": "pbkdf2_sha256$10000$VafJHHmYt4iX$Ydu6SHL+0/Wuei5Fb4VdfmOdhcP+z3zs0NO76J2vvF8=", 
+      "user_permissions": [], 
+      "username": "dev"
+    }, 
+    "model": "auth.user", 
+    "pk": 1
+  }, 
+  {
+    "fields": {
       "alpha3": "AND", 
       "area": 468, 
       "capital": "Andorra la Vella", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.417820+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -18,7 +37,8 @@
       "population": "84000", 
       "postal_code_format": "AD###", 
       "postal_code_regex": "^(?:AD)*(\\d{3})$", 
-      "tld": ".ad"
+      "tld": ".ad", 
+      "utime": "2013-02-17 12:19:01.417878+00:00"
     }, 
     "model": "common.country", 
     "pk": "AD"
@@ -29,6 +49,7 @@
       "area": 82880, 
       "capital": "Abu Dhabi", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.418087+00:00", 
       "currency_code": "AED", 
       "currency_name": "Dirham", 
       "equivalent_fips_code": "", 
@@ -42,7 +63,8 @@
       "population": "4975593", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ae"
+      "tld": ".ae", 
+      "utime": "2013-02-17 12:19:01.418118+00:00"
     }, 
     "model": "common.country", 
     "pk": "AE"
@@ -53,6 +75,7 @@
       "area": 647500, 
       "capital": "Kabul", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.418346+00:00", 
       "currency_code": "AFN", 
       "currency_name": "Afghani", 
       "equivalent_fips_code": "", 
@@ -66,7 +89,8 @@
       "population": "29121286", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".af"
+      "tld": ".af", 
+      "utime": "2013-02-17 12:19:01.418377+00:00"
     }, 
     "model": "common.country", 
     "pk": "AF"
@@ -77,6 +101,7 @@
       "area": 443, 
       "capital": "St. John's", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.418638+00:00", 
       "currency_code": "XCD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -90,7 +115,8 @@
       "population": "86754", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ag"
+      "tld": ".ag", 
+      "utime": "2013-02-17 12:19:01.418666+00:00"
     }, 
     "model": "common.country", 
     "pk": "AG"
@@ -101,6 +127,7 @@
       "area": 102, 
       "capital": "The Valley", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.418890+00:00", 
       "currency_code": "XCD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -114,7 +141,8 @@
       "population": "13254", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ai"
+      "tld": ".ai", 
+      "utime": "2013-02-17 12:19:01.418914+00:00"
     }, 
     "model": "common.country", 
     "pk": "AI"
@@ -125,6 +153,7 @@
       "area": 28748, 
       "capital": "Tirana", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.419164+00:00", 
       "currency_code": "ALL", 
       "currency_name": "Lek", 
       "equivalent_fips_code": "", 
@@ -138,7 +167,8 @@
       "population": "2986952", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".al"
+      "tld": ".al", 
+      "utime": "2013-02-17 12:19:01.419185+00:00"
     }, 
     "model": "common.country", 
     "pk": "AL"
@@ -149,6 +179,7 @@
       "area": 29800, 
       "capital": "Yerevan", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.420083+00:00", 
       "currency_code": "AMD", 
       "currency_name": "Dram", 
       "equivalent_fips_code": "", 
@@ -162,7 +193,8 @@
       "population": "2968000", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".am"
+      "tld": ".am", 
+      "utime": "2013-02-17 12:19:01.420114+00:00"
     }, 
     "model": "common.country", 
     "pk": "AM"
@@ -173,6 +205,7 @@
       "area": 960, 
       "capital": "Willemstad", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.467367+00:00", 
       "currency_code": "ANG", 
       "currency_name": "Guilder", 
       "equivalent_fips_code": "", 
@@ -186,7 +219,8 @@
       "population": "136197", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".an"
+      "tld": ".an", 
+      "utime": "2013-02-17 12:19:01.467380+00:00"
     }, 
     "model": "common.country", 
     "pk": "AN"
@@ -197,6 +231,7 @@
       "area": 1246700, 
       "capital": "Luanda", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.420391+00:00", 
       "currency_code": "AOA", 
       "currency_name": "Kwanza", 
       "equivalent_fips_code": "", 
@@ -210,7 +245,8 @@
       "population": "13068161", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ao"
+      "tld": ".ao", 
+      "utime": "2013-02-17 12:19:01.420414+00:00"
     }, 
     "model": "common.country", 
     "pk": "AO"
@@ -221,6 +257,7 @@
       "area": 14000000, 
       "capital": "", 
       "continent": "AN", 
+      "ctime": "2013-02-17 12:19:01.420649+00:00", 
       "currency_code": "", 
       "currency_name": "", 
       "equivalent_fips_code": "", 
@@ -234,7 +271,8 @@
       "population": "0", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".aq"
+      "tld": ".aq", 
+      "utime": "2013-02-17 12:19:01.420673+00:00"
     }, 
     "model": "common.country", 
     "pk": "AQ"
@@ -245,6 +283,7 @@
       "area": 2766890, 
       "capital": "Buenos Aires", 
       "continent": "SA", 
+      "ctime": "2013-02-17 12:19:01.420896+00:00", 
       "currency_code": "ARS", 
       "currency_name": "Peso", 
       "equivalent_fips_code": "", 
@@ -258,7 +297,8 @@
       "population": "41343201", 
       "postal_code_format": "@####@@@", 
       "postal_code_regex": "^([A-Z]\\d{4}[A-Z]{3})$", 
-      "tld": ".ar"
+      "tld": ".ar", 
+      "utime": "2013-02-17 12:19:01.420917+00:00"
     }, 
     "model": "common.country", 
     "pk": "AR"
@@ -269,6 +309,7 @@
       "area": 199, 
       "capital": "Pago Pago", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.421123+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -282,7 +323,8 @@
       "population": "57881", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".as"
+      "tld": ".as", 
+      "utime": "2013-02-17 12:19:01.421123+00:00"
     }, 
     "model": "common.country", 
     "pk": "AS"
@@ -293,6 +335,7 @@
       "area": 83858, 
       "capital": "Vienna", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.421300+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -306,7 +349,8 @@
       "population": "8205000", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".at"
+      "tld": ".at", 
+      "utime": "2013-02-17 12:19:01.421328+00:00"
     }, 
     "model": "common.country", 
     "pk": "AT"
@@ -317,6 +361,7 @@
       "area": 7686850, 
       "capital": "Canberra", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.421581+00:00", 
       "currency_code": "AUD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -330,7 +375,8 @@
       "population": "21515754", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".au"
+      "tld": ".au", 
+      "utime": "2013-02-17 12:19:01.421616+00:00"
     }, 
     "model": "common.country", 
     "pk": "AU"
@@ -341,6 +387,7 @@
       "area": 193, 
       "capital": "Oranjestad", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.421843+00:00", 
       "currency_code": "AWG", 
       "currency_name": "Guilder", 
       "equivalent_fips_code": "", 
@@ -354,7 +401,8 @@
       "population": "71566", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".aw"
+      "tld": ".aw", 
+      "utime": "2013-02-17 12:19:01.421858+00:00"
     }, 
     "model": "common.country", 
     "pk": "AW"
@@ -365,6 +413,7 @@
       "area": null, 
       "capital": "Mariehamn", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.422105+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "FI", 
@@ -378,7 +427,8 @@
       "population": "26711", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ax"
+      "tld": ".ax", 
+      "utime": "2013-02-17 12:19:01.422125+00:00"
     }, 
     "model": "common.country", 
     "pk": "AX"
@@ -389,6 +439,7 @@
       "area": 86600, 
       "capital": "Baku", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.422340+00:00", 
       "currency_code": "AZN", 
       "currency_name": "Manat", 
       "equivalent_fips_code": "", 
@@ -402,7 +453,8 @@
       "population": "8303512", 
       "postal_code_format": "AZ ####", 
       "postal_code_regex": "^(?:AZ)*(\\d{4})$", 
-      "tld": ".az"
+      "tld": ".az", 
+      "utime": "2013-02-17 12:19:01.422364+00:00"
     }, 
     "model": "common.country", 
     "pk": "AZ"
@@ -413,6 +465,7 @@
       "area": 51129, 
       "capital": "Sarajevo", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.422383+00:00", 
       "currency_code": "BAM", 
       "currency_name": "Marka", 
       "equivalent_fips_code": "", 
@@ -426,7 +479,8 @@
       "population": "4590000", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".ba"
+      "tld": ".ba", 
+      "utime": "2013-02-17 12:19:01.422383+00:00"
     }, 
     "model": "common.country", 
     "pk": "BA"
@@ -437,6 +491,7 @@
       "area": 431, 
       "capital": "Bridgetown", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.422505+00:00", 
       "currency_code": "BBD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -450,7 +505,8 @@
       "population": "285653", 
       "postal_code_format": "BB#####", 
       "postal_code_regex": "^(?:BB)*(\\d{5})$", 
-      "tld": ".bb"
+      "tld": ".bb", 
+      "utime": "2013-02-17 12:19:01.422534+00:00"
     }, 
     "model": "common.country", 
     "pk": "BB"
@@ -461,6 +517,7 @@
       "area": 144000, 
       "capital": "Dhaka", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.422597+00:00", 
       "currency_code": "BDT", 
       "currency_name": "Taka", 
       "equivalent_fips_code": "", 
@@ -474,7 +531,8 @@
       "population": "156118464", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".bd"
+      "tld": ".bd", 
+      "utime": "2013-02-17 12:19:01.422971+00:00"
     }, 
     "model": "common.country", 
     "pk": "BD"
@@ -485,6 +543,7 @@
       "area": 30510, 
       "capital": "Brussels", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.423340+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -498,7 +557,8 @@
       "population": "10403000", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".be"
+      "tld": ".be", 
+      "utime": "2013-02-17 12:19:01.423425+00:00"
     }, 
     "model": "common.country", 
     "pk": "BE"
@@ -509,6 +569,7 @@
       "area": 274200, 
       "capital": "Ouagadougou", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.423690+00:00", 
       "currency_code": "XOF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -522,7 +583,8 @@
       "population": "16241811", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".bf"
+      "tld": ".bf", 
+      "utime": "2013-02-17 12:19:01.423735+00:00"
     }, 
     "model": "common.country", 
     "pk": "BF"
@@ -533,6 +595,7 @@
       "area": 110910, 
       "capital": "Sofia", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.423983+00:00", 
       "currency_code": "BGN", 
       "currency_name": "Lev", 
       "equivalent_fips_code": "", 
@@ -546,7 +609,8 @@
       "population": "7148785", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".bg"
+      "tld": ".bg", 
+      "utime": "2013-02-17 12:19:01.424023+00:00"
     }, 
     "model": "common.country", 
     "pk": "BG"
@@ -557,6 +621,7 @@
       "area": 665, 
       "capital": "Manama", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.424262+00:00", 
       "currency_code": "BHD", 
       "currency_name": "Dinar", 
       "equivalent_fips_code": "", 
@@ -570,7 +635,8 @@
       "population": "738004", 
       "postal_code_format": "####|###", 
       "postal_code_regex": "^(\\d{3}\\d?)$", 
-      "tld": ".bh"
+      "tld": ".bh", 
+      "utime": "2013-02-17 12:19:01.424282+00:00"
     }, 
     "model": "common.country", 
     "pk": "BH"
@@ -581,6 +647,7 @@
       "area": 27830, 
       "capital": "Bujumbura", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.424527+00:00", 
       "currency_code": "BIF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -594,7 +661,8 @@
       "population": "9863117", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".bi"
+      "tld": ".bi", 
+      "utime": "2013-02-17 12:19:01.424549+00:00"
     }, 
     "model": "common.country", 
     "pk": "BI"
@@ -605,6 +673,7 @@
       "area": 112620, 
       "capital": "Porto-Novo", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.424765+00:00", 
       "currency_code": "XOF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -618,7 +687,8 @@
       "population": "9056010", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".bj"
+      "tld": ".bj", 
+      "utime": "2013-02-17 12:19:01.424788+00:00"
     }, 
     "model": "common.country", 
     "pk": "BJ"
@@ -629,6 +699,7 @@
       "area": 21, 
       "capital": "Gustavia", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.425158+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -642,7 +713,8 @@
       "population": "8450", 
       "postal_code_format": "### ###", 
       "postal_code_regex": "", 
-      "tld": ".gp"
+      "tld": ".gp", 
+      "utime": "2013-02-17 12:19:01.425194+00:00"
     }, 
     "model": "common.country", 
     "pk": "BL"
@@ -653,6 +725,7 @@
       "area": 53, 
       "capital": "Hamilton", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.425425+00:00", 
       "currency_code": "BMD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -666,7 +739,8 @@
       "population": "65365", 
       "postal_code_format": "@@ ##", 
       "postal_code_regex": "^([A-Z]{2}\\d{2})$", 
-      "tld": ".bm"
+      "tld": ".bm", 
+      "utime": "2013-02-17 12:19:01.425450+00:00"
     }, 
     "model": "common.country", 
     "pk": "BM"
@@ -677,6 +751,7 @@
       "area": 5770, 
       "capital": "Bandar Seri Begawan", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.425595+00:00", 
       "currency_code": "BND", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -690,7 +765,8 @@
       "population": "395027", 
       "postal_code_format": "@@####", 
       "postal_code_regex": "^([A-Z]{2}\\d{4})$", 
-      "tld": ".bn"
+      "tld": ".bn", 
+      "utime": "2013-02-17 12:19:01.425607+00:00"
     }, 
     "model": "common.country", 
     "pk": "BN"
@@ -701,6 +777,7 @@
       "area": 1098580, 
       "capital": "Sucre", 
       "continent": "SA", 
+      "ctime": "2013-02-17 12:19:01.425736+00:00", 
       "currency_code": "BOB", 
       "currency_name": "Boliviano", 
       "equivalent_fips_code": "", 
@@ -714,7 +791,8 @@
       "population": "9947418", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".bo"
+      "tld": ".bo", 
+      "utime": "2013-02-17 12:19:01.425747+00:00"
     }, 
     "model": "common.country", 
     "pk": "BO"
@@ -725,6 +803,7 @@
       "area": null, 
       "capital": "", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.425864+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -738,7 +817,8 @@
       "population": "18012", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".bq"
+      "tld": ".bq", 
+      "utime": "2013-02-17 12:19:01.425874+00:00"
     }, 
     "model": "common.country", 
     "pk": "BQ"
@@ -749,6 +829,7 @@
       "area": 8511965, 
       "capital": "Brasilia", 
       "continent": "SA", 
+      "ctime": "2013-02-17 12:19:01.426076+00:00", 
       "currency_code": "BRL", 
       "currency_name": "Real", 
       "equivalent_fips_code": "", 
@@ -762,7 +843,8 @@
       "population": "201103330", 
       "postal_code_format": "#####-###", 
       "postal_code_regex": "^(\\d{8})$", 
-      "tld": ".br"
+      "tld": ".br", 
+      "utime": "2013-02-17 12:19:01.426110+00:00"
     }, 
     "model": "common.country", 
     "pk": "BR"
@@ -773,6 +855,7 @@
       "area": 13940, 
       "capital": "Nassau", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.426269+00:00", 
       "currency_code": "BSD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -786,7 +869,8 @@
       "population": "301790", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".bs"
+      "tld": ".bs", 
+      "utime": "2013-02-17 12:19:01.426282+00:00"
     }, 
     "model": "common.country", 
     "pk": "BS"
@@ -797,6 +881,7 @@
       "area": 47000, 
       "capital": "Thimphu", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.426428+00:00", 
       "currency_code": "BTN", 
       "currency_name": "Ngultrum", 
       "equivalent_fips_code": "", 
@@ -810,7 +895,8 @@
       "population": "699847", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".bt"
+      "tld": ".bt", 
+      "utime": "2013-02-17 12:19:01.426441+00:00"
     }, 
     "model": "common.country", 
     "pk": "BT"
@@ -821,6 +907,7 @@
       "area": null, 
       "capital": "", 
       "continent": "AN", 
+      "ctime": "2013-02-17 12:19:01.426619+00:00", 
       "currency_code": "NOK", 
       "currency_name": "Krone", 
       "equivalent_fips_code": "", 
@@ -834,7 +921,8 @@
       "population": "0", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".bv"
+      "tld": ".bv", 
+      "utime": "2013-02-17 12:19:01.426638+00:00"
     }, 
     "model": "common.country", 
     "pk": "BV"
@@ -845,6 +933,7 @@
       "area": 600370, 
       "capital": "Gaborone", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.426792+00:00", 
       "currency_code": "BWP", 
       "currency_name": "Pula", 
       "equivalent_fips_code": "", 
@@ -858,7 +947,8 @@
       "population": "2029307", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".bw"
+      "tld": ".bw", 
+      "utime": "2013-02-17 12:19:01.426805+00:00"
     }, 
     "model": "common.country", 
     "pk": "BW"
@@ -869,6 +959,7 @@
       "area": 207600, 
       "capital": "Minsk", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.426930+00:00", 
       "currency_code": "BYR", 
       "currency_name": "Ruble", 
       "equivalent_fips_code": "", 
@@ -882,7 +973,8 @@
       "population": "9685000", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".by"
+      "tld": ".by", 
+      "utime": "2013-02-17 12:19:01.426940+00:00"
     }, 
     "model": "common.country", 
     "pk": "BY"
@@ -893,6 +985,7 @@
       "area": 22966, 
       "capital": "Belmopan", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.427069+00:00", 
       "currency_code": "BZD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -906,7 +999,8 @@
       "population": "314522", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".bz"
+      "tld": ".bz", 
+      "utime": "2013-02-17 12:19:01.427081+00:00"
     }, 
     "model": "common.country", 
     "pk": "BZ"
@@ -917,6 +1011,7 @@
       "area": 9984670, 
       "capital": "Ottawa", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.427209+00:00", 
       "currency_code": "CAD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -930,7 +1025,8 @@
       "population": "33679000", 
       "postal_code_format": "@#@ #@#", 
       "postal_code_regex": "^([ABCEGHJKLMNPRSTVXY]\\d[ABCEGHJKLMNPRSTVWXYZ]) ?(\\d[ABCEGHJKLMNPRSTVWXYZ]\\d)$", 
-      "tld": ".ca"
+      "tld": ".ca", 
+      "utime": "2013-02-17 12:19:01.427220+00:00"
     }, 
     "model": "common.country", 
     "pk": "CA"
@@ -941,6 +1037,7 @@
       "area": 14, 
       "capital": "West Island", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.427251+00:00", 
       "currency_code": "AUD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -954,7 +1051,8 @@
       "population": "628", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".cc"
+      "tld": ".cc", 
+      "utime": "2013-02-17 12:19:01.427251+00:00"
     }, 
     "model": "common.country", 
     "pk": "CC"
@@ -965,6 +1063,7 @@
       "area": 2345410, 
       "capital": "Kinshasa", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.427298+00:00", 
       "currency_code": "CDF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -978,7 +1077,8 @@
       "population": "70916439", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".cd"
+      "tld": ".cd", 
+      "utime": "2013-02-17 12:19:01.427314+00:00"
     }, 
     "model": "common.country", 
     "pk": "CD"
@@ -989,6 +1089,7 @@
       "area": 622984, 
       "capital": "Bangui", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.427447+00:00", 
       "currency_code": "XAF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -1002,7 +1103,8 @@
       "population": "4844927", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".cf"
+      "tld": ".cf", 
+      "utime": "2013-02-17 12:19:01.427462+00:00"
     }, 
     "model": "common.country", 
     "pk": "CF"
@@ -1013,6 +1115,7 @@
       "area": 342000, 
       "capital": "Brazzaville", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.427610+00:00", 
       "currency_code": "XAF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -1026,7 +1129,8 @@
       "population": "3039126", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".cg"
+      "tld": ".cg", 
+      "utime": "2013-02-17 12:19:01.427635+00:00"
     }, 
     "model": "common.country", 
     "pk": "CG"
@@ -1037,6 +1141,7 @@
       "area": 41290, 
       "capital": "Berne", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.427715+00:00", 
       "currency_code": "CHF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -1050,7 +1155,8 @@
       "population": "7581000", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".ch"
+      "tld": ".ch", 
+      "utime": "2013-02-17 12:19:01.427758+00:00"
     }, 
     "model": "common.country", 
     "pk": "CH"
@@ -1061,6 +1167,7 @@
       "area": 322460, 
       "capital": "Yamoussoukro", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.427892+00:00", 
       "currency_code": "XOF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -1074,7 +1181,8 @@
       "population": "21058798", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ci"
+      "tld": ".ci", 
+      "utime": "2013-02-17 12:19:01.427903+00:00"
     }, 
     "model": "common.country", 
     "pk": "CI"
@@ -1085,6 +1193,7 @@
       "area": 240, 
       "capital": "Avarua", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.428084+00:00", 
       "currency_code": "NZD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -1098,7 +1207,8 @@
       "population": "21388", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ck"
+      "tld": ".ck", 
+      "utime": "2013-02-17 12:19:01.428110+00:00"
     }, 
     "model": "common.country", 
     "pk": "CK"
@@ -1109,6 +1219,7 @@
       "area": 756950, 
       "capital": "Santiago", 
       "continent": "SA", 
+      "ctime": "2013-02-17 12:19:01.428360+00:00", 
       "currency_code": "CLP", 
       "currency_name": "Peso", 
       "equivalent_fips_code": "", 
@@ -1122,7 +1233,8 @@
       "population": "16746491", 
       "postal_code_format": "#######", 
       "postal_code_regex": "^(\\d{7})$", 
-      "tld": ".cl"
+      "tld": ".cl", 
+      "utime": "2013-02-17 12:19:01.428382+00:00"
     }, 
     "model": "common.country", 
     "pk": "CL"
@@ -1133,6 +1245,7 @@
       "area": 475440, 
       "capital": "Yaounde", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.428515+00:00", 
       "currency_code": "XAF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -1146,7 +1259,8 @@
       "population": "19294149", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".cm"
+      "tld": ".cm", 
+      "utime": "2013-02-17 12:19:01.428526+00:00"
     }, 
     "model": "common.country", 
     "pk": "CM"
@@ -1157,6 +1271,7 @@
       "area": 9596960, 
       "capital": "Beijing", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.428654+00:00", 
       "currency_code": "CNY", 
       "currency_name": "Yuan Renminbi", 
       "equivalent_fips_code": "", 
@@ -1170,7 +1285,8 @@
       "population": "1330044000", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".cn"
+      "tld": ".cn", 
+      "utime": "2013-02-17 12:19:01.428665+00:00"
     }, 
     "model": "common.country", 
     "pk": "CN"
@@ -1181,6 +1297,7 @@
       "area": 1138910, 
       "capital": "Bogota", 
       "continent": "SA", 
+      "ctime": "2013-02-17 12:19:01.428792+00:00", 
       "currency_code": "COP", 
       "currency_name": "Peso", 
       "equivalent_fips_code": "", 
@@ -1194,7 +1311,8 @@
       "population": "44205293", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".co"
+      "tld": ".co", 
+      "utime": "2013-02-17 12:19:01.428803+00:00"
     }, 
     "model": "common.country", 
     "pk": "CO"
@@ -1205,6 +1323,7 @@
       "area": 51100, 
       "capital": "San Jose", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.428927+00:00", 
       "currency_code": "CRC", 
       "currency_name": "Colon", 
       "equivalent_fips_code": "", 
@@ -1218,7 +1337,8 @@
       "population": "4516220", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".cr"
+      "tld": ".cr", 
+      "utime": "2013-02-17 12:19:01.428937+00:00"
     }, 
     "model": "common.country", 
     "pk": "CR"
@@ -1229,6 +1349,7 @@
       "area": 102350, 
       "capital": "Belgrade", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.467212+00:00", 
       "currency_code": "RSD", 
       "currency_name": "Dinar", 
       "equivalent_fips_code": "", 
@@ -1242,7 +1363,8 @@
       "population": "10829175", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".cs"
+      "tld": ".cs", 
+      "utime": "2013-02-17 12:19:01.467225+00:00"
     }, 
     "model": "common.country", 
     "pk": "CS"
@@ -1253,6 +1375,7 @@
       "area": 110860, 
       "capital": "Havana", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.429072+00:00", 
       "currency_code": "CUP", 
       "currency_name": "Peso", 
       "equivalent_fips_code": "", 
@@ -1266,7 +1389,8 @@
       "population": "11423000", 
       "postal_code_format": "CP #####", 
       "postal_code_regex": "^(?:CP)*(\\d{5})$", 
-      "tld": ".cu"
+      "tld": ".cu", 
+      "utime": "2013-02-17 12:19:01.429083+00:00"
     }, 
     "model": "common.country", 
     "pk": "CU"
@@ -1277,6 +1401,7 @@
       "area": 4033, 
       "capital": "Praia", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.429206+00:00", 
       "currency_code": "CVE", 
       "currency_name": "Escudo", 
       "equivalent_fips_code": "", 
@@ -1290,7 +1415,8 @@
       "population": "508659", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".cv"
+      "tld": ".cv", 
+      "utime": "2013-02-17 12:19:01.429216+00:00"
     }, 
     "model": "common.country", 
     "pk": "CV"
@@ -1301,6 +1427,7 @@
       "area": null, 
       "capital": " Willemstad", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.429338+00:00", 
       "currency_code": "ANG", 
       "currency_name": "Guilder", 
       "equivalent_fips_code": "", 
@@ -1314,7 +1441,8 @@
       "population": "141766", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".cw"
+      "tld": ".cw", 
+      "utime": "2013-02-17 12:19:01.429349+00:00"
     }, 
     "model": "common.country", 
     "pk": "CW"
@@ -1325,6 +1453,7 @@
       "area": 135, 
       "capital": "Flying Fish Cove", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.429491+00:00", 
       "currency_code": "AUD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -1338,7 +1467,8 @@
       "population": "1500", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".cx"
+      "tld": ".cx", 
+      "utime": "2013-02-17 12:19:01.429513+00:00"
     }, 
     "model": "common.country", 
     "pk": "CX"
@@ -1349,6 +1479,7 @@
       "area": 9250, 
       "capital": "Nicosia", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.429869+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -1362,7 +1493,8 @@
       "population": "1102677", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".cy"
+      "tld": ".cy", 
+      "utime": "2013-02-17 12:19:01.429915+00:00"
     }, 
     "model": "common.country", 
     "pk": "CY"
@@ -1373,6 +1505,7 @@
       "area": 78866, 
       "capital": "Prague", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.430284+00:00", 
       "currency_code": "CZK", 
       "currency_name": "Koruna", 
       "equivalent_fips_code": "", 
@@ -1386,7 +1519,8 @@
       "population": "10476000", 
       "postal_code_format": "### ##", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".cz"
+      "tld": ".cz", 
+      "utime": "2013-02-17 12:19:01.430345+00:00"
     }, 
     "model": "common.country", 
     "pk": "CZ"
@@ -1397,6 +1531,7 @@
       "area": 357021, 
       "capital": "Berlin", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.430505+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -1410,7 +1545,8 @@
       "population": "81802257", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".de"
+      "tld": ".de", 
+      "utime": "2013-02-17 12:19:01.430536+00:00"
     }, 
     "model": "common.country", 
     "pk": "DE"
@@ -1421,6 +1557,7 @@
       "area": 23000, 
       "capital": "Djibouti", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.430688+00:00", 
       "currency_code": "DJF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -1434,7 +1571,8 @@
       "population": "740528", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".dj"
+      "tld": ".dj", 
+      "utime": "2013-02-17 12:19:01.430717+00:00"
     }, 
     "model": "common.country", 
     "pk": "DJ"
@@ -1445,6 +1583,7 @@
       "area": 43094, 
       "capital": "Copenhagen", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.430868+00:00", 
       "currency_code": "DKK", 
       "currency_name": "Krone", 
       "equivalent_fips_code": "", 
@@ -1458,7 +1597,8 @@
       "population": "5484000", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".dk"
+      "tld": ".dk", 
+      "utime": "2013-02-17 12:19:01.430896+00:00"
     }, 
     "model": "common.country", 
     "pk": "DK"
@@ -1469,6 +1609,7 @@
       "area": 754, 
       "capital": "Roseau", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.431006+00:00", 
       "currency_code": "XCD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -1482,7 +1623,8 @@
       "population": "72813", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".dm"
+      "tld": ".dm", 
+      "utime": "2013-02-17 12:19:01.431030+00:00"
     }, 
     "model": "common.country", 
     "pk": "DM"
@@ -1493,6 +1635,7 @@
       "area": 48730, 
       "capital": "Santo Domingo", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.431162+00:00", 
       "currency_code": "DOP", 
       "currency_name": "Peso", 
       "equivalent_fips_code": "", 
@@ -1506,7 +1649,8 @@
       "population": "9823821", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".do"
+      "tld": ".do", 
+      "utime": "2013-02-17 12:19:01.431174+00:00"
     }, 
     "model": "common.country", 
     "pk": "DO"
@@ -1517,6 +1661,7 @@
       "area": 2381740, 
       "capital": "Algiers", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.431303+00:00", 
       "currency_code": "DZD", 
       "currency_name": "Dinar", 
       "equivalent_fips_code": "", 
@@ -1530,7 +1675,8 @@
       "population": "34586184", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".dz"
+      "tld": ".dz", 
+      "utime": "2013-02-17 12:19:01.431314+00:00"
     }, 
     "model": "common.country", 
     "pk": "DZ"
@@ -1541,6 +1687,7 @@
       "area": 283560, 
       "capital": "Quito", 
       "continent": "SA", 
+      "ctime": "2013-02-17 12:19:01.431456+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -1554,7 +1701,8 @@
       "population": "14790608", 
       "postal_code_format": "@####@", 
       "postal_code_regex": "^([a-zA-Z]\\d{4}[a-zA-Z])$", 
-      "tld": ".ec"
+      "tld": ".ec", 
+      "utime": "2013-02-17 12:19:01.431479+00:00"
     }, 
     "model": "common.country", 
     "pk": "EC"
@@ -1565,6 +1713,7 @@
       "area": 45226, 
       "capital": "Tallinn", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.431624+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -1578,7 +1727,8 @@
       "population": "1291170", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".ee"
+      "tld": ".ee", 
+      "utime": "2013-02-17 12:19:01.431635+00:00"
     }, 
     "model": "common.country", 
     "pk": "EE"
@@ -1589,6 +1739,7 @@
       "area": 1001450, 
       "capital": "Cairo", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.431766+00:00", 
       "currency_code": "EGP", 
       "currency_name": "Pound", 
       "equivalent_fips_code": "", 
@@ -1602,7 +1753,8 @@
       "population": "80471869", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".eg"
+      "tld": ".eg", 
+      "utime": "2013-02-17 12:19:01.431777+00:00"
     }, 
     "model": "common.country", 
     "pk": "EG"
@@ -1613,6 +1765,7 @@
       "area": 266000, 
       "capital": "El-Aaiun", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.431924+00:00", 
       "currency_code": "MAD", 
       "currency_name": "Dirham", 
       "equivalent_fips_code": "", 
@@ -1626,7 +1779,8 @@
       "population": "273008", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".eh"
+      "tld": ".eh", 
+      "utime": "2013-02-17 12:19:01.431955+00:00"
     }, 
     "model": "common.country", 
     "pk": "EH"
@@ -1637,6 +1791,7 @@
       "area": 121320, 
       "capital": "Asmara", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.432269+00:00", 
       "currency_code": "ERN", 
       "currency_name": "Nakfa", 
       "equivalent_fips_code": "", 
@@ -1650,7 +1805,8 @@
       "population": "5792984", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".er"
+      "tld": ".er", 
+      "utime": "2013-02-17 12:19:01.432284+00:00"
     }, 
     "model": "common.country", 
     "pk": "ER"
@@ -1661,6 +1817,7 @@
       "area": 504782, 
       "capital": "Madrid", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.432457+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -1674,7 +1831,8 @@
       "population": "46505963", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".es"
+      "tld": ".es", 
+      "utime": "2013-02-17 12:19:01.432481+00:00"
     }, 
     "model": "common.country", 
     "pk": "ES"
@@ -1685,6 +1843,7 @@
       "area": 1127127, 
       "capital": "Addis Ababa", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.432641+00:00", 
       "currency_code": "ETB", 
       "currency_name": "Birr", 
       "equivalent_fips_code": "", 
@@ -1698,7 +1857,8 @@
       "population": "88013491", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".et"
+      "tld": ".et", 
+      "utime": "2013-02-17 12:19:01.432673+00:00"
     }, 
     "model": "common.country", 
     "pk": "ET"
@@ -1709,6 +1869,7 @@
       "area": 337030, 
       "capital": "Helsinki", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.432824+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -1722,7 +1883,8 @@
       "population": "5244000", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(?:FI)*(\\d{5})$", 
-      "tld": ".fi"
+      "tld": ".fi", 
+      "utime": "2013-02-17 12:19:01.432837+00:00"
     }, 
     "model": "common.country", 
     "pk": "FI"
@@ -1733,6 +1895,7 @@
       "area": 18270, 
       "capital": "Suva", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.433061+00:00", 
       "currency_code": "FJD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -1746,7 +1909,8 @@
       "population": "875983", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".fj"
+      "tld": ".fj", 
+      "utime": "2013-02-17 12:19:01.433086+00:00"
     }, 
     "model": "common.country", 
     "pk": "FJ"
@@ -1757,6 +1921,7 @@
       "area": 12173, 
       "capital": "Stanley", 
       "continent": "SA", 
+      "ctime": "2013-02-17 12:19:01.433177+00:00", 
       "currency_code": "FKP", 
       "currency_name": "Pound", 
       "equivalent_fips_code": "", 
@@ -1770,7 +1935,8 @@
       "population": "2638", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".fk"
+      "tld": ".fk", 
+      "utime": "2013-02-17 12:19:01.433190+00:00"
     }, 
     "model": "common.country", 
     "pk": "FK"
@@ -1781,6 +1947,7 @@
       "area": 702, 
       "capital": "Palikir", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.433463+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -1794,7 +1961,8 @@
       "population": "107708", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".fm"
+      "tld": ".fm", 
+      "utime": "2013-02-17 12:19:01.433489+00:00"
     }, 
     "model": "common.country", 
     "pk": "FM"
@@ -1805,6 +1973,7 @@
       "area": 1399, 
       "capital": "Torshavn", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.433735+00:00", 
       "currency_code": "DKK", 
       "currency_name": "Krone", 
       "equivalent_fips_code": "", 
@@ -1818,7 +1987,8 @@
       "population": "48228", 
       "postal_code_format": "FO-###", 
       "postal_code_regex": "^(?:FO)*(\\d{3})$", 
-      "tld": ".fo"
+      "tld": ".fo", 
+      "utime": "2013-02-17 12:19:01.433759+00:00"
     }, 
     "model": "common.country", 
     "pk": "FO"
@@ -1829,6 +1999,7 @@
       "area": 547030, 
       "capital": "Paris", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.434014+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -1842,7 +2013,8 @@
       "population": "64768389", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".fr"
+      "tld": ".fr", 
+      "utime": "2013-02-17 12:19:01.434037+00:00"
     }, 
     "model": "common.country", 
     "pk": "FR"
@@ -1853,6 +2025,7 @@
       "area": 267667, 
       "capital": "Libreville", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.434283+00:00", 
       "currency_code": "XAF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -1866,7 +2039,8 @@
       "population": "1545255", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ga"
+      "tld": ".ga", 
+      "utime": "2013-02-17 12:19:01.434307+00:00"
     }, 
     "model": "common.country", 
     "pk": "GA"
@@ -1877,6 +2051,7 @@
       "area": 244820, 
       "capital": "London", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.434830+00:00", 
       "currency_code": "GBP", 
       "currency_name": "Pound", 
       "equivalent_fips_code": "", 
@@ -1890,7 +2065,8 @@
       "population": "62348447", 
       "postal_code_format": "@# #@@|@## #@@|@@# #@@|@@## #@@|@#@ #@@|@@#@ #@@|GIR0AA", 
       "postal_code_regex": "^(([A-Z]\\d{2}[A-Z]{2})|([A-Z]\\d{3}[A-Z]{2})|([A-Z]{2}\\d{2}[A-Z]{2})|([A-Z]{2}\\d{3}[A-Z]{2})|([A-Z]\\d[A-Z]\\d[A-Z]{2})|([A-Z]{2}\\d[A-Z]\\d[A-Z]{2})|(GIR0AA))$", 
-      "tld": ".uk"
+      "tld": ".uk", 
+      "utime": "2013-02-17 12:19:01.435030+00:00"
     }, 
     "model": "common.country", 
     "pk": "GB"
@@ -1901,6 +2077,7 @@
       "area": 344, 
       "capital": "St. George's", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.435241+00:00", 
       "currency_code": "XCD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -1914,7 +2091,8 @@
       "population": "107818", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".gd"
+      "tld": ".gd", 
+      "utime": "2013-02-17 12:19:01.435256+00:00"
     }, 
     "model": "common.country", 
     "pk": "GD"
@@ -1925,6 +2103,7 @@
       "area": 69700, 
       "capital": "Tbilisi", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.435430+00:00", 
       "currency_code": "GEL", 
       "currency_name": "Lari", 
       "equivalent_fips_code": "", 
@@ -1938,7 +2117,8 @@
       "population": "4630000", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".ge"
+      "tld": ".ge", 
+      "utime": "2013-02-17 12:19:01.435443+00:00"
     }, 
     "model": "common.country", 
     "pk": "GE"
@@ -1949,6 +2129,7 @@
       "area": 91000, 
       "capital": "Cayenne", 
       "continent": "SA", 
+      "ctime": "2013-02-17 12:19:01.435593+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -1962,7 +2143,8 @@
       "population": "195506", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^((97|98)3\\d{2})$", 
-      "tld": ".gf"
+      "tld": ".gf", 
+      "utime": "2013-02-17 12:19:01.435605+00:00"
     }, 
     "model": "common.country", 
     "pk": "GF"
@@ -1973,6 +2155,7 @@
       "area": 78, 
       "capital": "St Peter Port", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.435735+00:00", 
       "currency_code": "GBP", 
       "currency_name": "Pound", 
       "equivalent_fips_code": "", 
@@ -1986,7 +2169,8 @@
       "population": "65228", 
       "postal_code_format": "@# #@@|@## #@@|@@# #@@|@@## #@@|@#@ #@@|@@#@ #@@|GIR0AA", 
       "postal_code_regex": "^(([A-Z]\\d{2}[A-Z]{2})|([A-Z]\\d{3}[A-Z]{2})|([A-Z]{2}\\d{2}[A-Z]{2})|([A-Z]{2}\\d{3}[A-Z]{2})|([A-Z]\\d[A-Z]\\d[A-Z]{2})|([A-Z]{2}\\d[A-Z]\\d[A-Z]{2})|(GIR0AA))$", 
-      "tld": ".gg"
+      "tld": ".gg", 
+      "utime": "2013-02-17 12:19:01.435746+00:00"
     }, 
     "model": "common.country", 
     "pk": "GG"
@@ -1997,6 +2181,7 @@
       "area": 239460, 
       "capital": "Accra", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.435870+00:00", 
       "currency_code": "GHS", 
       "currency_name": "Cedi", 
       "equivalent_fips_code": "", 
@@ -2010,7 +2195,8 @@
       "population": "24339838", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".gh"
+      "tld": ".gh", 
+      "utime": "2013-02-17 12:19:01.435880+00:00"
     }, 
     "model": "common.country", 
     "pk": "GH"
@@ -2021,6 +2207,7 @@
       "area": 7, 
       "capital": "Gibraltar", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.436032+00:00", 
       "currency_code": "GIP", 
       "currency_name": "Pound", 
       "equivalent_fips_code": "", 
@@ -2034,7 +2221,8 @@
       "population": "27884", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".gi"
+      "tld": ".gi", 
+      "utime": "2013-02-17 12:19:01.436045+00:00"
     }, 
     "model": "common.country", 
     "pk": "GI"
@@ -2045,6 +2233,7 @@
       "area": 2166086, 
       "capital": "Nuuk", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.436172+00:00", 
       "currency_code": "DKK", 
       "currency_name": "Krone", 
       "equivalent_fips_code": "", 
@@ -2058,7 +2247,8 @@
       "population": "56375", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".gl"
+      "tld": ".gl", 
+      "utime": "2013-02-17 12:19:01.436183+00:00"
     }, 
     "model": "common.country", 
     "pk": "GL"
@@ -2069,6 +2259,7 @@
       "area": 11300, 
       "capital": "Banjul", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.436306+00:00", 
       "currency_code": "GMD", 
       "currency_name": "Dalasi", 
       "equivalent_fips_code": "", 
@@ -2082,7 +2273,8 @@
       "population": "1593256", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".gm"
+      "tld": ".gm", 
+      "utime": "2013-02-17 12:19:01.436316+00:00"
     }, 
     "model": "common.country", 
     "pk": "GM"
@@ -2093,6 +2285,7 @@
       "area": 245857, 
       "capital": "Conakry", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.436437+00:00", 
       "currency_code": "GNF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -2106,7 +2299,8 @@
       "population": "10324025", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".gn"
+      "tld": ".gn", 
+      "utime": "2013-02-17 12:19:01.436448+00:00"
     }, 
     "model": "common.country", 
     "pk": "GN"
@@ -2117,6 +2311,7 @@
       "area": 1780, 
       "capital": "Basse-Terre", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.436570+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -2130,7 +2325,8 @@
       "population": "443000", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^((97|98)\\d{3})$", 
-      "tld": ".gp"
+      "tld": ".gp", 
+      "utime": "2013-02-17 12:19:01.436581+00:00"
     }, 
     "model": "common.country", 
     "pk": "GP"
@@ -2141,6 +2337,7 @@
       "area": 28051, 
       "capital": "Malabo", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.436703+00:00", 
       "currency_code": "XAF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -2154,7 +2351,8 @@
       "population": "1014999", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".gq"
+      "tld": ".gq", 
+      "utime": "2013-02-17 12:19:01.436714+00:00"
     }, 
     "model": "common.country", 
     "pk": "GQ"
@@ -2165,6 +2363,7 @@
       "area": 131940, 
       "capital": "Athens", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.436836+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -2178,7 +2377,8 @@
       "population": "11000000", 
       "postal_code_format": "### ##", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".gr"
+      "tld": ".gr", 
+      "utime": "2013-02-17 12:19:01.436847+00:00"
     }, 
     "model": "common.country", 
     "pk": "GR"
@@ -2189,6 +2389,7 @@
       "area": 3903, 
       "capital": "Grytviken", 
       "continent": "AN", 
+      "ctime": "2013-02-17 12:19:01.436974+00:00", 
       "currency_code": "GBP", 
       "currency_name": "Pound", 
       "equivalent_fips_code": "", 
@@ -2202,7 +2403,8 @@
       "population": "30", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".gs"
+      "tld": ".gs", 
+      "utime": "2013-02-17 12:19:01.436985+00:00"
     }, 
     "model": "common.country", 
     "pk": "GS"
@@ -2213,6 +2415,7 @@
       "area": 108890, 
       "capital": "Guatemala City", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.437097+00:00", 
       "currency_code": "GTQ", 
       "currency_name": "Quetzal", 
       "equivalent_fips_code": "", 
@@ -2226,7 +2429,8 @@
       "population": "13550440", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".gt"
+      "tld": ".gt", 
+      "utime": "2013-02-17 12:19:01.437097+00:00"
     }, 
     "model": "common.country", 
     "pk": "GT"
@@ -2237,6 +2441,7 @@
       "area": 549, 
       "capital": "Hagatna", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.437234+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -2250,7 +2455,8 @@
       "population": "159358", 
       "postal_code_format": "969##", 
       "postal_code_regex": "^(969\\d{2})$", 
-      "tld": ".gu"
+      "tld": ".gu", 
+      "utime": "2013-02-17 12:19:01.437247+00:00"
     }, 
     "model": "common.country", 
     "pk": "GU"
@@ -2261,6 +2467,7 @@
       "area": 36120, 
       "capital": "Bissau", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.437395+00:00", 
       "currency_code": "XOF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -2274,7 +2481,8 @@
       "population": "1565126", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".gw"
+      "tld": ".gw", 
+      "utime": "2013-02-17 12:19:01.437407+00:00"
     }, 
     "model": "common.country", 
     "pk": "GW"
@@ -2285,6 +2493,7 @@
       "area": 214970, 
       "capital": "Georgetown", 
       "continent": "SA", 
+      "ctime": "2013-02-17 12:19:01.437531+00:00", 
       "currency_code": "GYD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -2298,7 +2507,8 @@
       "population": "748486", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".gy"
+      "tld": ".gy", 
+      "utime": "2013-02-17 12:19:01.437542+00:00"
     }, 
     "model": "common.country", 
     "pk": "GY"
@@ -2309,6 +2519,7 @@
       "area": 1092, 
       "capital": "Hong Kong", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.437664+00:00", 
       "currency_code": "HKD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -2322,7 +2533,8 @@
       "population": "6898686", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".hk"
+      "tld": ".hk", 
+      "utime": "2013-02-17 12:19:01.437675+00:00"
     }, 
     "model": "common.country", 
     "pk": "HK"
@@ -2333,6 +2545,7 @@
       "area": 412, 
       "capital": "", 
       "continent": "AN", 
+      "ctime": "2013-02-17 12:19:01.437797+00:00", 
       "currency_code": "AUD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -2346,7 +2559,8 @@
       "population": "0", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".hm"
+      "tld": ".hm", 
+      "utime": "2013-02-17 12:19:01.437808+00:00"
     }, 
     "model": "common.country", 
     "pk": "HM"
@@ -2357,6 +2571,7 @@
       "area": 112090, 
       "capital": "Tegucigalpa", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.437937+00:00", 
       "currency_code": "HNL", 
       "currency_name": "Lempira", 
       "equivalent_fips_code": "", 
@@ -2370,7 +2585,8 @@
       "population": "7989415", 
       "postal_code_format": "@@####", 
       "postal_code_regex": "^([A-Z]{2}\\d{4})$", 
-      "tld": ".hn"
+      "tld": ".hn", 
+      "utime": "2013-02-17 12:19:01.437948+00:00"
     }, 
     "model": "common.country", 
     "pk": "HN"
@@ -2381,6 +2597,7 @@
       "area": 56542, 
       "capital": "Zagreb", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.438072+00:00", 
       "currency_code": "HRK", 
       "currency_name": "Kuna", 
       "equivalent_fips_code": "", 
@@ -2394,7 +2611,8 @@
       "population": "4491000", 
       "postal_code_format": "HR-#####", 
       "postal_code_regex": "^(?:HR)*(\\d{5})$", 
-      "tld": ".hr"
+      "tld": ".hr", 
+      "utime": "2013-02-17 12:19:01.438083+00:00"
     }, 
     "model": "common.country", 
     "pk": "HR"
@@ -2405,6 +2623,7 @@
       "area": 27750, 
       "capital": "Port-au-Prince", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.438205+00:00", 
       "currency_code": "HTG", 
       "currency_name": "Gourde", 
       "equivalent_fips_code": "", 
@@ -2418,7 +2637,8 @@
       "population": "9648924", 
       "postal_code_format": "HT####", 
       "postal_code_regex": "^(?:HT)*(\\d{4})$", 
-      "tld": ".ht"
+      "tld": ".ht", 
+      "utime": "2013-02-17 12:19:01.438216+00:00"
     }, 
     "model": "common.country", 
     "pk": "HT"
@@ -2429,6 +2649,7 @@
       "area": 93030, 
       "capital": "Budapest", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.438339+00:00", 
       "currency_code": "HUF", 
       "currency_name": "Forint", 
       "equivalent_fips_code": "", 
@@ -2442,7 +2663,8 @@
       "population": "9930000", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".hu"
+      "tld": ".hu", 
+      "utime": "2013-02-17 12:19:01.438349+00:00"
     }, 
     "model": "common.country", 
     "pk": "HU"
@@ -2453,6 +2675,7 @@
       "area": 1919440, 
       "capital": "Jakarta", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.438642+00:00", 
       "currency_code": "IDR", 
       "currency_name": "Rupiah", 
       "equivalent_fips_code": "", 
@@ -2466,7 +2689,8 @@
       "population": "242968342", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".id"
+      "tld": ".id", 
+      "utime": "2013-02-17 12:19:01.438685+00:00"
     }, 
     "model": "common.country", 
     "pk": "ID"
@@ -2477,6 +2701,7 @@
       "area": 70280, 
       "capital": "Dublin", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.438843+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -2490,7 +2715,8 @@
       "population": "4622917", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ie"
+      "tld": ".ie", 
+      "utime": "2013-02-17 12:19:01.438880+00:00"
     }, 
     "model": "common.country", 
     "pk": "IE"
@@ -2501,6 +2727,7 @@
       "area": 20770, 
       "capital": "Jerusalem", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.439016+00:00", 
       "currency_code": "ILS", 
       "currency_name": "Shekel", 
       "equivalent_fips_code": "", 
@@ -2514,7 +2741,8 @@
       "population": "7353985", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".il"
+      "tld": ".il", 
+      "utime": "2013-02-17 12:19:01.439038+00:00"
     }, 
     "model": "common.country", 
     "pk": "IL"
@@ -2525,6 +2753,7 @@
       "area": 572, 
       "capital": "Douglas, Isle of Man", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.439171+00:00", 
       "currency_code": "GBP", 
       "currency_name": "Pound", 
       "equivalent_fips_code": "", 
@@ -2538,7 +2767,8 @@
       "population": "75049", 
       "postal_code_format": "@# #@@|@## #@@|@@# #@@|@@## #@@|@#@ #@@|@@#@ #@@|GIR0AA", 
       "postal_code_regex": "^(([A-Z]\\d{2}[A-Z]{2})|([A-Z]\\d{3}[A-Z]{2})|([A-Z]{2}\\d{2}[A-Z]{2})|([A-Z]{2}\\d{3}[A-Z]{2})|([A-Z]\\d[A-Z]\\d[A-Z]{2})|([A-Z]{2}\\d[A-Z]\\d[A-Z]{2})|(GIR0AA))$", 
-      "tld": ".im"
+      "tld": ".im", 
+      "utime": "2013-02-17 12:19:01.439182+00:00"
     }, 
     "model": "common.country", 
     "pk": "IM"
@@ -2549,6 +2779,7 @@
       "area": 3287590, 
       "capital": "New Delhi", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.439306+00:00", 
       "currency_code": "INR", 
       "currency_name": "Rupee", 
       "equivalent_fips_code": "", 
@@ -2562,7 +2793,8 @@
       "population": "1173108018", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".in"
+      "tld": ".in", 
+      "utime": "2013-02-17 12:19:01.439317+00:00"
     }, 
     "model": "common.country", 
     "pk": "IN"
@@ -2573,6 +2805,7 @@
       "area": 60, 
       "capital": "Diego Garcia", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.439440+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -2586,7 +2819,8 @@
       "population": "4000", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".io"
+      "tld": ".io", 
+      "utime": "2013-02-17 12:19:01.439450+00:00"
     }, 
     "model": "common.country", 
     "pk": "IO"
@@ -2597,6 +2831,7 @@
       "area": 437072, 
       "capital": "Baghdad", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.439574+00:00", 
       "currency_code": "IQD", 
       "currency_name": "Dinar", 
       "equivalent_fips_code": "", 
@@ -2610,7 +2845,8 @@
       "population": "29671605", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".iq"
+      "tld": ".iq", 
+      "utime": "2013-02-17 12:19:01.439585+00:00"
     }, 
     "model": "common.country", 
     "pk": "IQ"
@@ -2621,6 +2857,7 @@
       "area": 1648000, 
       "capital": "Tehran", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.439708+00:00", 
       "currency_code": "IRR", 
       "currency_name": "Rial", 
       "equivalent_fips_code": "", 
@@ -2634,7 +2871,8 @@
       "population": "76923300", 
       "postal_code_format": "##########", 
       "postal_code_regex": "^(\\d{10})$", 
-      "tld": ".ir"
+      "tld": ".ir", 
+      "utime": "2013-02-17 12:19:01.439719+00:00"
     }, 
     "model": "common.country", 
     "pk": "IR"
@@ -2645,6 +2883,7 @@
       "area": 103000, 
       "capital": "Reykjavik", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.439861+00:00", 
       "currency_code": "ISK", 
       "currency_name": "Krona", 
       "equivalent_fips_code": "", 
@@ -2658,7 +2897,8 @@
       "population": "308910", 
       "postal_code_format": "###", 
       "postal_code_regex": "^(\\d{3})$", 
-      "tld": ".is"
+      "tld": ".is", 
+      "utime": "2013-02-17 12:19:01.439874+00:00"
     }, 
     "model": "common.country", 
     "pk": "IS"
@@ -2669,6 +2909,7 @@
       "area": 301230, 
       "capital": "Rome", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.440049+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -2682,7 +2923,8 @@
       "population": "60340328", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".it"
+      "tld": ".it", 
+      "utime": "2013-02-17 12:19:01.440063+00:00"
     }, 
     "model": "common.country", 
     "pk": "IT"
@@ -2693,6 +2935,7 @@
       "area": 116, 
       "capital": "Saint Helier", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.440193+00:00", 
       "currency_code": "GBP", 
       "currency_name": "Pound", 
       "equivalent_fips_code": "", 
@@ -2706,7 +2949,8 @@
       "population": "90812", 
       "postal_code_format": "@# #@@|@## #@@|@@# #@@|@@## #@@|@#@ #@@|@@#@ #@@|GIR0AA", 
       "postal_code_regex": "^(([A-Z]\\d{2}[A-Z]{2})|([A-Z]\\d{3}[A-Z]{2})|([A-Z]{2}\\d{2}[A-Z]{2})|([A-Z]{2}\\d{3}[A-Z]{2})|([A-Z]\\d[A-Z]\\d[A-Z]{2})|([A-Z]{2}\\d[A-Z]\\d[A-Z]{2})|(GIR0AA))$", 
-      "tld": ".je"
+      "tld": ".je", 
+      "utime": "2013-02-17 12:19:01.440204+00:00"
     }, 
     "model": "common.country", 
     "pk": "JE"
@@ -2717,6 +2961,7 @@
       "area": 10991, 
       "capital": "Kingston", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.440327+00:00", 
       "currency_code": "JMD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -2730,7 +2975,8 @@
       "population": "2847232", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".jm"
+      "tld": ".jm", 
+      "utime": "2013-02-17 12:19:01.440338+00:00"
     }, 
     "model": "common.country", 
     "pk": "JM"
@@ -2741,6 +2987,7 @@
       "area": 92300, 
       "capital": "Amman", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.440461+00:00", 
       "currency_code": "JOD", 
       "currency_name": "Dinar", 
       "equivalent_fips_code": "", 
@@ -2754,7 +3001,8 @@
       "population": "6407085", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".jo"
+      "tld": ".jo", 
+      "utime": "2013-02-17 12:19:01.440472+00:00"
     }, 
     "model": "common.country", 
     "pk": "JO"
@@ -2765,6 +3013,7 @@
       "area": 377835, 
       "capital": "Tokyo", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.440660+00:00", 
       "currency_code": "JPY", 
       "currency_name": "Yen", 
       "equivalent_fips_code": "", 
@@ -2778,7 +3027,8 @@
       "population": "127288000", 
       "postal_code_format": "###-####", 
       "postal_code_regex": "^(\\d{7})$", 
-      "tld": ".jp"
+      "tld": ".jp", 
+      "utime": "2013-02-17 12:19:01.440684+00:00"
     }, 
     "model": "common.country", 
     "pk": "JP"
@@ -2789,6 +3039,7 @@
       "area": 582650, 
       "capital": "Nairobi", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.440888+00:00", 
       "currency_code": "KES", 
       "currency_name": "Shilling", 
       "equivalent_fips_code": "", 
@@ -2802,7 +3053,8 @@
       "population": "40046566", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".ke"
+      "tld": ".ke", 
+      "utime": "2013-02-17 12:19:01.440902+00:00"
     }, 
     "model": "common.country", 
     "pk": "KE"
@@ -2813,6 +3065,7 @@
       "area": 198500, 
       "capital": "Bishkek", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.441078+00:00", 
       "currency_code": "KGS", 
       "currency_name": "Som", 
       "equivalent_fips_code": "", 
@@ -2826,7 +3079,8 @@
       "population": "5508626", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".kg"
+      "tld": ".kg", 
+      "utime": "2013-02-17 12:19:01.441091+00:00"
     }, 
     "model": "common.country", 
     "pk": "KG"
@@ -2837,6 +3091,7 @@
       "area": 181040, 
       "capital": "Phnom Penh", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.441217+00:00", 
       "currency_code": "KHR", 
       "currency_name": "Riels", 
       "equivalent_fips_code": "", 
@@ -2850,7 +3105,8 @@
       "population": "14453680", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".kh"
+      "tld": ".kh", 
+      "utime": "2013-02-17 12:19:01.441229+00:00"
     }, 
     "model": "common.country", 
     "pk": "KH"
@@ -2861,6 +3117,7 @@
       "area": 811, 
       "capital": "Tarawa", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.441392+00:00", 
       "currency_code": "AUD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -2874,7 +3131,8 @@
       "population": "92533", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ki"
+      "tld": ".ki", 
+      "utime": "2013-02-17 12:19:01.441406+00:00"
     }, 
     "model": "common.country", 
     "pk": "KI"
@@ -2885,6 +3143,7 @@
       "area": 2170, 
       "capital": "Moroni", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.441573+00:00", 
       "currency_code": "KMF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -2898,7 +3157,8 @@
       "population": "773407", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".km"
+      "tld": ".km", 
+      "utime": "2013-02-17 12:19:01.441585+00:00"
     }, 
     "model": "common.country", 
     "pk": "KM"
@@ -2909,6 +3169,7 @@
       "area": 261, 
       "capital": "Basseterre", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.441734+00:00", 
       "currency_code": "XCD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -2922,7 +3183,8 @@
       "population": "49898", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".kn"
+      "tld": ".kn", 
+      "utime": "2013-02-17 12:19:01.441746+00:00"
     }, 
     "model": "common.country", 
     "pk": "KN"
@@ -2933,6 +3195,7 @@
       "area": 120540, 
       "capital": "Pyongyang", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.441894+00:00", 
       "currency_code": "KPW", 
       "currency_name": "Won", 
       "equivalent_fips_code": "", 
@@ -2946,7 +3209,8 @@
       "population": "22912177", 
       "postal_code_format": "###-###", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".kp"
+      "tld": ".kp", 
+      "utime": "2013-02-17 12:19:01.441906+00:00"
     }, 
     "model": "common.country", 
     "pk": "KP"
@@ -2957,6 +3221,7 @@
       "area": 98480, 
       "capital": "Seoul", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.442112+00:00", 
       "currency_code": "KRW", 
       "currency_name": "Won", 
       "equivalent_fips_code": "", 
@@ -2970,7 +3235,8 @@
       "population": "48422644", 
       "postal_code_format": "SEOUL ###-###", 
       "postal_code_regex": "^(?:SEOUL)*(\\d{6})$", 
-      "tld": ".kr"
+      "tld": ".kr", 
+      "utime": "2013-02-17 12:19:01.442126+00:00"
     }, 
     "model": "common.country", 
     "pk": "KR"
@@ -2981,6 +3247,7 @@
       "area": 17820, 
       "capital": "Kuwait City", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.442574+00:00", 
       "currency_code": "KWD", 
       "currency_name": "Dinar", 
       "equivalent_fips_code": "", 
@@ -2994,7 +3261,8 @@
       "population": "2789132", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".kw"
+      "tld": ".kw", 
+      "utime": "2013-02-17 12:19:01.442585+00:00"
     }, 
     "model": "common.country", 
     "pk": "KW"
@@ -3005,6 +3273,7 @@
       "area": 262, 
       "capital": "George Town", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.442708+00:00", 
       "currency_code": "KYD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -3018,7 +3287,8 @@
       "population": "44270", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ky"
+      "tld": ".ky", 
+      "utime": "2013-02-17 12:19:01.442719+00:00"
     }, 
     "model": "common.country", 
     "pk": "KY"
@@ -3029,6 +3299,7 @@
       "area": 2717300, 
       "capital": "Astana", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.442842+00:00", 
       "currency_code": "KZT", 
       "currency_name": "Tenge", 
       "equivalent_fips_code": "", 
@@ -3042,7 +3313,8 @@
       "population": "15340000", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".kz"
+      "tld": ".kz", 
+      "utime": "2013-02-17 12:19:01.442853+00:00"
     }, 
     "model": "common.country", 
     "pk": "KZ"
@@ -3053,6 +3325,7 @@
       "area": 236800, 
       "capital": "Vientiane", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.442981+00:00", 
       "currency_code": "LAK", 
       "currency_name": "Kip", 
       "equivalent_fips_code": "", 
@@ -3066,7 +3339,8 @@
       "population": "6368162", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".la"
+      "tld": ".la", 
+      "utime": "2013-02-17 12:19:01.442992+00:00"
     }, 
     "model": "common.country", 
     "pk": "LA"
@@ -3077,6 +3351,7 @@
       "area": 10400, 
       "capital": "Beirut", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.443115+00:00", 
       "currency_code": "LBP", 
       "currency_name": "Pound", 
       "equivalent_fips_code": "", 
@@ -3090,7 +3365,8 @@
       "population": "4125247", 
       "postal_code_format": "#### ####|####", 
       "postal_code_regex": "^(\\d{4}(\\d{4})?)$", 
-      "tld": ".lb"
+      "tld": ".lb", 
+      "utime": "2013-02-17 12:19:01.443126+00:00"
     }, 
     "model": "common.country", 
     "pk": "LB"
@@ -3101,6 +3377,7 @@
       "area": 616, 
       "capital": "Castries", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.443249+00:00", 
       "currency_code": "XCD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -3114,7 +3391,8 @@
       "population": "160922", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".lc"
+      "tld": ".lc", 
+      "utime": "2013-02-17 12:19:01.443259+00:00"
     }, 
     "model": "common.country", 
     "pk": "LC"
@@ -3125,6 +3403,7 @@
       "area": 160, 
       "capital": "Vaduz", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.443430+00:00", 
       "currency_code": "CHF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -3138,7 +3417,8 @@
       "population": "35000", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".li"
+      "tld": ".li", 
+      "utime": "2013-02-17 12:19:01.443454+00:00"
     }, 
     "model": "common.country", 
     "pk": "LI"
@@ -3149,6 +3429,7 @@
       "area": 65610, 
       "capital": "Colombo", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.443819+00:00", 
       "currency_code": "LKR", 
       "currency_name": "Rupee", 
       "equivalent_fips_code": "", 
@@ -3162,7 +3443,8 @@
       "population": "21513990", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".lk"
+      "tld": ".lk", 
+      "utime": "2013-02-17 12:19:01.443874+00:00"
     }, 
     "model": "common.country", 
     "pk": "LK"
@@ -3173,6 +3455,7 @@
       "area": 111370, 
       "capital": "Monrovia", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.444297+00:00", 
       "currency_code": "LRD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -3186,7 +3469,8 @@
       "population": "3685076", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".lr"
+      "tld": ".lr", 
+      "utime": "2013-02-17 12:19:01.444371+00:00"
     }, 
     "model": "common.country", 
     "pk": "LR"
@@ -3197,6 +3481,7 @@
       "area": 30355, 
       "capital": "Maseru", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.444691+00:00", 
       "currency_code": "LSL", 
       "currency_name": "Loti", 
       "equivalent_fips_code": "", 
@@ -3210,7 +3495,8 @@
       "population": "1919552", 
       "postal_code_format": "###", 
       "postal_code_regex": "^(\\d{3})$", 
-      "tld": ".ls"
+      "tld": ".ls", 
+      "utime": "2013-02-17 12:19:01.444734+00:00"
     }, 
     "model": "common.country", 
     "pk": "LS"
@@ -3221,6 +3507,7 @@
       "area": 65200, 
       "capital": "Vilnius", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.445018+00:00", 
       "currency_code": "LTL", 
       "currency_name": "Litas", 
       "equivalent_fips_code": "", 
@@ -3234,7 +3521,8 @@
       "population": "3565000", 
       "postal_code_format": "LT-#####", 
       "postal_code_regex": "^(?:LT)*(\\d{5})$", 
-      "tld": ".lt"
+      "tld": ".lt", 
+      "utime": "2013-02-17 12:19:01.445055+00:00"
     }, 
     "model": "common.country", 
     "pk": "LT"
@@ -3245,6 +3533,7 @@
       "area": 2586, 
       "capital": "Luxembourg", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.445352+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -3258,7 +3547,8 @@
       "population": "497538", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".lu"
+      "tld": ".lu", 
+      "utime": "2013-02-17 12:19:01.445374+00:00"
     }, 
     "model": "common.country", 
     "pk": "LU"
@@ -3269,6 +3559,7 @@
       "area": 64589, 
       "capital": "Riga", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.445512+00:00", 
       "currency_code": "LVL", 
       "currency_name": "Lat", 
       "equivalent_fips_code": "", 
@@ -3282,7 +3573,8 @@
       "population": "2217969", 
       "postal_code_format": "LV-####", 
       "postal_code_regex": "^(?:LV)*(\\d{4})$", 
-      "tld": ".lv"
+      "tld": ".lv", 
+      "utime": "2013-02-17 12:19:01.445524+00:00"
     }, 
     "model": "common.country", 
     "pk": "LV"
@@ -3293,6 +3585,7 @@
       "area": 1759540, 
       "capital": "Tripolis", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.445650+00:00", 
       "currency_code": "LYD", 
       "currency_name": "Dinar", 
       "equivalent_fips_code": "", 
@@ -3306,7 +3599,8 @@
       "population": "6461454", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ly"
+      "tld": ".ly", 
+      "utime": "2013-02-17 12:19:01.445660+00:00"
     }, 
     "model": "common.country", 
     "pk": "LY"
@@ -3317,6 +3611,7 @@
       "area": 446550, 
       "capital": "Rabat", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.445784+00:00", 
       "currency_code": "MAD", 
       "currency_name": "Dirham", 
       "equivalent_fips_code": "", 
@@ -3330,7 +3625,8 @@
       "population": "31627428", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".ma"
+      "tld": ".ma", 
+      "utime": "2013-02-17 12:19:01.445794+00:00"
     }, 
     "model": "common.country", 
     "pk": "MA"
@@ -3341,6 +3637,7 @@
       "area": 2, 
       "capital": "Monaco", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.445919+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -3354,7 +3651,8 @@
       "population": "32965", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".mc"
+      "tld": ".mc", 
+      "utime": "2013-02-17 12:19:01.445935+00:00"
     }, 
     "model": "common.country", 
     "pk": "MC"
@@ -3365,6 +3663,7 @@
       "area": 33843, 
       "capital": "Chisinau", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.446059+00:00", 
       "currency_code": "MDL", 
       "currency_name": "Leu", 
       "equivalent_fips_code": "", 
@@ -3378,7 +3677,8 @@
       "population": "4324000", 
       "postal_code_format": "MD-####", 
       "postal_code_regex": "^(?:MD)*(\\d{4})$", 
-      "tld": ".md"
+      "tld": ".md", 
+      "utime": "2013-02-17 12:19:01.446070+00:00"
     }, 
     "model": "common.country", 
     "pk": "MD"
@@ -3389,6 +3689,7 @@
       "area": 14026, 
       "capital": "Podgorica", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.446193+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -3402,7 +3703,8 @@
       "population": "666730", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".me"
+      "tld": ".me", 
+      "utime": "2013-02-17 12:19:01.446204+00:00"
     }, 
     "model": "common.country", 
     "pk": "ME"
@@ -3413,6 +3715,7 @@
       "area": 53, 
       "capital": "Marigot", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.446335+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -3426,7 +3729,8 @@
       "population": "35925", 
       "postal_code_format": "### ###", 
       "postal_code_regex": "", 
-      "tld": ".gp"
+      "tld": ".gp", 
+      "utime": "2013-02-17 12:19:01.446349+00:00"
     }, 
     "model": "common.country", 
     "pk": "MF"
@@ -3437,6 +3741,7 @@
       "area": 587040, 
       "capital": "Antananarivo", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.446558+00:00", 
       "currency_code": "MGA", 
       "currency_name": "Ariary", 
       "equivalent_fips_code": "", 
@@ -3450,7 +3755,8 @@
       "population": "21281844", 
       "postal_code_format": "###", 
       "postal_code_regex": "^(\\d{3})$", 
-      "tld": ".mg"
+      "tld": ".mg", 
+      "utime": "2013-02-17 12:19:01.446580+00:00"
     }, 
     "model": "common.country", 
     "pk": "MG"
@@ -3461,6 +3767,7 @@
       "area": 182, 
       "capital": "Majuro", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.446698+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -3474,7 +3781,8 @@
       "population": "65859", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".mh"
+      "tld": ".mh", 
+      "utime": "2013-02-17 12:19:01.446745+00:00"
     }, 
     "model": "common.country", 
     "pk": "MH"
@@ -3485,6 +3793,7 @@
       "area": 25333, 
       "capital": "Skopje", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.446784+00:00", 
       "currency_code": "MKD", 
       "currency_name": "Denar", 
       "equivalent_fips_code": "", 
@@ -3498,7 +3807,8 @@
       "population": "2061000", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".mk"
+      "tld": ".mk", 
+      "utime": "2013-02-17 12:19:01.446973+00:00"
     }, 
     "model": "common.country", 
     "pk": "MK"
@@ -3509,6 +3819,7 @@
       "area": 1240000, 
       "capital": "Bamako", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.447274+00:00", 
       "currency_code": "XOF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -3522,7 +3833,8 @@
       "population": "13796354", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ml"
+      "tld": ".ml", 
+      "utime": "2013-02-17 12:19:01.447336+00:00"
     }, 
     "model": "common.country", 
     "pk": "ML"
@@ -3533,6 +3845,7 @@
       "area": 678500, 
       "capital": "Nay Pyi Taw", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.447499+00:00", 
       "currency_code": "MMK", 
       "currency_name": "Kyat", 
       "equivalent_fips_code": "", 
@@ -3546,7 +3859,8 @@
       "population": "53414374", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".mm"
+      "tld": ".mm", 
+      "utime": "2013-02-17 12:19:01.447530+00:00"
     }, 
     "model": "common.country", 
     "pk": "MM"
@@ -3557,6 +3871,7 @@
       "area": 1565000, 
       "capital": "Ulan Bator", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.447685+00:00", 
       "currency_code": "MNT", 
       "currency_name": "Tugrik", 
       "equivalent_fips_code": "", 
@@ -3570,7 +3885,8 @@
       "population": "3086918", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".mn"
+      "tld": ".mn", 
+      "utime": "2013-02-17 12:19:01.447714+00:00"
     }, 
     "model": "common.country", 
     "pk": "MN"
@@ -3581,6 +3897,7 @@
       "area": 254, 
       "capital": "Macao", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.447867+00:00", 
       "currency_code": "MOP", 
       "currency_name": "Pataca", 
       "equivalent_fips_code": "", 
@@ -3594,7 +3911,8 @@
       "population": "449198", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".mo"
+      "tld": ".mo", 
+      "utime": "2013-02-17 12:19:01.447895+00:00"
     }, 
     "model": "common.country", 
     "pk": "MO"
@@ -3605,6 +3923,7 @@
       "area": 477, 
       "capital": "Saipan", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.448201+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -3618,7 +3937,8 @@
       "population": "53883", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".mp"
+      "tld": ".mp", 
+      "utime": "2013-02-17 12:19:01.448220+00:00"
     }, 
     "model": "common.country", 
     "pk": "MP"
@@ -3629,6 +3949,7 @@
       "area": 1100, 
       "capital": "Fort-de-France", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.448404+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -3642,7 +3963,8 @@
       "population": "432900", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".mq"
+      "tld": ".mq", 
+      "utime": "2013-02-17 12:19:01.448418+00:00"
     }, 
     "model": "common.country", 
     "pk": "MQ"
@@ -3653,6 +3975,7 @@
       "area": 1030700, 
       "capital": "Nouakchott", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.448644+00:00", 
       "currency_code": "MRO", 
       "currency_name": "Ouguiya", 
       "equivalent_fips_code": "", 
@@ -3666,7 +3989,8 @@
       "population": "3205060", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".mr"
+      "tld": ".mr", 
+      "utime": "2013-02-17 12:19:01.448664+00:00"
     }, 
     "model": "common.country", 
     "pk": "MR"
@@ -3677,6 +4001,7 @@
       "area": 102, 
       "capital": "Plymouth", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.448835+00:00", 
       "currency_code": "XCD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -3690,7 +4015,8 @@
       "population": "9341", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ms"
+      "tld": ".ms", 
+      "utime": "2013-02-17 12:19:01.448851+00:00"
     }, 
     "model": "common.country", 
     "pk": "MS"
@@ -3701,6 +4027,7 @@
       "area": 316, 
       "capital": "Valletta", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.449116+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -3714,7 +4041,8 @@
       "population": "403000", 
       "postal_code_format": "@@@ ###|@@@ ##", 
       "postal_code_regex": "^([A-Z]{3}\\d{2}\\d?)$", 
-      "tld": ".mt"
+      "tld": ".mt", 
+      "utime": "2013-02-17 12:19:01.449151+00:00"
     }, 
     "model": "common.country", 
     "pk": "MT"
@@ -3725,6 +4053,7 @@
       "area": 2040, 
       "capital": "Port Louis", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.449401+00:00", 
       "currency_code": "MUR", 
       "currency_name": "Rupee", 
       "equivalent_fips_code": "", 
@@ -3738,7 +4067,8 @@
       "population": "1294104", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".mu"
+      "tld": ".mu", 
+      "utime": "2013-02-17 12:19:01.449419+00:00"
     }, 
     "model": "common.country", 
     "pk": "MU"
@@ -3749,6 +4079,7 @@
       "area": 300, 
       "capital": "Male", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.449686+00:00", 
       "currency_code": "MVR", 
       "currency_name": "Rufiyaa", 
       "equivalent_fips_code": "", 
@@ -3762,7 +4093,8 @@
       "population": "395650", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".mv"
+      "tld": ".mv", 
+      "utime": "2013-02-17 12:19:01.449711+00:00"
     }, 
     "model": "common.country", 
     "pk": "MV"
@@ -3773,6 +4105,7 @@
       "area": 118480, 
       "capital": "Lilongwe", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.449982+00:00", 
       "currency_code": "MWK", 
       "currency_name": "Kwacha", 
       "equivalent_fips_code": "", 
@@ -3786,7 +4119,8 @@
       "population": "15447500", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".mw"
+      "tld": ".mw", 
+      "utime": "2013-02-17 12:19:01.450008+00:00"
     }, 
     "model": "common.country", 
     "pk": "MW"
@@ -3797,6 +4131,7 @@
       "area": 1972550, 
       "capital": "Mexico City", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.450265+00:00", 
       "currency_code": "MXN", 
       "currency_name": "Peso", 
       "equivalent_fips_code": "", 
@@ -3810,7 +4145,8 @@
       "population": "112468855", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".mx"
+      "tld": ".mx", 
+      "utime": "2013-02-17 12:19:01.450291+00:00"
     }, 
     "model": "common.country", 
     "pk": "MX"
@@ -3821,6 +4157,7 @@
       "area": 329750, 
       "capital": "Kuala Lumpur", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.450364+00:00", 
       "currency_code": "MYR", 
       "currency_name": "Ringgit", 
       "equivalent_fips_code": "", 
@@ -3834,7 +4171,8 @@
       "population": "28274729", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".my"
+      "tld": ".my", 
+      "utime": "2013-02-17 12:19:01.450364+00:00"
     }, 
     "model": "common.country", 
     "pk": "MY"
@@ -3845,6 +4183,7 @@
       "area": 801590, 
       "capital": "Maputo", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.450561+00:00", 
       "currency_code": "MZN", 
       "currency_name": "Metical", 
       "equivalent_fips_code": "", 
@@ -3858,7 +4197,8 @@
       "population": "22061451", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".mz"
+      "tld": ".mz", 
+      "utime": "2013-02-17 12:19:01.450591+00:00"
     }, 
     "model": "common.country", 
     "pk": "MZ"
@@ -3869,6 +4209,7 @@
       "area": 825418, 
       "capital": "Windhoek", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.450924+00:00", 
       "currency_code": "NAD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -3882,7 +4223,8 @@
       "population": "2128471", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".na"
+      "tld": ".na", 
+      "utime": "2013-02-17 12:19:01.450948+00:00"
     }, 
     "model": "common.country", 
     "pk": "NA"
@@ -3893,6 +4235,7 @@
       "area": 19060, 
       "capital": "Noumea", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.451646+00:00", 
       "currency_code": "XPF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -3906,7 +4249,8 @@
       "population": "216494", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".nc"
+      "tld": ".nc", 
+      "utime": "2013-02-17 12:19:01.451695+00:00"
     }, 
     "model": "common.country", 
     "pk": "NC"
@@ -3917,6 +4261,7 @@
       "area": 1267000, 
       "capital": "Niamey", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.452098+00:00", 
       "currency_code": "XOF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -3930,7 +4275,8 @@
       "population": "15878271", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".ne"
+      "tld": ".ne", 
+      "utime": "2013-02-17 12:19:01.452124+00:00"
     }, 
     "model": "common.country", 
     "pk": "NE"
@@ -3941,6 +4287,7 @@
       "area": 35, 
       "capital": "Kingston", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.452402+00:00", 
       "currency_code": "AUD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -3954,7 +4301,8 @@
       "population": "1828", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".nf"
+      "tld": ".nf", 
+      "utime": "2013-02-17 12:19:01.452427+00:00"
     }, 
     "model": "common.country", 
     "pk": "NF"
@@ -3965,6 +4313,7 @@
       "area": 923768, 
       "capital": "Abuja", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.452633+00:00", 
       "currency_code": "NGN", 
       "currency_name": "Naira", 
       "equivalent_fips_code": "", 
@@ -3978,7 +4327,8 @@
       "population": "154000000", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".ng"
+      "tld": ".ng", 
+      "utime": "2013-02-17 12:19:01.452652+00:00"
     }, 
     "model": "common.country", 
     "pk": "NG"
@@ -3989,6 +4339,7 @@
       "area": 129494, 
       "capital": "Managua", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.452867+00:00", 
       "currency_code": "NIO", 
       "currency_name": "Cordoba", 
       "equivalent_fips_code": "", 
@@ -4002,7 +4353,8 @@
       "population": "5995928", 
       "postal_code_format": "###-###-#", 
       "postal_code_regex": "^(\\d{7})$", 
-      "tld": ".ni"
+      "tld": ".ni", 
+      "utime": "2013-02-17 12:19:01.452893+00:00"
     }, 
     "model": "common.country", 
     "pk": "NI"
@@ -4013,6 +4365,7 @@
       "area": 41526, 
       "capital": "Amsterdam", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.453222+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -4026,7 +4379,8 @@
       "population": "16645000", 
       "postal_code_format": "#### @@", 
       "postal_code_regex": "^(\\d{4}[A-Z]{2})$", 
-      "tld": ".nl"
+      "tld": ".nl", 
+      "utime": "2013-02-17 12:19:01.453246+00:00"
     }, 
     "model": "common.country", 
     "pk": "NL"
@@ -4037,6 +4391,7 @@
       "area": 324220, 
       "capital": "Oslo", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.453462+00:00", 
       "currency_code": "NOK", 
       "currency_name": "Krone", 
       "equivalent_fips_code": "", 
@@ -4050,7 +4405,8 @@
       "population": "5009150", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".no"
+      "tld": ".no", 
+      "utime": "2013-02-17 12:19:01.453484+00:00"
     }, 
     "model": "common.country", 
     "pk": "NO"
@@ -4061,6 +4417,7 @@
       "area": 140800, 
       "capital": "Kathmandu", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.453697+00:00", 
       "currency_code": "NPR", 
       "currency_name": "Rupee", 
       "equivalent_fips_code": "", 
@@ -4074,7 +4431,8 @@
       "population": "28951852", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".np"
+      "tld": ".np", 
+      "utime": "2013-02-17 12:19:01.453719+00:00"
     }, 
     "model": "common.country", 
     "pk": "NP"
@@ -4085,6 +4443,7 @@
       "area": 21, 
       "capital": "Yaren", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.453957+00:00", 
       "currency_code": "AUD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -4098,7 +4457,8 @@
       "population": "10065", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".nr"
+      "tld": ".nr", 
+      "utime": "2013-02-17 12:19:01.453983+00:00"
     }, 
     "model": "common.country", 
     "pk": "NR"
@@ -4109,6 +4469,7 @@
       "area": 260, 
       "capital": "Alofi", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.454220+00:00", 
       "currency_code": "NZD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -4122,7 +4483,8 @@
       "population": "2166", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".nu"
+      "tld": ".nu", 
+      "utime": "2013-02-17 12:19:01.454242+00:00"
     }, 
     "model": "common.country", 
     "pk": "NU"
@@ -4133,6 +4495,7 @@
       "area": 268680, 
       "capital": "Wellington", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.454457+00:00", 
       "currency_code": "NZD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -4146,7 +4509,8 @@
       "population": "4252277", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".nz"
+      "tld": ".nz", 
+      "utime": "2013-02-17 12:19:01.454478+00:00"
     }, 
     "model": "common.country", 
     "pk": "NZ"
@@ -4157,6 +4521,7 @@
       "area": 212460, 
       "capital": "Muscat", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.454682+00:00", 
       "currency_code": "OMR", 
       "currency_name": "Rial", 
       "equivalent_fips_code": "", 
@@ -4170,7 +4535,8 @@
       "population": "2967717", 
       "postal_code_format": "###", 
       "postal_code_regex": "^(\\d{3})$", 
-      "tld": ".om"
+      "tld": ".om", 
+      "utime": "2013-02-17 12:19:01.454702+00:00"
     }, 
     "model": "common.country", 
     "pk": "OM"
@@ -4181,6 +4547,7 @@
       "area": 78200, 
       "capital": "Panama City", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.454795+00:00", 
       "currency_code": "PAB", 
       "currency_name": "Balboa", 
       "equivalent_fips_code": "", 
@@ -4194,7 +4561,8 @@
       "population": "3410676", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".pa"
+      "tld": ".pa", 
+      "utime": "2013-02-17 12:19:01.454795+00:00"
     }, 
     "model": "common.country", 
     "pk": "PA"
@@ -4205,6 +4573,7 @@
       "area": 1285220, 
       "capital": "Lima", 
       "continent": "SA", 
+      "ctime": "2013-02-17 12:19:01.454795+00:00", 
       "currency_code": "PEN", 
       "currency_name": "Sol", 
       "equivalent_fips_code": "", 
@@ -4218,7 +4587,8 @@
       "population": "29907003", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".pe"
+      "tld": ".pe", 
+      "utime": "2013-02-17 12:19:01.454872+00:00"
     }, 
     "model": "common.country", 
     "pk": "PE"
@@ -4229,6 +4599,7 @@
       "area": 4167, 
       "capital": "Papeete", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.455021+00:00", 
       "currency_code": "XPF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -4242,7 +4613,8 @@
       "population": "270485", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^((97|98)7\\d{2})$", 
-      "tld": ".pf"
+      "tld": ".pf", 
+      "utime": "2013-02-17 12:19:01.455052+00:00"
     }, 
     "model": "common.country", 
     "pk": "PF"
@@ -4253,6 +4625,7 @@
       "area": 462840, 
       "capital": "Port Moresby", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.455185+00:00", 
       "currency_code": "PGK", 
       "currency_name": "Kina", 
       "equivalent_fips_code": "", 
@@ -4266,7 +4639,8 @@
       "population": "6064515", 
       "postal_code_format": "###", 
       "postal_code_regex": "^(\\d{3})$", 
-      "tld": ".pg"
+      "tld": ".pg", 
+      "utime": "2013-02-17 12:19:01.455196+00:00"
     }, 
     "model": "common.country", 
     "pk": "PG"
@@ -4277,6 +4651,7 @@
       "area": 300000, 
       "capital": "Manila", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.455320+00:00", 
       "currency_code": "PHP", 
       "currency_name": "Peso", 
       "equivalent_fips_code": "", 
@@ -4290,7 +4665,8 @@
       "population": "99900177", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".ph"
+      "tld": ".ph", 
+      "utime": "2013-02-17 12:19:01.455331+00:00"
     }, 
     "model": "common.country", 
     "pk": "PH"
@@ -4301,6 +4677,7 @@
       "area": 803940, 
       "capital": "Islamabad", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.455454+00:00", 
       "currency_code": "PKR", 
       "currency_name": "Rupee", 
       "equivalent_fips_code": "", 
@@ -4314,7 +4691,8 @@
       "population": "184404791", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".pk"
+      "tld": ".pk", 
+      "utime": "2013-02-17 12:19:01.455465+00:00"
     }, 
     "model": "common.country", 
     "pk": "PK"
@@ -4325,6 +4703,7 @@
       "area": 312685, 
       "capital": "Warsaw", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.455588+00:00", 
       "currency_code": "PLN", 
       "currency_name": "Zloty", 
       "equivalent_fips_code": "", 
@@ -4338,7 +4717,8 @@
       "population": "38500000", 
       "postal_code_format": "##-###", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".pl"
+      "tld": ".pl", 
+      "utime": "2013-02-17 12:19:01.455599+00:00"
     }, 
     "model": "common.country", 
     "pk": "PL"
@@ -4349,6 +4729,7 @@
       "area": 242, 
       "capital": "Saint-Pierre", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.455724+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -4362,7 +4743,8 @@
       "population": "7012", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(97500)$", 
-      "tld": ".pm"
+      "tld": ".pm", 
+      "utime": "2013-02-17 12:19:01.455734+00:00"
     }, 
     "model": "common.country", 
     "pk": "PM"
@@ -4373,6 +4755,7 @@
       "area": 47, 
       "capital": "Adamstown", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.455857+00:00", 
       "currency_code": "NZD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -4386,7 +4769,8 @@
       "population": "46", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".pn"
+      "tld": ".pn", 
+      "utime": "2013-02-17 12:19:01.455867+00:00"
     }, 
     "model": "common.country", 
     "pk": "PN"
@@ -4397,6 +4781,7 @@
       "area": 9104, 
       "capital": "San Juan", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.456060+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -4410,7 +4795,8 @@
       "population": "3916632", 
       "postal_code_format": "#####-####", 
       "postal_code_regex": "^(\\d{9})$", 
-      "tld": ".pr"
+      "tld": ".pr", 
+      "utime": "2013-02-17 12:19:01.456073+00:00"
     }, 
     "model": "common.country", 
     "pk": "PR"
@@ -4421,6 +4807,7 @@
       "area": 5970, 
       "capital": "East Jerusalem", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.456197+00:00", 
       "currency_code": "ILS", 
       "currency_name": "Shekel", 
       "equivalent_fips_code": "", 
@@ -4434,7 +4821,8 @@
       "population": "3800000", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ps"
+      "tld": ".ps", 
+      "utime": "2013-02-17 12:19:01.456208+00:00"
     }, 
     "model": "common.country", 
     "pk": "PS"
@@ -4445,6 +4833,7 @@
       "area": 92391, 
       "capital": "Lisbon", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.456332+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -4458,7 +4847,8 @@
       "population": "10676000", 
       "postal_code_format": "####-###", 
       "postal_code_regex": "^(\\d{7})$", 
-      "tld": ".pt"
+      "tld": ".pt", 
+      "utime": "2013-02-17 12:19:01.456342+00:00"
     }, 
     "model": "common.country", 
     "pk": "PT"
@@ -4469,6 +4859,7 @@
       "area": 458, 
       "capital": "Melekeok", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.456673+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -4482,7 +4873,8 @@
       "population": "19907", 
       "postal_code_format": "96940", 
       "postal_code_regex": "^(96940)$", 
-      "tld": ".pw"
+      "tld": ".pw", 
+      "utime": "2013-02-17 12:19:01.456721+00:00"
     }, 
     "model": "common.country", 
     "pk": "PW"
@@ -4493,6 +4885,7 @@
       "area": 406750, 
       "capital": "Asuncion", 
       "continent": "SA", 
+      "ctime": "2013-02-17 12:19:01.456895+00:00", 
       "currency_code": "PYG", 
       "currency_name": "Guarani", 
       "equivalent_fips_code": "", 
@@ -4506,7 +4899,8 @@
       "population": "6375830", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".py"
+      "tld": ".py", 
+      "utime": "2013-02-17 12:19:01.456939+00:00"
     }, 
     "model": "common.country", 
     "pk": "PY"
@@ -4517,6 +4911,7 @@
       "area": 11437, 
       "capital": "Doha", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.457284+00:00", 
       "currency_code": "QAR", 
       "currency_name": "Rial", 
       "equivalent_fips_code": "", 
@@ -4530,7 +4925,8 @@
       "population": "840926", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".qa"
+      "tld": ".qa", 
+      "utime": "2013-02-17 12:19:01.457346+00:00"
     }, 
     "model": "common.country", 
     "pk": "QA"
@@ -4541,6 +4937,7 @@
       "area": 2517, 
       "capital": "Saint-Denis", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.457564+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -4554,7 +4951,8 @@
       "population": "776948", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^((97|98)(4|7|8)\\d{2})$", 
-      "tld": ".re"
+      "tld": ".re", 
+      "utime": "2013-02-17 12:19:01.457595+00:00"
     }, 
     "model": "common.country", 
     "pk": "RE"
@@ -4565,6 +4963,7 @@
       "area": 237500, 
       "capital": "Bucharest", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.457751+00:00", 
       "currency_code": "RON", 
       "currency_name": "Leu", 
       "equivalent_fips_code": "", 
@@ -4578,7 +4977,8 @@
       "population": "21959278", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".ro"
+      "tld": ".ro", 
+      "utime": "2013-02-17 12:19:01.457779+00:00"
     }, 
     "model": "common.country", 
     "pk": "RO"
@@ -4589,6 +4989,7 @@
       "area": 88361, 
       "capital": "Belgrade", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.457932+00:00", 
       "currency_code": "RSD", 
       "currency_name": "Dinar", 
       "equivalent_fips_code": "", 
@@ -4602,7 +5003,8 @@
       "population": "7344847", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".rs"
+      "tld": ".rs", 
+      "utime": "2013-02-17 12:19:01.457959+00:00"
     }, 
     "model": "common.country", 
     "pk": "RS"
@@ -4613,6 +5015,7 @@
       "area": 17100000, 
       "capital": "Moscow", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.458007+00:00", 
       "currency_code": "RUB", 
       "currency_name": "Ruble", 
       "equivalent_fips_code": "", 
@@ -4626,7 +5029,8 @@
       "population": "140702000", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".ru"
+      "tld": ".ru", 
+      "utime": "2013-02-17 12:19:01.458031+00:00"
     }, 
     "model": "common.country", 
     "pk": "RU"
@@ -4637,6 +5041,7 @@
       "area": 26338, 
       "capital": "Kigali", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.458159+00:00", 
       "currency_code": "RWF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -4650,7 +5055,8 @@
       "population": "11055976", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".rw"
+      "tld": ".rw", 
+      "utime": "2013-02-17 12:19:01.458170+00:00"
     }, 
     "model": "common.country", 
     "pk": "RW"
@@ -4661,6 +5067,7 @@
       "area": 1960582, 
       "capital": "Riyadh", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.458294+00:00", 
       "currency_code": "SAR", 
       "currency_name": "Rial", 
       "equivalent_fips_code": "", 
@@ -4674,7 +5081,8 @@
       "population": "25731776", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".sa"
+      "tld": ".sa", 
+      "utime": "2013-02-17 12:19:01.458305+00:00"
     }, 
     "model": "common.country", 
     "pk": "SA"
@@ -4685,6 +5093,7 @@
       "area": 28450, 
       "capital": "Honiara", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.458428+00:00", 
       "currency_code": "SBD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -4698,7 +5107,8 @@
       "population": "559198", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".sb"
+      "tld": ".sb", 
+      "utime": "2013-02-17 12:19:01.458439+00:00"
     }, 
     "model": "common.country", 
     "pk": "SB"
@@ -4709,6 +5119,7 @@
       "area": 455, 
       "capital": "Victoria", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.458564+00:00", 
       "currency_code": "SCR", 
       "currency_name": "Rupee", 
       "equivalent_fips_code": "", 
@@ -4722,7 +5133,8 @@
       "population": "88340", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".sc"
+      "tld": ".sc", 
+      "utime": "2013-02-17 12:19:01.458574+00:00"
     }, 
     "model": "common.country", 
     "pk": "SC"
@@ -4733,6 +5145,7 @@
       "area": 1861484, 
       "capital": "Khartoum", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.458698+00:00", 
       "currency_code": "SDG", 
       "currency_name": "Pound", 
       "equivalent_fips_code": "", 
@@ -4746,7 +5159,8 @@
       "population": "35000000", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".sd"
+      "tld": ".sd", 
+      "utime": "2013-02-17 12:19:01.458709+00:00"
     }, 
     "model": "common.country", 
     "pk": "SD"
@@ -4757,6 +5171,7 @@
       "area": 449964, 
       "capital": "Stockholm", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.458985+00:00", 
       "currency_code": "SEK", 
       "currency_name": "Krona", 
       "equivalent_fips_code": "", 
@@ -4770,7 +5185,8 @@
       "population": "9045000", 
       "postal_code_format": "SE-### ##", 
       "postal_code_regex": "^(?:SE)*(\\d{5})$", 
-      "tld": ".se"
+      "tld": ".se", 
+      "utime": "2013-02-17 12:19:01.458996+00:00"
     }, 
     "model": "common.country", 
     "pk": "SE"
@@ -4781,6 +5197,7 @@
       "area": 693, 
       "capital": "Singapur", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.459146+00:00", 
       "currency_code": "SGD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -4794,7 +5211,8 @@
       "population": "4701069", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".sg"
+      "tld": ".sg", 
+      "utime": "2013-02-17 12:19:01.459158+00:00"
     }, 
     "model": "common.country", 
     "pk": "SG"
@@ -4805,6 +5223,7 @@
       "area": 410, 
       "capital": "Jamestown", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.459353+00:00", 
       "currency_code": "SHP", 
       "currency_name": "Pound", 
       "equivalent_fips_code": "", 
@@ -4818,7 +5237,8 @@
       "population": "7460", 
       "postal_code_format": "STHL 1ZZ", 
       "postal_code_regex": "^(STHL1ZZ)$", 
-      "tld": ".sh"
+      "tld": ".sh", 
+      "utime": "2013-02-17 12:19:01.459373+00:00"
     }, 
     "model": "common.country", 
     "pk": "SH"
@@ -4829,6 +5249,7 @@
       "area": 20273, 
       "capital": "Ljubljana", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.459546+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -4842,7 +5263,8 @@
       "population": "2007000", 
       "postal_code_format": "SI- ####", 
       "postal_code_regex": "^(?:SI)*(\\d{4})$", 
-      "tld": ".si"
+      "tld": ".si", 
+      "utime": "2013-02-17 12:19:01.459559+00:00"
     }, 
     "model": "common.country", 
     "pk": "SI"
@@ -4853,6 +5275,7 @@
       "area": 62049, 
       "capital": "Longyearbyen", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.459715+00:00", 
       "currency_code": "NOK", 
       "currency_name": "Krone", 
       "equivalent_fips_code": "", 
@@ -4866,7 +5289,8 @@
       "population": "2550", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".sj"
+      "tld": ".sj", 
+      "utime": "2013-02-17 12:19:01.459728+00:00"
     }, 
     "model": "common.country", 
     "pk": "SJ"
@@ -4877,6 +5301,7 @@
       "area": 48845, 
       "capital": "Bratislava", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.459901+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -4890,7 +5315,8 @@
       "population": "5455000", 
       "postal_code_format": "###  ##", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".sk"
+      "tld": ".sk", 
+      "utime": "2013-02-17 12:19:01.459913+00:00"
     }, 
     "model": "common.country", 
     "pk": "SK"
@@ -4901,6 +5327,7 @@
       "area": 71740, 
       "capital": "Freetown", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.460080+00:00", 
       "currency_code": "SLL", 
       "currency_name": "Leone", 
       "equivalent_fips_code": "", 
@@ -4914,7 +5341,8 @@
       "population": "5245695", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".sl"
+      "tld": ".sl", 
+      "utime": "2013-02-17 12:19:01.460093+00:00"
     }, 
     "model": "common.country", 
     "pk": "SL"
@@ -4925,6 +5353,7 @@
       "area": 62, 
       "capital": "San Marino", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.460219+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -4938,7 +5367,8 @@
       "population": "31477", 
       "postal_code_format": "4789#", 
       "postal_code_regex": "^(4789\\d)$", 
-      "tld": ".sm"
+      "tld": ".sm", 
+      "utime": "2013-02-17 12:19:01.460230+00:00"
     }, 
     "model": "common.country", 
     "pk": "SM"
@@ -4949,6 +5379,7 @@
       "area": 196190, 
       "capital": "Dakar", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.460352+00:00", 
       "currency_code": "XOF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -4962,7 +5393,8 @@
       "population": "12323252", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".sn"
+      "tld": ".sn", 
+      "utime": "2013-02-17 12:19:01.460363+00:00"
     }, 
     "model": "common.country", 
     "pk": "SN"
@@ -4973,6 +5405,7 @@
       "area": 637657, 
       "capital": "Mogadishu", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.460486+00:00", 
       "currency_code": "SOS", 
       "currency_name": "Shilling", 
       "equivalent_fips_code": "", 
@@ -4986,7 +5419,8 @@
       "population": "10112453", 
       "postal_code_format": "@@  #####", 
       "postal_code_regex": "^([A-Z]{2}\\d{5})$", 
-      "tld": ".so"
+      "tld": ".so", 
+      "utime": "2013-02-17 12:19:01.460496+00:00"
     }, 
     "model": "common.country", 
     "pk": "SO"
@@ -4997,6 +5431,7 @@
       "area": 163270, 
       "capital": "Paramaribo", 
       "continent": "SA", 
+      "ctime": "2013-02-17 12:19:01.460618+00:00", 
       "currency_code": "SRD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -5010,7 +5445,8 @@
       "population": "492829", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".sr"
+      "tld": ".sr", 
+      "utime": "2013-02-17 12:19:01.460629+00:00"
     }, 
     "model": "common.country", 
     "pk": "SR"
@@ -5021,6 +5457,7 @@
       "area": 644329, 
       "capital": "Juba", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.458845+00:00", 
       "currency_code": "SSP", 
       "currency_name": "Pound", 
       "equivalent_fips_code": "", 
@@ -5034,7 +5471,8 @@
       "population": "8260490", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ""
+      "tld": "", 
+      "utime": "2013-02-17 12:19:01.458856+00:00"
     }, 
     "model": "common.country", 
     "pk": "SS"
@@ -5045,6 +5483,7 @@
       "area": 1001, 
       "capital": "Sao Tome", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.460810+00:00", 
       "currency_code": "STD", 
       "currency_name": "Dobra", 
       "equivalent_fips_code": "", 
@@ -5058,7 +5497,8 @@
       "population": "175808", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".st"
+      "tld": ".st", 
+      "utime": "2013-02-17 12:19:01.460823+00:00"
     }, 
     "model": "common.country", 
     "pk": "ST"
@@ -5069,6 +5509,7 @@
       "area": 21040, 
       "capital": "San Salvador", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.460947+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -5082,7 +5523,8 @@
       "population": "6052064", 
       "postal_code_format": "CP ####", 
       "postal_code_regex": "^(?:CP)*(\\d{4})$", 
-      "tld": ".sv"
+      "tld": ".sv", 
+      "utime": "2013-02-17 12:19:01.460958+00:00"
     }, 
     "model": "common.country", 
     "pk": "SV"
@@ -5093,6 +5535,7 @@
       "area": null, 
       "capital": "Philipsburg", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.461074+00:00", 
       "currency_code": "ANG", 
       "currency_name": "Guilder", 
       "equivalent_fips_code": "", 
@@ -5106,7 +5549,8 @@
       "population": "37429", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".sx"
+      "tld": ".sx", 
+      "utime": "2013-02-17 12:19:01.461084+00:00"
     }, 
     "model": "common.country", 
     "pk": "SX"
@@ -5117,6 +5561,7 @@
       "area": 185180, 
       "capital": "Damascus", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.461182+00:00", 
       "currency_code": "SYP", 
       "currency_name": "Pound", 
       "equivalent_fips_code": "", 
@@ -5130,7 +5575,8 @@
       "population": "22198110", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".sy"
+      "tld": ".sy", 
+      "utime": "2013-02-17 12:19:01.461182+00:00"
     }, 
     "model": "common.country", 
     "pk": "SY"
@@ -5141,6 +5587,7 @@
       "area": 17363, 
       "capital": "Mbabane", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.461209+00:00", 
       "currency_code": "SZL", 
       "currency_name": "Lilangeni", 
       "equivalent_fips_code": "", 
@@ -5154,7 +5601,8 @@
       "population": "1354051", 
       "postal_code_format": "@###", 
       "postal_code_regex": "^([A-Z]\\d{3})$", 
-      "tld": ".sz"
+      "tld": ".sz", 
+      "utime": "2013-02-17 12:19:01.461225+00:00"
     }, 
     "model": "common.country", 
     "pk": "SZ"
@@ -5165,6 +5613,7 @@
       "area": 430, 
       "capital": "Cockburn Town", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.461380+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -5178,7 +5627,8 @@
       "population": "20556", 
       "postal_code_format": "TKCA 1ZZ", 
       "postal_code_regex": "^(TKCA 1ZZ)$", 
-      "tld": ".tc"
+      "tld": ".tc", 
+      "utime": "2013-02-17 12:19:01.461393+00:00"
     }, 
     "model": "common.country", 
     "pk": "TC"
@@ -5189,6 +5639,7 @@
       "area": 1284000, 
       "capital": "N'Djamena", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.461552+00:00", 
       "currency_code": "XAF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -5202,7 +5653,8 @@
       "population": "10543464", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".td"
+      "tld": ".td", 
+      "utime": "2013-02-17 12:19:01.461564+00:00"
     }, 
     "model": "common.country", 
     "pk": "TD"
@@ -5213,6 +5665,7 @@
       "area": 7829, 
       "capital": "Port-aux-Francais", 
       "continent": "AN", 
+      "ctime": "2013-02-17 12:19:01.461692+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro  ", 
       "equivalent_fips_code": "", 
@@ -5226,7 +5679,8 @@
       "population": "140", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".tf"
+      "tld": ".tf", 
+      "utime": "2013-02-17 12:19:01.461703+00:00"
     }, 
     "model": "common.country", 
     "pk": "TF"
@@ -5237,6 +5691,7 @@
       "area": 56785, 
       "capital": "Lome", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.461827+00:00", 
       "currency_code": "XOF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -5250,7 +5705,8 @@
       "population": "6587239", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".tg"
+      "tld": ".tg", 
+      "utime": "2013-02-17 12:19:01.461843+00:00"
     }, 
     "model": "common.country", 
     "pk": "TG"
@@ -5261,6 +5717,7 @@
       "area": 514000, 
       "capital": "Bangkok", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.461972+00:00", 
       "currency_code": "THB", 
       "currency_name": "Baht", 
       "equivalent_fips_code": "", 
@@ -5274,7 +5731,8 @@
       "population": "67089500", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".th"
+      "tld": ".th", 
+      "utime": "2013-02-17 12:19:01.461983+00:00"
     }, 
     "model": "common.country", 
     "pk": "TH"
@@ -5285,6 +5743,7 @@
       "area": 143100, 
       "capital": "Dushanbe", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.462550+00:00", 
       "currency_code": "TJS", 
       "currency_name": "Somoni", 
       "equivalent_fips_code": "", 
@@ -5298,7 +5757,8 @@
       "population": "7487489", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".tj"
+      "tld": ".tj", 
+      "utime": "2013-02-17 12:19:01.462586+00:00"
     }, 
     "model": "common.country", 
     "pk": "TJ"
@@ -5309,6 +5769,7 @@
       "area": 10, 
       "capital": "", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.462745+00:00", 
       "currency_code": "NZD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -5322,7 +5783,8 @@
       "population": "1466", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".tk"
+      "tld": ".tk", 
+      "utime": "2013-02-17 12:19:01.462777+00:00"
     }, 
     "model": "common.country", 
     "pk": "TK"
@@ -5333,6 +5795,7 @@
       "area": 15007, 
       "capital": "Dili", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.462931+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -5346,7 +5809,8 @@
       "population": "1154625", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".tl"
+      "tld": ".tl", 
+      "utime": "2013-02-17 12:19:01.462960+00:00"
     }, 
     "model": "common.country", 
     "pk": "TL"
@@ -5357,6 +5821,7 @@
       "area": 488100, 
       "capital": "Ashgabat", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.463120+00:00", 
       "currency_code": "TMT", 
       "currency_name": "Manat", 
       "equivalent_fips_code": "", 
@@ -5370,7 +5835,8 @@
       "population": "4940916", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".tm"
+      "tld": ".tm", 
+      "utime": "2013-02-17 12:19:01.463134+00:00"
     }, 
     "model": "common.country", 
     "pk": "TM"
@@ -5381,6 +5847,7 @@
       "area": 163610, 
       "capital": "Tunis", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.463264+00:00", 
       "currency_code": "TND", 
       "currency_name": "Dinar", 
       "equivalent_fips_code": "", 
@@ -5394,7 +5861,8 @@
       "population": "10589025", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".tn"
+      "tld": ".tn", 
+      "utime": "2013-02-17 12:19:01.463274+00:00"
     }, 
     "model": "common.country", 
     "pk": "TN"
@@ -5405,6 +5873,7 @@
       "area": 748, 
       "capital": "Nuku'alofa", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.463397+00:00", 
       "currency_code": "TOP", 
       "currency_name": "Pa'anga", 
       "equivalent_fips_code": "", 
@@ -5418,7 +5887,8 @@
       "population": "122580", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".to"
+      "tld": ".to", 
+      "utime": "2013-02-17 12:19:01.463408+00:00"
     }, 
     "model": "common.country", 
     "pk": "TO"
@@ -5429,6 +5899,7 @@
       "area": 780580, 
       "capital": "Ankara", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.463531+00:00", 
       "currency_code": "TRY", 
       "currency_name": "Lira", 
       "equivalent_fips_code": "", 
@@ -5442,7 +5913,8 @@
       "population": "77804122", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".tr"
+      "tld": ".tr", 
+      "utime": "2013-02-17 12:19:01.463541+00:00"
     }, 
     "model": "common.country", 
     "pk": "TR"
@@ -5453,6 +5925,7 @@
       "area": 5128, 
       "capital": "Port of Spain", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.463663+00:00", 
       "currency_code": "TTD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -5466,7 +5939,8 @@
       "population": "1228691", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".tt"
+      "tld": ".tt", 
+      "utime": "2013-02-17 12:19:01.463673+00:00"
     }, 
     "model": "common.country", 
     "pk": "TT"
@@ -5477,6 +5951,7 @@
       "area": 26, 
       "capital": "Funafuti", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.463795+00:00", 
       "currency_code": "AUD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -5490,7 +5965,8 @@
       "population": "10472", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".tv"
+      "tld": ".tv", 
+      "utime": "2013-02-17 12:19:01.463806+00:00"
     }, 
     "model": "common.country", 
     "pk": "TV"
@@ -5501,6 +5977,7 @@
       "area": 35980, 
       "capital": "Taipei", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.463934+00:00", 
       "currency_code": "TWD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -5514,7 +5991,8 @@
       "population": "22894384", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".tw"
+      "tld": ".tw", 
+      "utime": "2013-02-17 12:19:01.463946+00:00"
     }, 
     "model": "common.country", 
     "pk": "TW"
@@ -5525,6 +6003,7 @@
       "area": 945087, 
       "capital": "Dodoma", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.463979+00:00", 
       "currency_code": "TZS", 
       "currency_name": "Shilling", 
       "equivalent_fips_code": "", 
@@ -5538,7 +6017,8 @@
       "population": "41892895", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".tz"
+      "tld": ".tz", 
+      "utime": "2013-02-17 12:19:01.463979+00:00"
     }, 
     "model": "common.country", 
     "pk": "TZ"
@@ -5549,6 +6029,7 @@
       "area": 603700, 
       "capital": "Kiev", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.463979+00:00", 
       "currency_code": "UAH", 
       "currency_name": "Hryvnia", 
       "equivalent_fips_code": "", 
@@ -5562,7 +6043,8 @@
       "population": "45415596", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".ua"
+      "tld": ".ua", 
+      "utime": "2013-02-17 12:19:01.463979+00:00"
     }, 
     "model": "common.country", 
     "pk": "UA"
@@ -5573,6 +6055,7 @@
       "area": 236040, 
       "capital": "Kampala", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.464015+00:00", 
       "currency_code": "UGX", 
       "currency_name": "Shilling", 
       "equivalent_fips_code": "", 
@@ -5586,7 +6069,8 @@
       "population": "33398682", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ug"
+      "tld": ".ug", 
+      "utime": "2013-02-17 12:19:01.464039+00:00"
     }, 
     "model": "common.country", 
     "pk": "UG"
@@ -5597,6 +6081,7 @@
       "area": 0, 
       "capital": "", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.464171+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar ", 
       "equivalent_fips_code": "", 
@@ -5610,7 +6095,8 @@
       "population": "0", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".um"
+      "tld": ".um", 
+      "utime": "2013-02-17 12:19:01.464182+00:00"
     }, 
     "model": "common.country", 
     "pk": "UM"
@@ -5621,6 +6107,7 @@
       "area": 9629091, 
       "capital": "Washington", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.464306+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -5634,7 +6121,8 @@
       "population": "310232863", 
       "postal_code_format": "#####-####", 
       "postal_code_regex": "^\\d{5}(-\\d{4})?$", 
-      "tld": ".us"
+      "tld": ".us", 
+      "utime": "2013-02-17 12:19:01.464316+00:00"
     }, 
     "model": "common.country", 
     "pk": "US"
@@ -5645,6 +6133,7 @@
       "area": 176220, 
       "capital": "Montevideo", 
       "continent": "SA", 
+      "ctime": "2013-02-17 12:19:01.464438+00:00", 
       "currency_code": "UYU", 
       "currency_name": "Peso", 
       "equivalent_fips_code": "", 
@@ -5658,7 +6147,8 @@
       "population": "3477000", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".uy"
+      "tld": ".uy", 
+      "utime": "2013-02-17 12:19:01.464449+00:00"
     }, 
     "model": "common.country", 
     "pk": "UY"
@@ -5669,6 +6159,7 @@
       "area": 447400, 
       "capital": "Tashkent", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.464572+00:00", 
       "currency_code": "UZS", 
       "currency_name": "Som", 
       "equivalent_fips_code": "", 
@@ -5682,7 +6173,8 @@
       "population": "27865738", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".uz"
+      "tld": ".uz", 
+      "utime": "2013-02-17 12:19:01.464582+00:00"
     }, 
     "model": "common.country", 
     "pk": "UZ"
@@ -5693,6 +6185,7 @@
       "area": 1, 
       "capital": "Vatican City", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.464703+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -5706,7 +6199,8 @@
       "population": "921", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".va"
+      "tld": ".va", 
+      "utime": "2013-02-17 12:19:01.464714+00:00"
     }, 
     "model": "common.country", 
     "pk": "VA"
@@ -5717,6 +6211,7 @@
       "area": 389, 
       "capital": "Kingstown", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.464836+00:00", 
       "currency_code": "XCD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -5730,7 +6225,8 @@
       "population": "104217", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".vc"
+      "tld": ".vc", 
+      "utime": "2013-02-17 12:19:01.464847+00:00"
     }, 
     "model": "common.country", 
     "pk": "VC"
@@ -5741,6 +6237,7 @@
       "area": 912050, 
       "capital": "Caracas", 
       "continent": "SA", 
+      "ctime": "2013-02-17 12:19:01.465006+00:00", 
       "currency_code": "VEF", 
       "currency_name": "Bolivar", 
       "equivalent_fips_code": "", 
@@ -5754,7 +6251,8 @@
       "population": "27223228", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".ve"
+      "tld": ".ve", 
+      "utime": "2013-02-17 12:19:01.465062+00:00"
     }, 
     "model": "common.country", 
     "pk": "VE"
@@ -5765,6 +6263,7 @@
       "area": 153, 
       "capital": "Road Town", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.465196+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -5778,7 +6277,8 @@
       "population": "21730", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".vg"
+      "tld": ".vg", 
+      "utime": "2013-02-17 12:19:01.465207+00:00"
     }, 
     "model": "common.country", 
     "pk": "VG"
@@ -5789,6 +6289,7 @@
       "area": 352, 
       "capital": "Charlotte Amalie", 
       "continent": "NA", 
+      "ctime": "2013-02-17 12:19:01.465331+00:00", 
       "currency_code": "USD", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -5802,7 +6303,8 @@
       "population": "108708", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".vi"
+      "tld": ".vi", 
+      "utime": "2013-02-17 12:19:01.465341+00:00"
     }, 
     "model": "common.country", 
     "pk": "VI"
@@ -5813,6 +6315,7 @@
       "area": 329560, 
       "capital": "Hanoi", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.465464+00:00", 
       "currency_code": "VND", 
       "currency_name": "Dong", 
       "equivalent_fips_code": "", 
@@ -5826,7 +6329,8 @@
       "population": "89571130", 
       "postal_code_format": "######", 
       "postal_code_regex": "^(\\d{6})$", 
-      "tld": ".vn"
+      "tld": ".vn", 
+      "utime": "2013-02-17 12:19:01.465475+00:00"
     }, 
     "model": "common.country", 
     "pk": "VN"
@@ -5837,6 +6341,7 @@
       "area": 12200, 
       "capital": "Port Vila", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.465597+00:00", 
       "currency_code": "VUV", 
       "currency_name": "Vatu", 
       "equivalent_fips_code": "", 
@@ -5850,7 +6355,8 @@
       "population": "221552", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".vu"
+      "tld": ".vu", 
+      "utime": "2013-02-17 12:19:01.465607+00:00"
     }, 
     "model": "common.country", 
     "pk": "VU"
@@ -5861,6 +6367,7 @@
       "area": 274, 
       "capital": "Mata Utu", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.465730+00:00", 
       "currency_code": "XPF", 
       "currency_name": "Franc", 
       "equivalent_fips_code": "", 
@@ -5874,7 +6381,8 @@
       "population": "16025", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(986\\d{2})$", 
-      "tld": ".wf"
+      "tld": ".wf", 
+      "utime": "2013-02-17 12:19:01.465741+00:00"
     }, 
     "model": "common.country", 
     "pk": "WF"
@@ -5885,6 +6393,7 @@
       "area": 2944, 
       "capital": "Apia", 
       "continent": "OC", 
+      "ctime": "2013-02-17 12:19:01.465863+00:00", 
       "currency_code": "WST", 
       "currency_name": "Tala", 
       "equivalent_fips_code": "", 
@@ -5898,7 +6407,8 @@
       "population": "192001", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ws"
+      "tld": ".ws", 
+      "utime": "2013-02-17 12:19:01.465874+00:00"
     }, 
     "model": "common.country", 
     "pk": "WS"
@@ -5909,6 +6419,7 @@
       "area": null, 
       "capital": "Pristina", 
       "continent": "EU", 
+      "ctime": "2013-02-17 12:19:01.442429+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -5922,7 +6433,8 @@
       "population": "1800000", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ""
+      "tld": "", 
+      "utime": "2013-02-17 12:19:01.442444+00:00"
     }, 
     "model": "common.country", 
     "pk": "XK"
@@ -5933,6 +6445,7 @@
       "area": 527970, 
       "capital": "Sanaa", 
       "continent": "AS", 
+      "ctime": "2013-02-17 12:19:01.466001+00:00", 
       "currency_code": "YER", 
       "currency_name": "Rial", 
       "equivalent_fips_code": "", 
@@ -5946,7 +6459,8 @@
       "population": "23495361", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".ye"
+      "tld": ".ye", 
+      "utime": "2013-02-17 12:19:01.466012+00:00"
     }, 
     "model": "common.country", 
     "pk": "YE"
@@ -5957,6 +6471,7 @@
       "area": 374, 
       "capital": "Mamoudzou", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.466136+00:00", 
       "currency_code": "EUR", 
       "currency_name": "Euro", 
       "equivalent_fips_code": "", 
@@ -5970,7 +6485,8 @@
       "population": "159042", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".yt"
+      "tld": ".yt", 
+      "utime": "2013-02-17 12:19:01.466147+00:00"
     }, 
     "model": "common.country", 
     "pk": "YT"
@@ -5981,6 +6497,7 @@
       "area": 1219912, 
       "capital": "Pretoria", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.466314+00:00", 
       "currency_code": "ZAR", 
       "currency_name": "Rand", 
       "equivalent_fips_code": "", 
@@ -5994,7 +6511,8 @@
       "population": "49000000", 
       "postal_code_format": "####", 
       "postal_code_regex": "^(\\d{4})$", 
-      "tld": ".za"
+      "tld": ".za", 
+      "utime": "2013-02-17 12:19:01.466342+00:00"
     }, 
     "model": "common.country", 
     "pk": "ZA"
@@ -6005,6 +6523,7 @@
       "area": 752614, 
       "capital": "Lusaka", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.466832+00:00", 
       "currency_code": "ZMK", 
       "currency_name": "Kwacha", 
       "equivalent_fips_code": "", 
@@ -6018,7 +6537,8 @@
       "population": "13460305", 
       "postal_code_format": "#####", 
       "postal_code_regex": "^(\\d{5})$", 
-      "tld": ".zm"
+      "tld": ".zm", 
+      "utime": "2013-02-17 12:19:01.466869+00:00"
     }, 
     "model": "common.country", 
     "pk": "ZM"
@@ -6029,6 +6549,7 @@
       "area": 390580, 
       "capital": "Harare", 
       "continent": "AF", 
+      "ctime": "2013-02-17 12:19:01.467023+00:00", 
       "currency_code": "ZWL", 
       "currency_name": "Dollar", 
       "equivalent_fips_code": "", 
@@ -6042,7 +6563,8 @@
       "population": "11651858", 
       "postal_code_format": "", 
       "postal_code_regex": "", 
-      "tld": ".zw"
+      "tld": ".zw", 
+      "utime": "2013-02-17 12:19:01.467058+00:00"
     }, 
     "model": "common.country", 
     "pk": "ZW"

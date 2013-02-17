@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 import dateutil
 import hashlib
+import hmac
 import logging
 import os
 import random
+import time
 
 from datetime import datetime
 from django.conf import settings
+from django.utils.importlib import import_module
 
 
 logger = logging.getLogger(__name__)
@@ -28,7 +31,7 @@ def later_than(date, base=datetime.utcnow()):
 def earlier_than(date, base=datetime.now()):
     return not later_than(date, base)
 
-# path
+# file path
 def whereis(command):
     for path in os.environ.get('PATH', '').split(':'):
         if os.path.exists(os.path.join(path, command)) and \
