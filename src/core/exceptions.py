@@ -9,18 +9,12 @@ class CoreException(Exception):
         super(CoreException, self).__init__(message, *arg, **kwargs)
 
 
-class SSOAuthenticatorInitializationException(CoreException):
+class AuthenticatorInitializationException(CoreException):
     def __init__(self, *args, **kwargs):
         Exception.__init__(self,
                            _(u'Failed to instantiate SSOAuthenticator, ' +
                              u'could not identify service or find ' +
                              u'required parameters.'))
-
-
-class InvalidSSOTokenException(CoreException):
-    def __init__(self, *args, **kwargs):
-        Exception.__init__(self,
-                           _(u'Invalid SSO token detected.'))
 
 
 class InvalidHMACException(CoreException):
@@ -29,13 +23,25 @@ class InvalidHMACException(CoreException):
                            _(u'Invalid HMAC detacted'))
 
 
-class SSOTokenExpiredException(CoreException):
+class InvalidTokenException(CoreException):
+    def __init__(self, *args, **kwargs):
+        Exception.__init__(self,
+                           _(u'Invalid SSO token detected.'))
+
+
+class TokenExpiredException(CoreException):
     def __init__(self, *args, **kwargs):
         Exception.__init__(self,
                            _(u'SSO token has expired.'))
 
 
-class SSOTokenUserNotFoundException(CoreException):
+class UnsupportedFormatException(CoreException):
+    def __init__(self, *args, **kwargs):
+        Exception.__init__(self,
+                           _(u'Format not supported.'))
+
+
+class UserNotFoundException(CoreException):
     def __init__(self, *args, **kwargs):
         Exception.__init__(self,
                            _(u'Could not identify user.'))

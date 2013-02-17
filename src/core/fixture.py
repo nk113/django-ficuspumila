@@ -43,7 +43,6 @@ class Generator(object):
                 self.data = sorted(self.data, key=itemgetter('model'))
 
             with open(self.fixture, 'w') as fixture:
-
                 # overwrite initial_data
                 fixture.write(json.dumps(self.data, sort_keys=True, indent=2))
 

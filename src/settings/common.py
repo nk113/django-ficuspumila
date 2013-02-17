@@ -75,19 +75,16 @@ API_VERSION = 'v1'
 API_PATH = 'api/%s/' % API_VERSION
 API_URL = '-- must be overwritten --'
 API_PROXY = True
-SSO_EXPIRATION = 60*2
-SSO_SERVICES = {
-    'source': {
-        'service': 'core.content.models.Source',
-        'user'   : 'core.content.models.Owner',
+TOKEN_EXPIRATION = 60*2
+SERVICES = {
+    'core.content.models.Source': {
+        'user': 'core.content.models.Owner',
     },
-    # 'store': {
-    #     'service': 'core.product.models.Store',
-    #     'user'   : 'core.product.models.Consumer',
+    # 'core.product.models.Store': {
+    #     'user': 'core.product.models.Consumer',
     # },
-    # 'licenser': {
-    #     'service': 'core.playready.models.Lisenser',
-    #     'user'   : 'core.playready.models.Licency',
+    # 'core.playready.models.Lisenser': {
+    #     'user': 'core.playready.models.Licency',
     # },
 }
 
