@@ -64,7 +64,7 @@ class _AES(object):
             else:
                 return encrypted
         except Exception, e:
-            logger.exception('failed to encrypt (%s)' % e)
+            logger.exception(u'failed to encrypt (%s)' % e)
             raise e
 
     def decrypt(self, encrypted):
@@ -77,7 +77,7 @@ class _AES(object):
                                                 AES.MODE_CBC,
                                                 self.iv).decrypt(encrypted)))
         except Exception, e:
-            logger.exception('failed to decrypt (%s)' % e)
+            logger.exception(u'failed to decrypt (%s)' % e)
             raise e
 
     def nr_pad_bytes(self, blocksize, size):
@@ -85,7 +85,7 @@ class _AES(object):
         Returns number of required pad bytes for block of size.
         '''
         if not (0 < blocksize < 255):
-            raise Exception('Blocksize must be between 0 and 255.')
+            raise Exception(u'Blocksize must be between 0 and 255.')
         return blocksize - (size % blocksize)
 
     def add_padding(self, blocksize, s):
@@ -105,5 +105,5 @@ class _AES(object):
         # last byte contains number of padding bytes
         n = ord(s[-1])
         if n > blocksize or n > len(s):
-            raise Exception('Invalid padding.')
+            raise Exception(u'Invalid padding.')
         return s[:-n]

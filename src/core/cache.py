@@ -62,10 +62,10 @@ def get_or_set_cache(key, value=None, timeout=60*15, **kwargs):
     stored = djcache.get(hash, None)
 
     if stored is None:
-        logger.debug('not in cache (%s)' % key)
+        logger.debug(u'not in cache (%s)' % key)
 
     else:
-        logger.debug('found in cache (%s)' % key)
+        logger.debug(u'found in cache (%s)' % key)
 
         return stored
 
@@ -74,7 +74,7 @@ def get_or_set_cache(key, value=None, timeout=60*15, **kwargs):
     else:
         return None
 
-    logger.debug('setting cache (%s -> %s)' % (key, value,))
+    logger.debug(u'setting cache (%s -> %s)' % (key, value,))
 
     djcache.set(hash, value, timeout)
     return value

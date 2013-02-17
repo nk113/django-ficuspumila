@@ -18,12 +18,12 @@ class Generator(object):
         self.fixture = fixture if fixture else self.fixture
 
     def generate(self):
-        logger.info('generating fixture...')
+        logger.info(u'generating fixture...')
 
         return self.update()
 
     def update(self):
-        logger.info('updating fixture: %s' % self.fixture)
+        logger.info(u'updating fixture: %s' % self.fixture)
 
         try:
             with open(self.fixture, 'r') as fixture:
@@ -31,7 +31,7 @@ class Generator(object):
                 try:
                     self.data = json.loads(fixture.read())
                 except Exception, e:
-                    logger.exception('an error occurred during parsing fixture: %s' % e)
+                    logger.exception(u'an error occurred during parsing fixture: %s' % e)
 
                     self.data = json.loads('[]')
 
@@ -48,11 +48,11 @@ class Generator(object):
                 fixture.write(json.dumps(self.data, sort_keys=True, indent=2))
 
         except Exception, e:
-            logger.exception('an error has occurred during update (%s)' % e)
+            logger.exception(u'an error has occurred during update (%s)' % e)
 
             return 1
 
-        logger.info('fixture has successfully been updated.')
+        logger.info(u'fixture has successfully been updated.')
         return 0
 
     def update_objects(self):

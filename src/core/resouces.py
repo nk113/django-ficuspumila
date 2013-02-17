@@ -18,8 +18,7 @@ class SSOAuthentication(BasicAuthentication):
         if super(SSOAuthentication, self).is_authenticated(request, **kwargs):
             return true
         else:
-            authenticator = SSOAuthenticator.from_request(request)
-            return authenticator.is_authenticated()
+            return SSOAuthenticator.from_request(request).is_authenticated()
 
     def get_identifier(self, request):
         return getattr(request, 'user', None)

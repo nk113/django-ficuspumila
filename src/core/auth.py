@@ -33,8 +33,8 @@ class SSOBackend(object):
             }
             user = SSOAuthenticator(**kwargs).user.user
         except Exception, e:
-            logger.exception('failed to authenticate user: %s, %s' % (username,
-                                                                      password,))
+            logger.exception(u'failed to authenticate user: %s, %s' % (username,
+                                                                       password,))
 
             user = None
         return user
@@ -92,16 +92,16 @@ class SSOAuthenticator(object):
                                if kwargs.get(s[0])][0]
 
         except InvalidSSOTokenException, e:
-            logger.exception('invalid token is given: %s' % kwargs.get(self.TOKEN_PARAM, None))
+            logger.exception(u'invalid token is given: %s' % kwargs.get(self.TOKEN_PARAM, None))
         except SSOTokenExpiredException, e:
-            logger.exception('token is expired')           
+            logger.exception(u'token is expired')           
         except SSOTokenUserNotFoundException, e:
-            logger.exception('could not identify user')
+            logger.exception(u'could not identify user')
         except InvalidHMACException, e:
-            logger.exception('invalid HMAC detected')
+            logger.exception(u'invalid HMAC detected')
         except Exception:
             if getattr(self, 'service', None) is None:
-                logger.exception('failed to initialize authenticator: %s' % e)
+                logger.exception(u'failed to initialize authenticator: %s' % e)
 
                 raise SSOAuthenticatorInitializationException()
 

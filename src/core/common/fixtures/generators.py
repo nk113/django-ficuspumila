@@ -58,7 +58,7 @@ class Country(object):
             return [i for i, v in enumerate(self.COLUMN_FIELD_MAP) if v[1] == field][0]
 
         def populate(row):
-            # logger.debug('populating... (%s)' % row)
+            # logger.debug(u'populating... (%s)' % row)
 
             index = self.generator.index('common.country', row[cindex(self.PK_FIELD)])
 

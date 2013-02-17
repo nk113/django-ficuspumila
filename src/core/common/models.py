@@ -82,19 +82,20 @@ class Country(Model):
         try:
             e = None
             if response.status_code == 200:
-                logger.debug('api response (%s -> HTTP %s: %s)' % (ip,
-                                                               response.status_code,
-                                                               response.json,))
+                logger.debug(u'api response (%s -> HTTP %s: %s)' % (
+                                ip,
+                                response.status_code,
+                                response.json,))
 
                 return Country.objects.get(alpha2=response.json['countryCode'])
         except Exception, e:
             pass
 
         logger.exception(u'failed to retrieve country (%s -> HTTP %s: %s: %s)' % (
-                         ip,
-                         response.status_code,
-                         response.text,
-                         e))
+                             ip,
+                             response.status_code,
+                             response.text,
+                             e))
 
         return None
 
