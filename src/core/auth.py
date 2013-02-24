@@ -103,18 +103,21 @@ class SSOAuthenticator(object):
                          kwargs.get(SSOAuthenticator.FORMAT_PARAM, None),
                          kwargs.get(SSOAuthenticator.DATA_PARAM, None))
 
-
-            # detect user
-            self.user = self.user if self.user else [s[1]['user'].objects.get(**{
-                         '%s' % s[0]: self.service,
-                         '%s' % s[2]: self.token.get(s[2]),
-                         })
-                         for s in [(get_name(k),
-                                    v,
-                                    '%s_%s_id' % (get_name(k),
-                                    v['user'].__name__.lower(),))
-                         for k, v in services.iteritems()]
-                         if kwargs.get(s[0])][0]
+            if self.token.get('username'):
+                # TODO: detect service user from django user
+                pass
+            else:
+                # detect service user from params
+                self.user = self.user if self.user else [s[1]['user'].objects.get(**{
+                                '%s' % s[0]: self.service,
+                                '%s' % s[2]: self.token.get(s[2]),
+                            })
+                            for s in [(get_name(k),
+                                v,
+                                '%s_%s_id' % (get_name(k),
+                                v['user'].__name__.lower(),))
+                            for k, v in services.iteritems()]
+                            if kwargs.get(s[0])][0]
 
         except IndexError, e:
             logger.exception(u'service or user not found in params')
@@ -137,7 +140,7 @@ class SSOAuthenticator(object):
         logger.debug(u'token: %s' % token)
 
         try:
-            decrypted = self.service.decrypt_token(token)
+            decrypted = service.decrypt_token(token)
             if format == 'json':
                 token = json.loads(decrypted)
             else:
@@ -173,7 +176,7 @@ class SSOAuthenticator(object):
 
         if data:
             if (token.get('hmac') and
-               generate_hmac_digest(self.service.hmac_key, data)) != token.get('hmac'):
+               generate_hmac_digest(service.hmac_key, data)) != token.get('hmac'):
                 raise AuthException(_(u'Invalid HMAC detected.'))
             else: 
                 raise AuthException(_(u'HMAC not found.'))
@@ -181,10 +184,6 @@ class SSOAuthenticator(object):
         if token.get('username') and token.get('password'):
             user = authenticate(username=token.get('username'),
                                 password=token.get('password'))
-
-            self.user = getattr(user,
-                                self.service.__class__.__name__.lower,
-                                None)
 
         return token
 
