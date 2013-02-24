@@ -81,29 +81,30 @@ class _AES(object):
             raise e
 
     def nr_pad_bytes(self, blocksize, size):
-        '''
+        """
         Returns number of required pad bytes for block of size.
-        '''
+        """
         if not (0 < blocksize < 255):
             raise Exception(u'Blocksize must be between 0 and 255.')
         return blocksize - (size % blocksize)
 
     def add_padding(self, blocksize, s):
-        '''
+        """
         Adds rfc 1423 padding to string.
 
         RFC 1423 algorithm adds 1 up to blocksize padding bytes to string s. Each 
         padding byte contains the number of padding bytes.
-        '''
+        """
         n = self.nr_pad_bytes(blocksize, len(s))
         return s + (chr(n) * n)
 
     def remove_padding(self, blocksize, s):
-        '''
+        """
         Removes rfc 1423 padding from string.
-        '''
+        """
         # last byte contains number of padding bytes
         n = ord(s[-1])
         if n > blocksize or n > len(s):
             raise Exception(u'Invalid padding.')
         return s[:-n]
+

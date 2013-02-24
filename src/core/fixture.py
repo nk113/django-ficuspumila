@@ -55,9 +55,9 @@ class Generator(object):
         return 0
 
     def update_objects(self):
-        '''
+        """
         Should be implemented in subclasses
-        '''
+        """
         pass
 
     def index(self, model, pk):

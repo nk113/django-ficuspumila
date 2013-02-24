@@ -3,10 +3,11 @@
     "fields": {
       "ctime": "2013-02-17T11:55:40Z", 
       "source": 1, 
-      "source_owner_id": "owner", 
+      "source_owner_id": "dev", 
+      "user": 1,
       "utime": "2013-02-17T11:55:40Z"
     }, 
-    "model": "content.owner", 
+    "model": "common.owner", 
     "pk": 1
   }, 
   {
@@ -19,7 +20,7 @@
       "token_key": "5871124786add4f56217e6655567d1e1a6486a5373c24a6c7edd502c8f439f28", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "content.source", 
+    "model": "common.source", 
     "pk": 1
   }
 ]

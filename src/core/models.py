@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
+import json
 import logging
+import time
 
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User as AuthUser
 from django.db import models
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
+from urllib import urlencode
 
+from .auth import SSOAuthenticator
 from .crypto import Transcoder
+from .exceptions import ModelException
 from .utils import (
     generate_hmac_digest,
     get_default_language_code,
@@ -24,13 +29,48 @@ class CSVField(models.CharField):
 
     def to_python(self, value):
         if isinstance(value, basestring):
-            return value.split(',')
-        return value
+            try:
+                return value.split(',')
+            except:
+                logger.exception(u'Failed to convert CSV field ' +
+                                 u'to python: %s' % value)
+                raise ModelException(_(u'Could not evaluate CSV field.'))
+        else:
+            return value
 
     def get_prep_value(self, value):
-        if isinstance(value, list):
+        try:
             return ','.join(value)
-        return value
+        except:
+            logger.exception(u'Failed to prep data for CSV field: ' +
+                             u'%s' % value)
+            raise ModelException(_(u'Invalid value detected for CSV field.'))
+
+
+class JSONField(models.CharField):
+
+    __metaclass__ = models.SubfieldBase
+
+    def to_python(self, value):
+        if isinstance(value, basestring):
+            if len(value) < 1:
+                return None
+            try:
+                return json.loads(value)
+            except:
+                logger.exception(u'Failed to convert JSON field ' +
+                                 u'to python: %s' % value)
+                raise ModelException(_(u'Could not evaluate JSON field.'))
+        else:
+            return value
+
+    def get_prep_value(self, value):
+        try:
+            return json.dumps(value)
+        except:
+            logger.exception(u'Failed to prep data for JSON field: ' +
+                             u'%s' % value)
+            raise ModelException(_(u'Invalid value detected for JSON field.'))
 
 
 class Model(models.Model):
@@ -58,7 +98,10 @@ class Model(models.Model):
         return super(Model, self).__setitem__(field, value)
 
 
-class Subject(Model):
+class Subject(models.Model):
+
+    class Meta:
+        abstract = True
 
     attribute_model = None
 
@@ -88,11 +131,11 @@ class Attribute(Model):
 
     class Meta:
         abstract = True
-        ordering = 'name'
+        ordering = ('name',)
 
     DEFAULT = 0
     ATTRIBUTES = (
-        (DEFAULT, 'NAME',)
+        (DEFAULT, 'NAME',),
     )
 
     name = models.SmallIntegerField(default=DEFAULT,
@@ -277,12 +320,52 @@ class Service(Notifier):
     class Meta:
         abstract = True
 
-    user = models.OneToOneField(User,
-                         primary_key=True,
-                         verbose_name=_(u'Django auth user'))
     token_key = models.CharField(max_length=255,
                          default=trans.algorithm.generate_key,
                          verbose_name=_(u'Key for the SSO auth token'))
     token_iv = models.CharField(max_length=255,
                          default=trans.algorithm.generate_iv,
                          verbose_name=_(u'IV for the SSO auth token'))
+
+    def generate_token(self, data={}):
+        try:
+            return Transcoder(
+                       key=self.token_key,
+                       iv=self.token_iv).algorithm.encrypt(
+                           json.dumps([
+                               int(time.time()) + settings.TOKEN_EXPIRATION,
+                               data,]))
+        except:
+            return None
+
+    def update_token(self, token):
+        try:
+            return self.generate_token(json.dumps(
+                       self.decrypt_token(token)[1]))
+        except:
+            return None
+
+    def decrypt_token(self, token):
+        try:
+            return json.loads(Transcoder(
+                       key=self.token_key,
+                       iv=self.token_iv).algorithm.decrypt(token))
+        except:
+            return None
+
+    def generate_sso_params(self, data={}):
+        try:
+            return urlencode({self.__class__.name__.lower(): self.user.id,
+                              SSOAuthenticator.TOKEN_PARAM: self.generate_token(data),})
+        except:
+            return None
+
+
+class User(Model):
+
+    class Meta:
+        abstract = True
+
+    user = models.OneToOneField(AuthUser,
+                         primary_key=True,
+                         verbose_name=_(u'Django auth user'))

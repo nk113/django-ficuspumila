@@ -15,6 +15,18 @@ from django.utils.importlib import import_module
 logger = logging.getLogger(__name__)
 
 
+class Singleton(object):
+
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(Singleton, cls).__new__(
+                                cls, *args, **kwargs)
+
+        return cls._instance
+
+
 # locale
 def get_default_language_code():
     return settings.LANGUAGE_CODE.split('-')[0].lower()

@@ -5,6 +5,7 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 from core.common import resources as common_resources
+from core.content.common import resources as content_common_resources
 
 
 admin.autodiscover()
@@ -14,6 +15,7 @@ urlpatterns = patterns('',
 
     # api
     url(r'^%s' % settings.API_PATH, include(common_resources.urls)),
+    url(r'^%s' % settings.API_PATH, include(content_common_resources.urls)),
 )
 
 urlpatterns += staticfiles_urlpatterns()

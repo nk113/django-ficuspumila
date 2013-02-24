@@ -2,44 +2,53 @@
 import logging
 
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from tastypie import fields
 from tastypie.api import Api
-from tastypie.authentication import Authentication
-from tastypie.authorization import Authorization
 from tastypie.cache import SimpleCache
-from tastypie.resources import ModelResource
 
+from core.resources import (
+    EXACT_IN,
+    EXACT_IN_CONTAINS,
+    EXACT_IN_GTE_LTE,
+    EXACT_IN_GET_LTE_DATE,
+    EXACT_IN_STARTSWITH,
+    Meta, Resource,
+)
 from .models import Country
-
-
-EXACT_IN = ('exact', 'in',)
-EXACT_IN_STARTSWITH = EXACT_IN + ('startswith',)
-EXACT_IN_CONTAINS = EXACT_IN + ('contains',)
-EXACT_IN_GTE_LTE = EXACT_IN + ('gte', 'lte',)
-EXACT_IN_GET_LTE_DATE = EXACT_IN_GTE_LTE + ('date',)
 
 
 logger = logging.getLogger(__name__)
 
 
-class Resource(ModelResource):
+class UserResource(Resource):
 
-    pass
+    class Meta:
+        queryset = User.objects.all()
+        resource_name = 'user'
+        allowed_methods = ('get',)
+        cache = SimpleCache()
+        excludes = ('password',)
+        filtering = {
+           'username': EXACT_IN,
+        }
 
+    def obj_create(self, bundle, request=None, **kwargs):
+        # TODO
+        pass
 
-class Meta(object):
-
-    allowed_methods = ('get',)
-    authentication = Authentication()
-    authorization = Authorization()
+    def apply_authorization_limits(self, request, object_list):
+        # TODO
+        pass
 
 
 class CountryResource(Resource):
 
-    class Meta(Meta):
+    class Meta:
         queryset = Country.objects.all()
         resource_name = 'country'
+        allowed_methods = ('get',)
         cache = SimpleCache()
         filtering = {
             'alpha2': EXACT_IN,
@@ -66,6 +75,7 @@ class CountryResource(Resource):
 
 def get():
     api = Api(api_name='common')
+    api.register(UserResource())
     api.register(CountryResource())
     return api.urls
 

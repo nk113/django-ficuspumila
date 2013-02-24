@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import hashlib
+import inspect
 import logging
 import sys
 
@@ -24,7 +25,8 @@ def cache(**decorator_kwargs):
             for keyarg in keyargs:
                 if isinstance(keyarg, int):
                     try:
-                        keys.append(args[keyarg])
+                        if args[keyarg] is not None:
+                            keys.append(args[keyarg])
                     except:
                         pass
                 if isinstance(keyarg, str):
@@ -37,6 +39,9 @@ def cache(**decorator_kwargs):
             key = '%s:%s:%s' % (func.func_globals.get('__name__', ''),
                                 func.func_name,
                                 key,)
+
+            logger.debug(u'generated key: %s' % key)
+
             value = get_or_set_cache(key, prefix=False)
 
             if value:

@@ -4,21 +4,17 @@ import logging
 import time
 
 from django.conf import settings
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.http import HttpResponseForbidden
 from django.utils.importlib import import_module
+from django.utils.translation import ugettext as _
 from functools import wraps
 
-from exceptions import (
-    AuthenticatorInitializationException,
-    InvalidHMACException,
-    InvalidTokenException,
-    TokenExpiredException,
-    UnsupportedFormatException,
-    UserNotFoundException,
-)
 from crypto import Transcoder
+from exceptions import AuthException
 from utils import generate_hmac_digest
+
 
 logger = logging.getLogger(__name__)
 
@@ -27,14 +23,17 @@ class SSOBackend(object):
 
     DELIMITER = '$'
 
+    supports_inactive_user = False; 
+
     def authenticate(self, username=None, password=None):
+        logger.debug('trying to authenticate with sso: %s / %s' % (username,
+                                                                   password,))
         try:
             service, id = username.split(DELIMITER)
-            kwargs = {
-                service: id,
+            user = SSOAuthenticator(**{
+                service: int(id),
                 SSOAuthenticator.TOKEN_PARAM: password,
-            }
-            user = SSOAuthenticator(**kwargs).user.user
+            }).user.user
         except Exception, e:
             logger.exception(u'failed to authenticate user: %s, %s' % (username,
                                                                        password,))
@@ -44,19 +43,36 @@ class SSOBackend(object):
 
 
 class SSOAuthenticator(object):
-    '''
+    """
     Expects decrypted SSO token to contain following parameters:
 
-    {
-      expiration: <timestamp, now + settings.SSO_TOKEN_EXPIRATION>,
-      <service>_<user>_id: <service user id>,
-      (hmac: <hmac for data>,)
-    }
-    '''
-    def __init__(self, *args, **kwargs):
+    format: json
+      [
+        <timestamp, now + settings.SSO_TOKEN_EXPIRATION>
+        (, {
+          ("<service>_<user>_id": "<service user id>")
+          (, "username": "<Django Auth username>")
+          (, "password": "<Django Auth password>")
+          (, "hmac": "<hmac for data>")
+        } )
+      ]
+    """
+    AUTH_TYPE = 'sso'
+
+    TOKEN_PARAM = 'token'
+    FORMAT_PARAM = 'format'
+    DATA_PARAM = 'data'
+
+    service = None
+    token = None
+    user = None
+
+    def __init__(self, **kwargs):
 
         def get_name(path):
             return path.split('.').pop().lower()
+
+        logger.debug('trying to initialize: %s' % kwargs,)
 
         try:
             # import modules
@@ -71,96 +87,104 @@ class SSOAuthenticator(object):
                                                      user.pop().title()),
                 }
 
+            logger.debug('installed services: %s' % services)
+
             # instantiate service
             self.service = [s[1]['service'].objects.get(
-                               pk=int(kwargs.get(k)))
-                               for s in [(get_name(k),
-                                          v,) for k, v in services.iteritems()]
-                               if kwargs.get(s[0])][0]
+                         pk=int(kwargs.get(k)))
+                         for s in [(get_name(k),
+                                    v,) for k, v in services.iteritems()]
+                         if kwargs.get(s[0])][0]
 
             # validate token
-            self.token = self.validate_token(kwargs.get('token', None),
-                                             kwargs.get('format', None),
-                                             kwargs.get('data', None))
+            self.token = self.validate_token(
+                         self.service,
+                         kwargs.get(SSOAuthenticator.TOKEN_PARAM, None),
+                         kwargs.get(SSOAuthenticator.FORMAT_PARAM, None),
+                         kwargs.get(SSOAuthenticator.DATA_PARAM, None))
 
 
             # detect user
-            self.user = [s[1]['user'].objects.get(**{
-                               '%s' % s[0]: self.service,
-                               '%s' % s[2]: self.token.get(s[2]),
-                               })
-                               for s in [(get_name(k),
-                                          v,
-                                          '%s_%s_id' % (get_name(k),
-                                                        v['user'].__name__.lower(),))
-                                          for k, v in services.iteritems()]
-                               if kwargs.get(s[0])][0]
+            self.user = self.user if self.user else [s[1]['user'].objects.get(**{
+                         '%s' % s[0]: self.service,
+                         '%s' % s[2]: self.token.get(s[2]),
+                         })
+                         for s in [(get_name(k),
+                                    v,
+                                    '%s_%s_id' % (get_name(k),
+                                    v['user'].__name__.lower(),))
+                         for k, v in services.iteritems()]
+                         if kwargs.get(s[0])][0]
 
-        except InvalidHMACException, e:
-            logger.exception(u'invalid HMAC detected')
+        except IndexError, e:
+            logger.exception(u'service or user not found in params')
 
-        except InvalidTokenException, e:
-            logger.exception(u'invalid token is given: %s' % kwargs.get(self.TOKEN_PARAM, None))
-
-        except TokenExpiredException, e:
-            logger.exception(u'token is expired')           
-
-        except UserNotFoundException, e:
-            logger.exception(u'could not identify user')
+        except AuthException, e:
+            logger.exception(e)
 
         except Exception, e:
             if getattr(self, 'service', None) is None:
                 logger.exception(u'failed to initialize authenticator: %s' % e)
 
-                raise AuthenticatorInitializationException()
+                raise AuthException(e)
 
-    def validate_token(self, token, format='json', data=None):
-        if token is None or getattr(self, 'service', None) is None:
-            raise InvalidSSOTokenException()
+    def validate_token(self, service, token, format='json', data=None):
+        if service is None:
+            raise AuthException(_(u'Service not found.'))
+        if token is None:
+            raise AuthException(_(u'Token not found.'))
 
         logger.debug(u'token: %s' % token)
 
         try:
-            decrypted = Transcoder(
-                            key=self.service.token_key,
-                            iv=self.service.token_iv
-                        ).algorithm.decrypt(token)
+            decrypted = self.service.decrypt_token(token)
             if format == 'json':
                 token = json.loads(decrypted)
             else:
-                raise UnsupportedFormatException()
+                raise AuthException(_(u'Format not supported.'))
 
-        except UnsupportedFormatException, e:
+        except AuthException, e:
             raise e
 
         except Exception, e:
             logger.exception(u'failed to validate token: %s' % e)
 
-            raise InvalidSSOTokenException()
+            raise AuthException(_(u'Invalid token detected.'))
 
         logger.debug(u'token decrypted: %s' % token)
 
-        if token.get('expiration'):
-            if float(token['expiration']) > time.time() + settings.TOKEN_EXPIRATION:
+        if token[0]:
+            if float(token[0]) > time.time() + settings.TOKEN_EXPIRATION:
                 logger.debug(u'token expiration is bigger than expected: token %s > %s' % (
-                                 token['expiration'],
+                                 token[0],
                                  timezone.now() + settings.TOKEN_EXPIRATION,))
 
-                raise InvalidSSOTokenException()
+                raise AuthException(_(u'Expiration specified in token is '
+                                      u'bigger than expected.'))
         
-            if float(token['expiration']) < time.time():
+            if float(token[0]) < time.time():
                 logger.debug(u'token is expired: token %s < %s')
 
-                raise TokenExpiredException()
+                raise AuthException(_(u'Token expired.'))
         else:
-            raise InvalidSSOTokenException()
+            raise AuthException(_(u'Invalid token detected.'))
+
+        token = token[1] if len(token) > 0 else {}
 
         if data:
             if (token.get('hmac') and
-               generate_hmac_digest(self.service.hmac_key, data)) != token['hmac']:
-                raise InvalidHMACException
-            else:
-                raise InvalidSSOTokenException()
+               generate_hmac_digest(self.service.hmac_key, data)) != token.get('hmac'):
+                raise AuthException(_(u'Invalid HMAC detected.'))
+            else: 
+                raise AuthException(_(u'HMAC not found.'))
+
+        if token.get('username') and token.get('password'):
+            user = authenticate(username=token.get('username'),
+                                password=token.get('password'))
+
+            self.user = getattr(user,
+                                self.service.__class__.__name__.lower,
+                                None)
 
         return token
 
@@ -169,11 +193,28 @@ class SSOAuthenticator(object):
 
     @staticmethod
     def from_request(request):
-        instance = SSOAuthenticator(
-        )
+        if (request.META.get('HTTP_AUTHORIZATION') and
+            request.META['HTTP_AUTHORIZATION'].lower().startswith(
+                '%s ' % SSOAuthenticator.AUTHTYPE)):
+            (auth_type, data) = request.META['HTTP_AUTHORIZATION'].split()
 
-        if instance.is_authenticated():
-            request.user = instance.user.user
+            if auth_type.lower() != SSOAuthenticator.AUTH_TYPE:
+                raise ValueError(u'Incorrect authorization header')
+            
+            service, id, token = data.split(':', 2)
+            kwargs = {
+                service: id,
+                SSOAuthenticator.TOKEN_PARAM: token,
+            }
+            authenticator = SSOAuthenticator(**kwargs).is_authenticated()
+        else:
+            kwargs = request.GET.copy()
+            kwargs.update(request.POST.copy())
+            kwargs.update(request.COOKIES.copy())
+            kwargs['data'] = request.body
+            authenticator = SSOAuthenticator(**kwargs)
 
-        return instance
+        if authenticator.is_authenticated():
+            request.user = authenticator.user.user
 
+        return authenticator

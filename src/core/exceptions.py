@@ -1,54 +1,27 @@
-# -*- coding: utf-8 -*-                
+# -*- coding: utf-8 -*-
+import logging
+
 from django.utils.translation import ugettext as _
+
+
+logger = logging.getLogger(__name__)
 
 
 class CoreException(Exception):
     def __init__(self, message, *args, **kwargs):
         self.errors = kwargs.get('errors', None)
 
-        super(CoreException, self).__init__(message, *arg, **kwargs)
+        super(CoreException, self).__init__(message, *args, **kwargs)
 
 
-class AuthenticatorInitializationException(CoreException):
-    def __init__(self, *args, **kwargs):
-        Exception.__init__(self,
-                           _(u'Failed to instantiate SSOAuthenticator, ' +
-                             u'could not identify service or find ' +
-                             u'required parameters.'))
+class AuthException(CoreException):
+    pass
 
 
-class InvalidHMACException(CoreException):
-    def __init__(self, *args, **kwargs):
-        Exception.__init__(self,
-                           _(u'Invalid HMAC detacted'))
+class ModelException(CoreException):
+    pass
 
 
-class InvalidTokenException(CoreException):
-    def __init__(self, *args, **kwargs):
-        Exception.__init__(self,
-                           _(u'Invalid SSO token detected.'))
-
-
-class TokenExpiredException(CoreException):
-    def __init__(self, *args, **kwargs):
-        Exception.__init__(self,
-                           _(u'SSO token has expired.'))
-
-
-class UnsupportedFormatException(CoreException):
-    def __init__(self, *args, **kwargs):
-        Exception.__init__(self,
-                           _(u'Format not supported.'))
-
-
-class UserNotFoundException(CoreException):
-    def __init__(self, *args, **kwargs):
-        Exception.__init__(self,
-                           _(u'Could not identify user.'))
-
-
-class SSOTokenGenerationFailureException(CoreException):
-    def __init__(self, *args, **kwargs):
-        Exception.__init__(self,
-                           _(u'Failed to generate SSO token.'))
+class ProxyException(CoreException):
+    pass
 

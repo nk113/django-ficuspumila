@@ -2,7 +2,7 @@
   {
     "fields": {
       "date_joined": "2013-02-17T03:20:27Z", 
-      "email": "dev@nk113.com", 
+      "email": "dev@example.com", 
       "first_name": "", 
       "groups": [], 
       "is_active": true, 

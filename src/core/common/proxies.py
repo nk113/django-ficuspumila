@@ -8,8 +8,13 @@ from . import models
 logger = logging.getLogger(__name__)
 
 
+class UserProxy(Proxy):
+    pass
+
+
 class CountryProxy(Proxy):
     pass
 
 
+User    = get('User')
 Country = get('Country')

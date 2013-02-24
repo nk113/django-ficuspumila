@@ -7,18 +7,23 @@ from django.utils.translation import ugettext_lazy as _
 
 from core.cache import cache
 from core.models import (
-    Model,
+    Attribute, Event,
     Localizable, Localization,
-    Logger, Event,
-    Notifier, Notification,
-    Service,
+    Logger, Model,
+    Notification, Notifier,
+    Service, Subject, User,
 )
 
+
+MODULE = __name__.split('.')[-3].lower()
 
 logger = logging.getLogger(__name__)
 
 
 class Genre(Localizable):
+
+    class Meta:
+        db_table = '%s_genre' % MODULE
 
     GENRE_TYPES = (
         (0, 'AUDIO',),
@@ -39,6 +44,9 @@ class Genre(Localizable):
 
 class GenreLocalization(Localization):
 
+    class Meta:
+        db_table = '%s_genrelocalization' % MODULE
+
     genre = models.ForeignKey(Genre)
     name = models.CharField(max_length=128,
                             verbose_name=_(u'Genre name'))
@@ -48,7 +56,35 @@ class GenreLocalization(Localization):
                              self.name,)
 
 
+class Source(Service):
+
+    class Meta:
+        db_table = '%s_source' % MODULE
+
+    name = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return self.name
+
+
+class SourceAttribute(Attribute):
+
+    class Meta:
+        db_table = '%s_sourceattribute' % MODULE
+
+    DEFAULT = 0
+    ATTRIBUTES = (
+        (DEFAULT, 'DELETE_FROM_RESOURCE',)
+    )
+
+    source = models.ForeignKey(Source,
+                               verbose_name=_(u'Content source'))
+
+
 class SourceEvent(Event):
+
+    class Meta:
+        db_table = '%s_sourceevent' % MODULE
 
     ITEM_READY = 0
     RESOURCE_ACCESSED = 1
@@ -58,26 +94,22 @@ class SourceEvent(Event):
         (RESOURCE_ACCESSED, 'RESOURCE_ACCESSED',),
     )
 
-    source = models.ForeignKey('content.Source',
+    source = models.ForeignKey(Source,
                                verbose_name=_(u'Content source'))
 
 
 class SourceNotification(Notification):
 
+    class Meta:
+        db_table = '%s_sourcenotification' % MODULE
+
     event = models.ForeignKey(SourceEvent)
 
 
-class Source(Service):
-
-    name = models.CharField(max_length=255)
-
-    def __unicode__(self):
-        return self.name
-
-
-class Owner(Model):
+class Owner(User):
 
     class Meta:
+        db_table = '%s_owner' % MODULE
         unique_together = ('source', 'source_owner_id',)
 
     source = models.ForeignKey(Source)
