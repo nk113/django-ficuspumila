@@ -13,7 +13,10 @@ class UserProxy(Proxy):
 
 
 class CountryProxy(Proxy):
-    pass
+
+    @staticmethod
+    def get_by_ip(ip):
+        return models.Country.get_by_ip(ip)
 
 
 User    = get('User')

@@ -14,7 +14,7 @@ from core.resources import (
     EXACT_IN_GTE_LTE,
     EXACT_IN_GET_LTE_DATE,
     EXACT_IN_STARTSWITH,
-    Meta, Resource,
+    Meta, AdminMeta, Resource,
 )
 from .models import Country
 
@@ -24,23 +24,26 @@ logger = logging.getLogger(__name__)
 
 class UserResource(Resource):
 
-    class Meta:
-        queryset = User.objects.all()
+    class Meta(AdminMeta):
+        queryset = User.objects.filter(is_active=True)
         resource_name = 'user'
-        allowed_methods = ('get',)
+        allowed_methods = ('get', 'post', 'put', 'patch',)
         cache = SimpleCache()
-        excludes = ('password',)
+        excludes = ('password', 'is_active', 'is_superuser', 'is_staff',)
         filtering = {
            'username': EXACT_IN,
         }
 
     def obj_create(self, bundle, request=None, **kwargs):
         # TODO
-        pass
+        return super(UserResource, self).obj_create(bundle,
+                                                    request=None,
+                                                    **kwargs)
 
     def apply_authorization_limits(self, request, object_list):
         # TODO
-        pass
+        return super(UserResource, self).apply_authorization_limits(request,
+                                                                    object_list)
 
 
 class CountryResource(Resource):

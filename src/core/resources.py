@@ -21,9 +21,6 @@ logger = logging.getLogger(__name__)
 
 class Authentication(BasicAuthentication):
 
-    def __init__(self, *args, **kwargs):
-        super(Authentication, self).__init__()
-
     def is_authenticated(self, request, **kwargs):
         authenticated = super(Authentication,
                               self).is_authenticated(request, **kwargs)
@@ -42,7 +39,20 @@ class Authentication(BasicAuthentication):
 class Authorization(TastypieAuthorization):
 
     def is_authorized(self, request, obj=None):
-        return True
+        return super(Authorization).is_authorized(request, obj)
+
+
+class AdminAuthentication(Authentication):
+
+    def is_authenticated(self, request, **kwargs):
+        authenticated = super(AdminAuthentication,
+                              self).is_authenticated(request, **kwargs)
+        return request.user.is_superuser
+
+
+class AdminAuthorization(TastypieAuthorization):
+
+    pass
 
 
 class Resource(ModelResource):
@@ -111,6 +121,14 @@ class Meta(object):
     allowed_methods = ('get',)
     authentication = Authentication()
     authorization = Authorization()
+    excludes = ['utime',]
+
+
+class AdminMeta(object):
+
+    allowed_methods = ('get', 'post', 'put', 'patch', 'delete',)
+    authentication = AdminAuthentication()
+    authorization = AdminAuthorization()
     excludes = ['utime',]
 
 

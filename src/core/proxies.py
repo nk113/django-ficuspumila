@@ -37,7 +37,16 @@ class ProxyClient(Client):
 
     @cache(keyarg=1)
     def schema(self, model_name=None):
-        return super(ProxyClient, self).schema(model_name)
+        # overrides to support multiple api endpoints - app namespace
+        app_name = self._base_url.replace(settings.API_URL,
+                                          '').split('/')[0]
+        if not app_name in self._schema_store:
+            schema = super(ProxyClient, self).schema(model_name)
+            del(self._schema_store[None])
+            self._schema_store[app_name] = schema
+
+        logger.debug(self._schema_store)
+        return self._schema_store[app_name]
 
 
 class Proxy(object):

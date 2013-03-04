@@ -80,7 +80,6 @@ class Country(Model):
                                       'format': 'json'})
 
         try:
-            e = None
             if response.status_code == 200:
                 logger.debug(u'api response (%s -> HTTP %s: %s)' % (
                                 ip,
@@ -95,7 +94,7 @@ class Country(Model):
                              ip,
                              response.status_code,
                              response.text,
-                             e))
+                             e if 'e' in locals() else None,))
 
         return None
 
