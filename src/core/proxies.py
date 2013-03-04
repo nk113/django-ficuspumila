@@ -45,7 +45,6 @@ class ProxyClient(Client):
             del(self._schema_store[None])
             self._schema_store[app_name] = schema
 
-        logger.debug(self._schema_store)
         return self._schema_store[app_name]
 
 
