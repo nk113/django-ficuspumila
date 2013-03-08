@@ -62,7 +62,9 @@ class Throttle(CacheThrottle):
     def should_be_throttled(self, identifier, **kwargs):
         if identifier == settings.SYSTEM_USERNAME:
             return False
-        return True
+        return super(Throttele, self).should_be_throttled(self,
+                                                          identifier,
+                                                          **kwargs)
 
     def accessed(self, identifier, **kwargs):
         pass
@@ -162,15 +164,15 @@ class Meta(object):
     authentication = Authentication()
     authorization = Authorization()
     throttle = Throttle()
-    excludes = ['utime',]
+    excludes = ('utime',)
+    ordering = ('id',)
 
 
-class AdminMeta(object):
+class AdminMeta(Meta):
 
     allowed_methods = ('get', 'post', 'put', 'patch', 'delete',)
     authentication = AdminAuthentication()
     authorization = AdminAuthorization()
-    excludes = ['utime',]
 
 
 class ServiceMeta(Meta):

@@ -42,8 +42,8 @@ class ProxyClient(Client):
     @cache(keyarg=1)
     def schema(self, model_name=None):
         # overrides to support multiple api endpoints - app namespace
-        api_name = self._base_url.replace(settings.API_URL,
-                                          '').split('/')[0]
+        api_name = '.'.join(self._base_url.replace(settings.API_URL,
+                                                   '').split('/')[:-1])
 
         if model_name is None:
             model_name = api_name
@@ -64,10 +64,8 @@ class Proxy(object):
         if not getattr(settings, 'API_URL', None):
             raise ProxyException(_(u'API_URL not found in settings.'))
 
-        api_name = getattr(self, 'api_name', None)
-
         self._client = ProxyClient('%s%s/' % (settings.API_URL,
-                           api_name if api_name else self.__module__.split('.')[1]),
+                           '/'.join(self.__module__.split('.')[:-2])),
                            (settings.SYSTEM_USERNAME,
                             settings.SYSTEM_PASSWORD))
 
@@ -99,8 +97,3 @@ class Proxy(object):
                 setattr(self, key, value)
             except:
                 pass
-
-
-class CoreProxy(Proxy):
-
-    api_name = 'core'

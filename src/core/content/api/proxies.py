@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from core.content.proxies import ContentProxy
-from core.proxies import get
+from core.proxies import get, Proxy
 from . import models
 
 
@@ -11,37 +10,37 @@ COMMON_MODELS = 'core.content.common.models'
 logger = logging.getLogger(__name__)
 
 
-class GenreProxy(ContentProxy):
+class GenreProxy(Proxy):
 
     pass
 
 
-class GenreLocalizationProxy(ContentProxy):
+class GenreLocalizationProxy(Proxy):
 
     pass
 
 
-class SourceProxy(ContentProxy):
+class SourceProxy(Proxy):
 
     pass
 
 
-class SourceAttributeProxy(ContentProxy):
+class SourceAttributeProxy(Proxy):
 
     pass
 
 
-class SourceEventProxy(ContentProxy):
+class SourceEventProxy(Proxy):
 
     pass
 
 
-class SourceNotificationProxy(ContentProxy):
+class SourceNotificationProxy(Proxy):
 
     pass
 
 
-class OwnerProxy(ContentProxy):
+class OwnerProxy(Proxy):
 
     pass
 

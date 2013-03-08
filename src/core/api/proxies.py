@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from core.proxies import get, CoreProxy
+from core.proxies import get, Proxy
 
 
 logger = logging.getLogger(__name__)
 
 
-class UserProxy(CoreProxy):
+class UserProxy(Proxy):
 
     pass
 
 
-class CountryProxy(CoreProxy):
+class CountryProxy(Proxy):
 
     pass
 
