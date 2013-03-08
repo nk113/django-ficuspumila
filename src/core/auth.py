@@ -70,7 +70,7 @@ class SSOAuthenticator(object):
     def __init__(self, **kwargs):
 
         def get_name(path):
-            return path.split('.').pop().lower()
+            return path.rpartition('.').lower()
 
         logger.debug('trying to initialize: %s' % kwargs,)
 

@@ -2,6 +2,7 @@
 import logging
 
 from django.conf import settings
+from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 from tastypie import fields
 from tastypie.api import Api
@@ -14,49 +15,26 @@ from tastypie.exceptions import (
 from tastypie.http import HttpForbidden
 from tastypie.resources import ALL, ALL_WITH_RELATIONS
 
-from core.common.resources import UserResource
+from core.api.resources import UserResource
+from core.content.resources import ContentResource
 from core.resources import (
     EXACT_IN,
     EXACT_IN_CONTAINS,
     EXACT_IN_GTE_LTE,
     EXACT_IN_GET_LTE_DATE,
     EXACT_IN_STARTSWITH,
-    Resource, Meta, ServiceMeta,
+    Meta, ServiceMeta,
+)
+from core.content.common.models import (
+    Genre, GenreLocalization, Source, SourceAttribute,
+    SourceEvent, SourceNotification,
 )
 from .models import (
-    Genre, GenreLocalization, Source, SourceAttribute,
-    SourceEvent, SourceNotification, Owner,
+    Owner,
 )
 
 
 logger = logging.getLogger(__name__)
-
-
-class ContentResource(Resource):
-
-    def obj_create(self, bundle, request=None, **kwargs):
-        if hasattr(request.user, 'owner'):
-            if hasattr(self._meta.object_class, 'source'):
-                kwargs['source'] = request.user.owner.source
-            if hasattr(self._meta.object_class, 'owner'):
-                kwargs['owner'] = request.user.owner
-            return super(ResourceBase, self).obj_create(bundle,
-                                                        request,
-                                                        **kwargs)
-
-        raise ImmediateHttpResponse(response=HttpForbidden())
-
-    def apply_authorization_limits(self, request, object_list):
-        if hasattr(request.user, 'owner'):
-            if hasattr(self._meta.object_class, 'source'):
-                return object_list.filter(source=request.user.owner.source)
-            if hasattr(self._meta.object_class, 'owner'):
-                return object_list.filter(source=request.user.owner)
-            if hasattr(self._meta.object_class, 'event'):
-                return object_list.filter(event__source=request.user.owner.source)
-            return object_list
-
-        raise ImmediateHttpResponse(response=HttpForbidden())
 
 
 class GenreResource(ContentResource):
@@ -167,19 +145,22 @@ class OwnerResource(ContentResource):
         }
 
     user = fields.ForeignKey(UserResource, 'user')
-    source = fields.ForeignKey(SourceResource, 'source')
+    source = fields.ForeignKey(SourceResource,
+                               'source')
 
 
 def get():
     api = Api(api_name='content')
+
     api.register(GenreResource())
     api.register(GenreLocalizationResource())
     api.register(SourceResource())
     api.register(SourceAttributeResource())
     api.register(SourceEventResource())
     api.register(SourceNotificationResource())
+
     api.register(OwnerResource())
+
     return api.urls
 
 urls = get()
-

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import inspect
 import json
 import logging
 import time
@@ -21,6 +22,32 @@ from .utils import (
 
 logger = logging.getLogger(__name__)
 trans = Transcoder()
+
+
+class Choice(object):
+
+    class __metaclass__(type):
+        def __init__(self, *args, **kwargs):
+            self._data = []
+            for name, value in inspect.getmembers(self):
+                if not name.startswith('_') and not inspect.ismethod(value):
+                    if isinstance(value, tuple) and len(value) > 1:
+                        data = value
+                    else:
+                        pieces = [x.capitalize() for x in name.split('_')]
+                        data = (value, ' '.join(pieces))
+                    self._data.append(data)
+                    setattr(self, name, data[0])
+
+            self._hash = dict(self._data)
+
+        def __iter__(self):
+            for value, data in self._data:
+                yield (value, data)
+
+    @classmethod
+    def get_value(self, key):
+        return self._hash[key]
 
 
 class CSVField(models.CharField):
@@ -47,7 +74,7 @@ class CSVField(models.CharField):
             raise ModelException(_(u'Invalid value detected for CSV field.'))
 
 
-class JSONField(models.CharField):
+class JSONField(models.TextField):
 
     __metaclass__ = models.SubfieldBase
 
@@ -103,28 +130,40 @@ class Subject(models.Model):
     class Meta:
         abstract = True
 
+    class Attributes(Choice):
+        NAME = 0
+        DEFAULT = NAME
+
     attribute_model = None
 
     def __init__(self, *args, **kwargs):
         if self.attribute_model is None:
             self.attribute_model = getattr(import_module(self.__module__),
                                            '%sAttribute' % self.__class__.__name__)
-        return super(Attribute, self).__init__(*args, **kwargs)
+        return super(Subject, self).__init__(*args, **kwargs)
 
-    @property
-    def attribute_set(self):
-        return getattr(self, '%s_set' % self.attribute_model.__name__.lower())
-
-    def set_attribute(self, name, value):
-        return self.attribute_set.add(self.attirbute_model(name=name, value=value))
-
-    def get_attribute(self, name, default=None):
+    def getattr(self, name, default=None):
         try:
-            return self.attribute_set.get(name=name).value
-        except self.attribute_model.MultipleObjectReturned, e:
-            return self.attribute_set.all()[0]
-        else:
+            return self.attributes.get(name=name).value
+        except self.attribute_model.DoesNotExist:
             return default
+
+    def setattr(self, name, value):
+        try:
+            attribute = self.attributes.get(name=name)
+        except self.attribute_model.DoesNotExist:
+            self.attributes.create(name=name, value=value)
+        else:
+            attribute.value = value
+            attribute.save()
+
+    def delattr(self, name):
+        try:
+            attribute = self.attributes.get(name=name)
+        except self.attribute_model.DoesNotExist:
+            raise KeyError(name)
+        else:
+            attribute.delete()
 
 
 class Attribute(Model):
@@ -133,13 +172,7 @@ class Attribute(Model):
         abstract = True
         ordering = ('name',)
 
-    DEFAULT = 0
-    ATTRIBUTES = (
-        (DEFAULT, 'NAME',),
-    )
-
-    name = models.SmallIntegerField(default=DEFAULT,
-                         choices=ATTRIBUTES)
+    # name field must be specified as a choice field
     value = models.CharField(max_length=512)
 
     def __init__(self, *args, **kwargs):
@@ -190,6 +223,9 @@ class Logger(Model):
     class Meta:
         abstract = True
 
+    class Events(Choice):
+        DEFAULT = 0
+
     auto_initial_event = True
 
     def __init__(self, *args, **kwargs):
@@ -201,23 +237,17 @@ class Logger(Model):
     @property
     def latest(self):
         try:
-            return self.event_set.all()[0]
+            return self.events.all()[0]
         except:
             return None
 
-    @property
-    def event_set(self):
-        return getattr(self, '%s_set' % self.event_model.__name__.lower())
-
     def track(self, event, **kwargs):
-        event = self.event_model(event=event, **kwargs)
-        self.event_set.add(event)
-        return event
+        self.events.create(event=event, **kwargs)
 
     def save(self, *args, **kwargs):
         super(Logger, self).save(*args, **kwargs)
-        if self.event_model and self.auto_initial_event and not self.latest:
-            self.track_event(self.event_model.DEFAULT_EVENT)
+        if self.event_model and self.auto_initial_event and self.latest is None:
+            self.track(self.Events.DEFAULT)
 
 
 class Event(Model):
@@ -225,14 +255,8 @@ class Event(Model):
     class Meta:
         abstract = True
 
-    DEFAULT = 0
-    EVENTS = (
-        (DEFAULT, 'DEFAULT',),
-    )
-
-    name = models.SmallIntegerField(default=DEFAULT,
-                         choices=EVENTS)
-    message = models.TextField(blank=True,
+    # event field must be specified as a choice field
+    message = JSONField(blank=True,
                          null=False,
                          verbose_name=_(u'Message'))
 
@@ -249,11 +273,11 @@ class Event(Model):
     def save(self, *args, **kwargs):
         if not self.id:
             try:
-                self.id = self.__class__.objects.all()[0].id - 1
+                self.id = self.__class__.objects.all()[0].id -1
             except:
                 self.id = -1
         return super(Event, self).save(*args, **kwargs)
-        
+
 
 class Stateful(Logger):
 
@@ -262,7 +286,7 @@ class Stateful(Logger):
 
     @property
     def state(self):
-        return self.latest_event
+        return self.latest
 
 
 class Notifier(Logger):
@@ -315,7 +339,7 @@ class Notification(Model):
         return '%s: Event（%s）' % (self.ctime, self.event,)
 
 
-class Service(Notifier):
+class Service(Notifier, Subject):
 
     class Meta:
         abstract = True

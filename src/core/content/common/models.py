@@ -7,11 +7,11 @@ from django.utils.translation import ugettext_lazy as _
 
 from core.cache import cache
 from core.models import (
-    Attribute, Event,
+    Attribute, Choice, CSVField, Event,
     Localizable, Localization,
     Logger, Model,
     Notification, Notifier,
-    Service, Subject, User,
+    Service, Subject,
 )
 
 
@@ -25,14 +25,14 @@ class Genre(Localizable):
     class Meta:
         db_table = '%s_genre' % MODULE
 
-    GENRE_TYPES = (
-        (0, 'AUDIO',),
-        (1, 'VIDEO',),
-        (2, 'PICTURE',),
-        (3, 'TEXT',),
-    )
+    class Types(Choice):
+        AUDIO   = 0
+        VIDEO   = 1
+        PICTURE = 2
+        TEXT    = 3
 
-    type = models.SmallIntegerField(choices=GENRE_TYPES,
+    type = models.SmallIntegerField(default=Types.AUDIO,
+                         choices=Types,
                          verbose_name=_(u'Genre type'))
 
     def __unicode__(self):
@@ -61,6 +61,15 @@ class Source(Service):
     class Meta:
         db_table = '%s_source' % MODULE
 
+    class Attributes(Choice):
+        DELETE_FROM_RESOURCE_ON_ITEM_READY = 0
+        DEFAULT = DELETE_FROM_RESOURCE_ON_ITEM_READY
+
+    class Events(Choice):
+        ITEM_READY = 0
+        RESOURCE_ACCESSED = 1
+        DEFAULT = ITEM_READY
+
     name = models.CharField(max_length=255)
 
     def __unicode__(self):
@@ -71,14 +80,13 @@ class SourceAttribute(Attribute):
 
     class Meta:
         db_table = '%s_sourceattribute' % MODULE
-
-    DEFAULT = 0
-    ATTRIBUTES = (
-        (DEFAULT, 'DELETE_FROM_RESOURCE',)
-    )
+        unique_together = ('source', 'name',)
 
     source = models.ForeignKey(Source,
-                               verbose_name=_(u'Content source'))
+                         related_name='attributes',
+                         verbose_name=_(u'Content source'))
+    name = models.SmallIntegerField(default=Source.Attributes.DEFAULT,
+                         choices=Source.Attributes)
 
 
 class SourceEvent(Event):
@@ -86,16 +94,11 @@ class SourceEvent(Event):
     class Meta:
         db_table = '%s_sourceevent' % MODULE
 
-    ITEM_READY = 0
-    RESOURCE_ACCESSED = 1
-    DEFAULT = ITEM_READY
-    EVENTS = (
-        (DEFAULT, 'ITEM_READY',),
-        (RESOURCE_ACCESSED, 'RESOURCE_ACCESSED',),
-    )
-
     source = models.ForeignKey(Source,
-                               verbose_name=_(u'Content source'))
+                         related_name='events',
+                         verbose_name=_(u'Content source'))
+    event = models.SmallIntegerField(default=Source.Events.DEFAULT,
+                         choices=Source.Events)
 
 
 class SourceNotification(Notification):
@@ -103,53 +106,36 @@ class SourceNotification(Notification):
     class Meta:
         db_table = '%s_sourcenotification' % MODULE
 
-    event = models.ForeignKey(SourceEvent)
+    event = models.ForeignKey(SourceEvent,
+                         related_name='notifications')
 
 
-class Owner(User):
-
-    class Meta:
-        db_table = '%s_owner' % MODULE
-        unique_together = ('source', 'source_owner_id',)
-
-    source = models.ForeignKey(Source)
-    source_owner_id = models.CharField(max_length=255)
-
-    def __unicode__(self):
-        return '%s@%s' % (self.source_owner_id, self.source.name,)
-
-
-# class Item(Model):
+# class FileType(Model):
 
 #     class Meta:
-#         unique_together = ('owner', 'source_item_id',)
+#         db_table = '%s_filetype' % MODULE
 
-#     CATEGORIES = (
-#         (0, 'DIGITAL',),
-#         (1, 'PHYSICAL',),
-#         (2, 'MEMBERSHIP',),
-#     )
+#     name = models.CharField(max_length=128)
+#     mime_type = CSVField(max_length=128)
+#     extension = models.CharField(max_length=5)
 
-#     # types of metadata
-#     TYPES = (
-#         (0, 'TRACK',),
-#         (1, 'ALBUM',),
-#         (2, 'COLLECTION',),
-#     )
+#     def __unicode__(self):
+#         return self.name
 
-#     owner = models.ForeignKey(Owner)
-#     source_item_id = models.CharField(max_length=255)
-#     category = models.SmallIntegerField(default=0,
-#                          choices=CATEGORIES)
-#     type = models.SmallIntegerField(default=0,
-#                          choices=TYPES)
-#     children = models.ManyToManyField('self',
-#                          symmetrical=False,
-#                          related_name='parents')
-#     resources = models.ManyToManyField('content.Resource',
-#                          related_name='items')
-#     enabled = models.BooleanField(default=True)
 
-#     @property
-#     def metadata(self):
-#         return getattr(self, self.get_type_display().replace('_', '').lower())
+# class FileSpecification(Model, Subject):
+
+#     class Meta:
+#         unique_together = ('source', 'name',),
+
+#     source = models.ForeignKey(Source,
+#                          blank=True,
+#                          null=True)
+#     owner = models.ForeignKey('core.content.api.models.Owner',
+#                          blank=True,
+#                          null=True)
+#     type = models.ForeignKey(FileType)
+#     name = models.CharField(max_length=128)
+
+#     def __unicode__(self):
+#         return '%s: %s' % (self.source, self.name,)

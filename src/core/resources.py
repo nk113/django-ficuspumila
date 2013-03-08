@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-                                                
 import logging
 
+from django.conf import settings
 from tastypie.authentication import BasicAuthentication
-from tastypie.authorization import Authorization as TastypieAuthorization
+from tastypie.authorization import DjangoAuthorization
 from tastypie.exceptions import ImmediateHttpResponse, InvalidFilterError
 from tastypie.http import HttpUnauthorized
 from tastypie.resources import ModelResource
+from tastypie.throttle import CacheThrottle
+from tastypie.validation import CleanedDataFormValidation
 
 from .auth import SSOAuthenticator
 
@@ -33,13 +36,12 @@ class Authentication(BasicAuthentication):
         return authenticated
 
     def get_identifier(self, request):
-        return getattr(request, 'user', None)
+        return getattr(request, 'user', None).username
 
 
-class Authorization(TastypieAuthorization):
+class Authorization(DjangoAuthorization):
 
-    def is_authorized(self, request, obj=None):
-        return super(Authorization).is_authorized(request, obj)
+    pass
 
 
 class AdminAuthentication(Authentication):
@@ -50,9 +52,45 @@ class AdminAuthentication(Authentication):
         return request.user.is_superuser
 
 
-class AdminAuthorization(TastypieAuthorization):
+class AdminAuthorization(Authorization):
 
     pass
+
+
+class Throttle(CacheThrottle):
+
+    def should_be_throttled(self, identifier, **kwargs):
+        if identifier == settings.SYSTEM_USERNAME:
+            return False
+        return True
+
+    def accessed(self, identifier, **kwargs):
+        pass
+
+
+class FormValidation(CleanedDataFormValidation):
+    """
+    An extension of FormValidation that allows to specify a list of fields
+    should not be validated. This is useful for ForeignKey, as the
+    validation would fail if passed by ID rather than URL, because their
+    actual URL is built by alter_deserialized_detail_data AFTER validation
+    has taken place.
+    """
+    def __init__(self, **kwargs):
+        self.apply_cleaned_data = kwargs.get('apply_cleaned_data', False)
+        self.exclude = kwargs.pop('exclude') if 'exclude' in kwargs else []
+        super(FormValidation, self).__init__(**kwargs)
+
+    def is_valid(self, bundle, request=None):
+        if 'unit_id' in bundle.obj.__dict__ and hasattr(request, 'unit'):
+            bundle.data['unit'] = request.unit.id
+
+        errors = super(FormValidation if self.apply_cleaned_data
+                       else FormValidation, self).is_valid(bundle, request)
+
+        for field_not_to_validate in self.exclude:
+            errors.pop(field_not_to_validate, None)
+        return errors
 
 
 class Resource(ModelResource):
@@ -78,7 +116,9 @@ class Resource(ModelResource):
         response = super(Resource, self).dispatch(request_type,
                                                   request,
                                                   **kwargs)
+
         self.debug(request, response)
+
         return response
 
     def _handle_500(self, request, exception):
@@ -121,6 +161,7 @@ class Meta(object):
     allowed_methods = ('get',)
     authentication = Authentication()
     authorization = Authorization()
+    throttle = Throttle()
     excludes = ['utime',]
 
 

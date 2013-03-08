@@ -60,6 +60,8 @@ WSGI_APPLICATION = 'wsgi.local.application'
 # apps
 INSTALLED_APPS += (
     'django.contrib.admin',
+    'south',
+    'core.common',
 )
 
 
@@ -70,41 +72,8 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-# core
-SYSTEM_USERNAME = '-- <django auth username> must be overwritten --'
-SYSTEM_PASSWORD = '-- <django auth password> must be overwritten --'
-API_VERSION = 'v1'
-API_PATH = 'api/%s/' % API_VERSION
-TOKEN_EXPIRATION = 60*2
-SERVICES = {
-    'core.content.common.models.Source': {
-        'user': 'core.content.common.models.Owner',
-    },
-    # 'core.product.models.Store': {
-    #     'user': 'core.product.models.Consumer',
-    # },
-    # 'core.playready.models.Lisenser': {
-    #     'user': 'core.playready.models.Licency',
-    # },
-}
-
-
-# core.common
-IPINFODB_API_URL = 'http://api.ipinfodb.com/v3/ip-country/'
-IPINFODB_API_KEY = '<api key for ipinfodb> -- must be overwriten --'
-GEONAMES_COUNTRY_INFO = 'http://download.geonames.org/export/dump/countryInfo.txt'
-
-
-# core.content
-
-
-# core.product
-
-
-# core.playready
-
-
-# core.transaction
+# tastypie
+TASTYPIE_CANNED_ERROR = 'Oops, a catastrophic error has occurred!'
 
 
 # logging
@@ -154,27 +123,27 @@ LOGGING = {
         },
         'django_log': {
             'level': 'INFO',
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.WatchedFileHandler',
             'formatter': 'normal',
             'filename': os.path.join(APP_ROOT, 'logs/django.log'),
         },
         'debug_log': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.WatchedFileHandler',
             'formatter': 'verbose',
-            'filename': os.path.join(APP_ROOT, 'logs/django_debug.log'),
+            'filename': os.path.join(APP_ROOT, 'logs/django-debug.log'),
         },
         'sql_log': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.WatchedFileHandler',
             'formatter': 'simple',
-            'filename': os.path.join(APP_ROOT, 'logs/django_sql.log'),
+            'filename': os.path.join(APP_ROOT, 'logs/django-sql.log'),
         },
         'test_log': {
             'level': 'DEBUG',
-            'class': 'logging.FileHandler',
+            'class': 'logging.handlers.WatchedFileHandler',
             'formatter': 'normal',
-            'filename': os.path.join(APP_ROOT, 'logs/django_test.log'),
+            'filename': os.path.join(APP_ROOT, 'logs/django-test.log'),
         },
     },
     'loggers': {
@@ -187,3 +156,42 @@ LOGGING = {
 warnings.filterwarnings(action='ignore',
                         category=UserWarning,
                         module=r'tastypie.*')
+
+
+# core
+SYSTEM_USERNAME = '<django auth username>'
+SYSTEM_PASSWORD = '<django auth password>'
+API_VERSION = 'v1'
+API_PATH = 'api/%s/' % API_VERSION
+TOKEN_EXPIRATION = 60*2
+SERVICES = {
+    'core.content.common.models.Source': {
+        'user': 'core.content.common.models.Owner',
+    },
+    # 'core.product.models.Store': {
+    #     'user': 'core.product.models.Consumer',
+    # },
+    # 'core.playready.models.Lisenser': {
+    #     'user': 'core.playready.models.Licency',
+    # },
+}
+
+
+# core.common
+IPINFODB_API_URL = 'http://api.ipinfodb.com/v3/ip-country/'
+IPINFODB_API_KEY = '<api key for ipinfodb>'
+GEONAMES_COUNTRY_INFO = 'http://download.geonames.org/export/dump/countryInfo.txt'
+
+
+# core.content
+
+
+# core.product
+
+
+# core.playready
+
+
+# core.transaction
+
+

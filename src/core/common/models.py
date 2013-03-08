@@ -6,7 +6,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import Model, CSVField
+from core.models import Choice, CSVField, Model
 from core.cache import cache
 
 
@@ -19,14 +19,13 @@ class Country(Model):
         verbose_name = _(u'Country')
         verbose_name_plural = _(u'Countries')
 
-    CONTINENTS = (
-        ('AN', 'Antarctica',),
-        ('AS', 'Asia',),
-        ('EU', 'Europe',),
-        ('NA', 'North America',),
-        ('OC', 'Oceania',),
-        ('SA', 'South America',),
-    )
+    class Continents(Choice):
+        ANTARCTICA     = 'AN'
+        ASIA           = 'AS'
+        EUROPE         = 'EU'
+        NOURTH_AMERICA = 'NA'
+        OCEANIA        = 'OC'
+        SOURTH_AMERICA = 'SA'
 
     alpha2 = models.CharField(max_length=2,
                          primary_key=True,
@@ -45,7 +44,7 @@ class Country(Model):
                          verbose_name=_(u'Area (in sq km)'))
     population = models.IntegerField(null=True)
     continent = models.CharField(max_length=2,
-                         choices=CONTINENTS)
+                         choices=Continents)
     tld = models.CharField(max_length=5,
                          blank=True,
                          verbose_name=_(u'Top level domain'))

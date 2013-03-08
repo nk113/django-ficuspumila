@@ -17,15 +17,19 @@ from .exceptions import ProxyException
 logger = logging.getLogger(__name__)
 
 
-def get(name):
+def get(name, model_module=None):
 
     frame = inspect.stack()[1]
     module = inspect.getmodule(frame[0])
+
     splitted = module.__name__.split('.')
 
     if splitted.pop() != 'proxies':
-        splitted.append('models')
-        module = import_module('.'.join(splited))
+        if model_module is None:
+            splitted.append('models')
+            module = import_module('.'.join(splited))
+        else:
+            module = import_module(model_module)
 
     if getattr(settings, 'API_URL', None):
         return getattr(module, '%sProxy' % name)()
@@ -38,14 +42,19 @@ class ProxyClient(Client):
     @cache(keyarg=1)
     def schema(self, model_name=None):
         # overrides to support multiple api endpoints - app namespace
-        app_name = self._base_url.replace(settings.API_URL,
+        api_name = self._base_url.replace(settings.API_URL,
                                           '').split('/')[0]
-        if not app_name in self._schema_store:
-            schema = super(ProxyClient, self).schema(model_name)
-            del(self._schema_store[None])
-            self._schema_store[app_name] = schema
 
-        return self._schema_store[app_name]
+        if model_name is None:
+            model_name = api_name
+            url = self._base_url
+        else:
+            url = self._url_gen('%s/schema/' % model_name)
+
+        if not model_name in self._schema_store:
+            self._schema_store[model_name] = self.request(url)
+
+        return self._schema_store[model_name]
 
 
 class Proxy(object):
@@ -55,12 +64,20 @@ class Proxy(object):
         if not getattr(settings, 'API_URL', None):
             raise ProxyException(_(u'API_URL not found in settings.'))
 
+        api_name = getattr(self, 'api_name', None)
+
         self._client = ProxyClient('%s%s/' % (settings.API_URL,
-                                       self.__module__.split('.')[1]),
-                                   (settings.SYSTEM_USERNAME,
-                                    settings.SYSTEM_PASSWORD))
-        self._resource = getattr(self._client,
-                                 self.__class__.__name__[:-5].lower())
+                           api_name if api_name else self.__module__.split('.')[1]),
+                           (settings.SYSTEM_USERNAME,
+                            settings.SYSTEM_PASSWORD))
+
+        try:
+            resource_name = self.__class__.__name__[:-5].lower()
+            self._resource = getattr(self._client,
+                                     resource_name)
+        except AttributeError, e:
+            raise ProxyException(_(u'API seems not to have endpoint ' +
+                                    u'for the resource: %s' % resource_name))
 
         # support timezone
         def _setfield(self, attr, value):
@@ -82,3 +99,8 @@ class Proxy(object):
                 setattr(self, key, value)
             except:
                 pass
+
+
+class CoreProxy(Proxy):
+
+    api_name = 'core'

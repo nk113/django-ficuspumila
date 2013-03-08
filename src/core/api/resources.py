@@ -3,20 +3,18 @@ import logging
 
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.utils.translation import ugettext_lazy as _
-from tastypie import fields
 from tastypie.api import Api
 from tastypie.cache import SimpleCache
 
+from core.common.models import Country
 from core.resources import (
     EXACT_IN,
     EXACT_IN_CONTAINS,
     EXACT_IN_GTE_LTE,
     EXACT_IN_GET_LTE_DATE,
     EXACT_IN_STARTSWITH,
-    Meta, AdminMeta, Resource,
+    AdminMeta, Resource,
 )
-from .models import Country
 
 
 logger = logging.getLogger(__name__)
@@ -77,9 +75,10 @@ class CountryResource(Resource):
 
 
 def get():
-    api = Api(api_name='common')
+    api = Api(api_name='core')
     api.register(UserResource())
     api.register(CountryResource())
+
     return api.urls
 
 urls = get()

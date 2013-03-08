@@ -1,10 +1,13 @@
+# latest revision
 celery
 Django
 django-celery
-django-tastypie
 fluent-logger
 MySQL-python
 pycrypto
 python-memcached
 south
 tastypie-queryset-client
+
+# specific revision
+-e git+https://github.com/toastdriven/django-tastypie.git@32dae8d259#egg=django-tastypie
