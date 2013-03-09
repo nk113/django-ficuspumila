@@ -357,7 +357,7 @@ class Service(Notifier, Subject):
                        key=self.token_key,
                        iv=self.token_iv).algorithm.encrypt(
                            json.dumps([
-                               int(time.time()) + settings.TOKEN_EXPIRATION,
+                               int(time.time()) + settings.TOKEN_TIMEOUT,
                                data,]))
         except:
             return None

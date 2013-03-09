@@ -2,8 +2,6 @@
 import os                                            
 import warnings
 
-from Crypto.pct_warnings import RandomPool_DeprecationWarning
-
 from .settings import *
 
 
@@ -13,6 +11,10 @@ gettext = lambda s: s
 # debug
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+
+# version
+APP_VERSION = '0.0.1'
 
 
 # pathes
@@ -48,7 +50,8 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': 'localhost:11211',
-        'TIMEOUT': 60*15,
+        'TIMEOUT': 60 * 15,
+        'VERSION': APP_VERSION,
     }
 }
 
@@ -156,6 +159,9 @@ LOGGING = {
 warnings.filterwarnings(action='ignore',
                         category=UserWarning,
                         module=r'tastypie.*')
+warnings.filterwarnings(action='ignore',
+                        category=DeprecationWarning,
+                        module=r'core.*')
 
 
 # core
@@ -163,7 +169,6 @@ SYSTEM_USERNAME = '<django auth username>'
 SYSTEM_PASSWORD = '<django auth password>'
 API_VERSION = 'v1'
 API_PATH = 'api/%s/' % API_VERSION
-TOKEN_EXPIRATION = 60*2
 SERVICES = {
     'core.content.common.models.Source': {
         'user': 'core.content.common.models.Owner',
@@ -175,6 +180,8 @@ SERVICES = {
     #     'user': 'core.playready.models.Licency',
     # },
 }
+CACHE_TIMEOUT = CACHES['default']['TIMEOUT']
+TOKEN_TIMEOUT = 60 * 2
 
 
 # core.common

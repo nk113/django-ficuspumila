@@ -48,7 +48,7 @@ class SSOAuthenticator(object):
 
     format: json
       [
-        <timestamp, now + settings.SSO_TOKEN_EXPIRATION>
+        <timestamp, now + settings.TOKEN_TIMEOUT>
         (, {
           ("<service>_<user>_id": "<service user id>")
           (, "username": "<Django Auth username>")
@@ -157,10 +157,10 @@ class SSOAuthenticator(object):
         logger.debug(u'token decrypted: %s' % token)
 
         if token[0]:
-            if float(token[0]) > time.time() + settings.TOKEN_EXPIRATION:
+            if float(token[0]) > time.time() + settings.TOKEN_TIMEOUT:
                 logger.debug(u'token expiration is bigger than expected: token %s > %s' % (
                                  token[0],
-                                 timezone.now() + settings.TOKEN_EXPIRATION,))
+                                 timezone.now() + settings.TOKEN_TIMEOUT,))
 
                 raise AuthException(_(u'Expiration specified in token is '
                                       u'bigger than expected.'))
@@ -194,7 +194,7 @@ class SSOAuthenticator(object):
     def from_request(request):
         if (request.META.get('HTTP_AUTHORIZATION') and
             request.META['HTTP_AUTHORIZATION'].lower().startswith(
-                '%s ' % SSOAuthenticator.AUTHTYPE)):
+                '%s ' % SSOAuthenticator.AUTH_TYPE)):
             (auth_type, data) = request.META['HTTP_AUTHORIZATION'].split()
 
             if auth_type.lower() != SSOAuthenticator.AUTH_TYPE:

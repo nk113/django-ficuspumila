@@ -140,6 +140,7 @@ class OwnerResource(ContentResource):
         resource_name = 'owner'
         allowed_methods = ('get',)
         filtering = {
+            'user': ALL_WITH_RELATIONS,
             'source': ALL_WITH_RELATIONS,
             'source_owner_id': EXACT_IN_STARTSWITH,
         }
