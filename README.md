@@ -1,66 +1,65 @@
 ...earnestly developping!
 
 ===========
-ficuspumila
+Ficuspumila
 ===========
 
 Ficuspumila (creeping fig or climbing fig, AKA pumila) is a species of flowering plant in the family Moraceae, native to East Asia... As the common name "creeping fig" indicates, the plant has a creeping / vining habit and is often used in gardens and landscapes... ([Wikipedia] [1])
 
   [1]: http://en.wikipedia.org/wiki/Ficus_pumila "Wikipedia"
 
-Ficuspumila is a django application suite which helps you to build comprehensive media contents management and distribution service. It covers whole media lifecycle from metadata ingestion, media file encoding and encryption to payment transacsion, authorized distribution and usage tracking. It would be really great if Ficuspumika can empower your medias to grow and spread like the pumila creeps!
+Ficuspumila is a django application suite which helps you to build comprehensive media contents management and distribution service. It covers whole media lifecycle from metadata ingestion, media file encoding and encryption to payment transacsion, authorized distribution and usage tracking. It would be great if Ficuspumila can empower your medias to grow and spread like the pumila creeps!
 
 Structure
-=========
+---------
 
-Ficuspumila is designed to process media files in destributed environment so that means adding servers is only needed to handle growing encoding or download session.
+Ficuspumila is designed to process media files in destributed environment so you don't need to bother about scaling up your system as encoding or download session grows, just add servers.
 
 Requirements
-============
+------------
 
-Python Libraries
-----------------
+### Python Libraries
 
 * python modules in [requirements.txt](src/requirements.txt "requirements.txt")
 
-External Services
------------------
+### External Services
 
 * AMQP service, [RabbitMQ](http://www.rabbitmq.com/ "RabbitMQ") is recommended.
 
-Media Tools
------------
+### Media Tools
 
 * [FFmpeg](http://www.ffmpeg.org/ "FFmpeg")
 * [SoX](http://sox.sourceforge.net/ "SoX")
 * [GPAC](http://gpac.wp.mines-telecom.fr/mp4box/ "GPAC")
 * [m3u8-segmenter](https://github.com/johnf/m3u8-segmenter "m3u8-segmenter")
 
-Accounts
---------
+### Accounts
 
 * [ipinfodb.com](http://ipinfodb.com/ "ipinfodb.com")
 
 Modules
-=======
+-------
 
-core
-----
+### core
 
-core.content
-------------
+Provides fundamental components including authentication, caching, api resources,  proxies and so on.
 
-core.product
-------------
+### core.content
 
-core.playready
---------------
+Consists of encoder and storage.
 
-core.transaction
-----------------
+### core.product
 
-api
----
+
+### core.playready
+
+
+### core.transaction
+
+
+### api
+
+Each core application has its API endpoint and resources. Ficuspumila is fully integrated with [django-tastypie](https://github.com/toastdriven/django-tastypie) to implement internal RPC and to provide external interface so you can easily allow users to access there resources.
 
 Getting Started with Ficuspumila
 ================================

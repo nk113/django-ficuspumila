@@ -110,32 +110,65 @@ class SourceNotification(Notification):
                          related_name='notifications')
 
 
-# class FileType(Model):
+class FileType(Model):
 
-#     class Meta:
-#         db_table = '%s_filetype' % MODULE
+    class Meta:
+        db_table = '%s_filetype' % MODULE
 
-#     name = models.CharField(max_length=128)
-#     mime_type = CSVField(max_length=128)
-#     extension = models.CharField(max_length=5)
+    name = models.CharField(max_length=128)
+    mime_type = CSVField(max_length=128)
+    extension = models.CharField(max_length=5)
 
-#     def __unicode__(self):
-#         return self.name
+    def __unicode__(self):
+        return self.name
 
 
-# class FileSpecification(Model, Subject):
+class FileSpecification(Model, Subject):
 
-#     class Meta:
-#         unique_together = ('source', 'name',),
+    class Meta:
+        unique_together = ('source', 'name',),
 
-#     source = models.ForeignKey(Source,
-#                          blank=True,
-#                          null=True)
-#     owner = models.ForeignKey('core.content.api.models.Owner',
-#                          blank=True,
-#                          null=True)
-#     type = models.ForeignKey(FileType)
-#     name = models.CharField(max_length=128)
+    class Attributes(Choice):
+        WIDTH         = 0
+        HEIGHT        = 1
+        CANVAS_COLOR  = 3
+        CAPTURE_POSITION = 4
+        LETTERBOX     = 5
+        QUALITY       = 6
+        FRAMERATE     = 7
+        SAMPLERATE    = 8
+        AUDIO_BITRATE = 1
+        AUDIO_CODEC   = 2
+        AUDIO_PARAMS  = 3
+        VIDEO_BITRATE = 4
+        VIDEO_CODEC   = 4
+        VIDEO_PARAMS  = 4
+        VIDEO_PRESET  = 4
+        SEGMENT_DURATION = 4
+        ASPECT        = 2
+        TRIAL         = 2
+        ITEM_FILE_TYPE = 4
+        DEFAULT = PROTECTED
 
-#     def __unicode__(self):
-#         return '%s: %s' % (self.source, self.name,)
+    source = models.ForeignKey(Source,
+                         blank=True,
+                         null=True)
+    name = models.CharField(max_length=128)
+    type = models.ForeignKey(FileType)
+
+    def __unicode__(self):
+        return '%s: %s' % (self.source, self.name,)
+
+
+class FileSpecificationAttribute(Attribute):
+
+    class Meta:
+        ordering = ('name',)
+        unique_together = ('file_spec', 'name',)
+
+    spec = models.ForeignKey(FileSpecification)
+    name = models.SmallIntegerField(default=FileSpecification.Attributes.DEFAULT,
+                         choices=FileSpecification.Attributes)
+
+    def __unicode__(self):
+        return '%s: %s' % (self.name, self.value)

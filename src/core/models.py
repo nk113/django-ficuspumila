@@ -344,6 +344,8 @@ class Service(Notifier, Subject):
     class Meta:
         abstract = True
 
+    user = models.OneToOneField(AuthUser,
+                         verbose_name=_(u'Django auth user'))
     token_key = models.CharField(max_length=255,
                          default=trans.algorithm.generate_key,
                          verbose_name=_(u'Key for the SSO auth token'))
