@@ -1,24 +1,14 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from django.test import TestCase
-
+from core.test import TestCase
 from core.common.models import Country
 
 
 logger = logging.getLogger(__name__)
 
 
-class BaseTestCase(TestCase):
-
-    def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
-
-
-class CountryTestCase(BaseTestCase):
+class CountryTestCase(TestCase):
 
     def test_get(self):
         c = Country.objects.get(pk='IN')

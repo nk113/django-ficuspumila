@@ -58,7 +58,7 @@ class Response(client.Response):
                           self._response[attr][1:-1].replace(settings.API_PATH,
                                                              '').split('/')[:-2]))
 
-            logger.debug('need namespace schema (%s)' % url)
+            logger.debug(u'need namespace schema (%s)' % url)
 
             client = ProxyClient.get(url)
             client.schema()

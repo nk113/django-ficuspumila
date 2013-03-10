@@ -171,7 +171,7 @@ API_VERSION = 'v1'
 API_PATH = 'api/%s/' % API_VERSION
 SERVICES = {
     'core.content.common.models.Source': {
-        'user': 'core.content.common.models.Owner',
+        'user': 'core.content.api.models.Owner',
     },
     # 'core.product.models.Store': {
     #     'user': 'core.product.models.Consumer',

@@ -15,7 +15,7 @@ DATABASES = {
 LOGGING['loggers'] = {
     '': {
         'handlers': ('console', 'test_log',),
-        'level': 'DEBUG',
+        'level': 'INFO',
         'propagate': True,
     },
 }

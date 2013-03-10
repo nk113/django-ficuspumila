@@ -3,7 +3,7 @@ from core.test import ResourceTestCase
 
 
 class CountryResourceTestCase(ResourceTestCase):
-    app_name = 'common'
+    api_name = 'core'
     resource_name = 'country'
 
     def setUp(self):
@@ -16,3 +16,8 @@ class CountryResourceTestCase(ResourceTestCase):
 
     def test_get_detail_unauthenticated(self):
         pass
+
+    def test_get_detail_json(self):
+        # FIXME: this sometimes fails for some reason...
+        r = super(CountryResourceTestCase, self).test_get_detail_json()
+        return r

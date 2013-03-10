@@ -26,10 +26,10 @@ class SSOBackend(object):
     supports_inactive_user = False; 
 
     def authenticate(self, username=None, password=None):
-        logger.debug('trying to authenticate with sso: %s / %s' % (username,
-                                                                   password,))
+        logger.debug(u'trying to authenticate with sso (%s / %s)' % (username,
+                                                                     password,))
         try:
-            service, id = username.split(DELIMITER)
+            service, id = username.split(SSOBackend.DELIMITER)
             user = SSOAuthenticator(**{
                 service: int(id),
                 SSOAuthenticator.TOKEN_PARAM: password,
@@ -70,9 +70,9 @@ class SSOAuthenticator(object):
     def __init__(self, **kwargs):
 
         def get_name(path):
-            return path.rpartition('.').lower()
+            return path.rpartition('.')[-1].lower()
 
-        logger.debug('trying to initialize: %s' % kwargs,)
+        logger.debug(u'trying to initialize (%s)' % kwargs,)
 
         try:
             # import modules
@@ -87,7 +87,7 @@ class SSOAuthenticator(object):
                                                      user.pop().title()),
                 }
 
-            logger.debug('installed services: %s' % services)
+            logger.debug(u'installed services: %s' % services)
 
             # instantiate service
             self.service = [s[1]['service'].objects.get(

@@ -31,7 +31,7 @@ class Authentication(BasicAuthentication):
             authenticated = SSOAuthenticator.from_request(
                                 request).is_authenticated()
 
-        logger.debug('authenticated as user: %s' % request.user)
+        logger.debug(u'authenticated as user (%s)' % request.user)
 
         return authenticated
 

@@ -2,25 +2,35 @@
 import logging
 
 from django.conf import settings
-from django.test import TestCase
+from django.test import TestCase as DjangoTestCase
 from tastypie.test import ResourceTestCase as TastypieResourceTestCase
 
 
-FIXTURES = ('initial_data.json',)
+FIXTURES = ('initial_data.json', 'core',)
 
 logger = logging.getLogger(__name__)
 
 
+class TestCase(DjangoTestCase):
+    fixtures = FIXTURES
+
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+
 class ResourceTestCase(TastypieResourceTestCase):
     fixtures = FIXTURES
-    app_name = ''
-    resource_name = ''
+    api_name = 'core'
+    resource_name = 'user'
 
     def setUp(self):
         super(ResourceTestCase, self).setUp()
 
         self.list_endpoint = '/%s%s/%s/' % (settings.API_PATH,
-                                            self.app_name,
+                                            self.api_name,
                                             self.resource_name,)
         self.detail_endpoint = '%s1/' % self.list_endpoint
 
@@ -49,3 +59,4 @@ class ResourceTestCase(TastypieResourceTestCase):
                                 authentication=self.get_credentials())
         self.assertValidJSONResponse(r)
         return r
+

@@ -1,17 +1,6 @@
 [
   {
     "fields": {
-      "ctime": "2013-02-17T11:55:40Z", 
-      "source": 1, 
-      "source_owner_id": "dev", 
-      "user": 1,
-      "utime": "2013-02-17T11:55:40Z"
-    }, 
-    "model": "common.owner", 
-    "pk": 1
-  }, 
-  {
-    "fields": {
       "ctime": "2013-02-17T03:24:43Z", 
       "hmac_key": "dd811a04aa1c3761906796a129809f8be5b869f701342d5e3fd756adf83fd74c", 
       "name": "dev", 
