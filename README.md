@@ -13,7 +13,7 @@ Ficuspumila is a django application suite which helps you to build comprehensive
 Structure
 =========
 
-Ficuspumila is designed to process media files in destributed environment. The more encoding or download session increase, the more encoder or donwload server will be required.
+Ficuspumila is designed to process media files in destributed environment so that means adding servers is only needed to handle growing encoding or download session.
 
 Requirements
 ============
