@@ -129,26 +129,26 @@ class FileSpecification(Model, Subject):
         unique_together = ('source', 'name',),
 
     class Attributes(Choice):
-        WIDTH         = 0
-        HEIGHT        = 1
-        CANVAS_COLOR  = 3
-        CAPTURE_POSITION = 4
-        LETTERBOX     = 5
-        QUALITY       = 6
-        FRAMERATE     = 7
-        SAMPLERATE    = 8
-        AUDIO_BITRATE = 1
-        AUDIO_CODEC   = 2
-        AUDIO_PARAMS  = 3
-        VIDEO_BITRATE = 4
-        VIDEO_CODEC   = 4
-        VIDEO_PARAMS  = 4
-        VIDEO_PRESET  = 4
-        SEGMENT_DURATION = 4
-        ASPECT        = 2
-        TRIAL         = 2
-        ITEM_FILE_TYPE = 4
-        DEFAULT = PROTECTED
+        WIDTH            = 0
+        HEIGHT           = 1
+        CANVAS_COLOR     = 2
+        CLIP_POSITION    = 3
+        LETTERBOX        = 4
+        QUALITY          = 5
+        FRAMERATE        = 6
+        SAMPLERATE       = 7
+        AUDIO_BITRATE    = 8
+        AUDIO_CODEC      = 9
+        AUDIO_PARAMS     = 10
+        VIDEO_BITRATE    = 11
+        VIDEO_CODEC      = 12
+        VIDEO_PARAMS     = 13
+        VIDEO_PRESET     = 14
+        SEGMENT_DURATION = 15
+        ASPECT           = 16
+        TRIAL            = 17
+        ITEM_FILE_TYPE   = 18
+        DEFAULT          = WIDTH
 
     source = models.ForeignKey(Source,
                          blank=True,
@@ -164,7 +164,7 @@ class FileSpecificationAttribute(Attribute):
 
     class Meta:
         ordering = ('name',)
-        unique_together = ('file_spec', 'name',)
+        unique_together = ('spec', 'name',)
 
     spec = models.ForeignKey(FileSpecification)
     name = models.SmallIntegerField(default=FileSpecification.Attributes.DEFAULT,

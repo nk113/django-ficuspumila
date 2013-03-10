@@ -186,7 +186,7 @@ class Attribute(Model):
                             self.value,)
 
 
-class Localizable(Model):
+class Localizable(models.Model):
 
     class Meta:
         abstract = True
@@ -218,7 +218,7 @@ class Localization(Model):
                          help_text=_(u'Language code'))
 
 
-class Logger(Model):
+class Logger(models.Model):
 
     class Meta:
         abstract = True
@@ -339,13 +339,21 @@ class Notification(Model):
         return '%s: Event（%s）' % (self.ctime, self.event,)
 
 
-class Service(Notifier, Subject):
+class User(Model):
 
     class Meta:
         abstract = True
 
     user = models.OneToOneField(AuthUser,
+                         primary_key=True,
                          verbose_name=_(u'Django auth user'))
+
+
+class Service(User, Notifier, Subject):
+
+    class Meta:
+        abstract = True
+
     token_key = models.CharField(max_length=255,
                          default=trans.algorithm.generate_key,
                          verbose_name=_(u'Key for the SSO auth token'))
@@ -385,13 +393,3 @@ class Service(Notifier, Subject):
                               SSOAuthenticator.TOKEN_PARAM: self.generate_token(data),})
         except:
             return None
-
-
-class User(Model):
-
-    class Meta:
-        abstract = True
-
-    user = models.OneToOneField(AuthUser,
-                         primary_key=True,
-                         verbose_name=_(u'Django auth user'))

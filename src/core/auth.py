@@ -91,7 +91,7 @@ class SSOAuthenticator(object):
 
             # instantiate service
             self.service = [s[1]['service'].objects.get(
-                         pk=int(kwargs.get(k)))
+                         user=int(kwargs.get(k)))
                          for s in [(get_name(k),
                                     v,) for k, v in services.iteritems()]
                          if kwargs.get(s[0])][0]
