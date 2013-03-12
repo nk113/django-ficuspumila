@@ -8,5 +8,6 @@ logger = logging.getLogger(__name__)
 
 
 class DateHierarchicalAdmin(admin.ModelAdmin)
+
     date_hierarchy = 'ctime'
 

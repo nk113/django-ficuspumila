@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 class CountryAdmin(admin.ModelAdmin):
+
     list_display  = ('name', 'alpha2', 'currency_code', '_languages',
                      '_neighbours',)
     list_filter   = ('continent',)

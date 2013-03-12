@@ -12,6 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 class TestCase(DjangoTestCase):
+
     fixtures = FIXTURES
 
     def setUp(self):
@@ -22,6 +23,7 @@ class TestCase(DjangoTestCase):
 
 
 class ResourceTestCase(TastypieResourceTestCase):
+
     fixtures = FIXTURES
     api_name = 'core'
     resource_name = 'user'

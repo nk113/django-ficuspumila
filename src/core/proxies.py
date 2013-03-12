@@ -63,12 +63,12 @@ class Response(client.Response):
             client = ProxyClient.get(url)
             client.schema()
 
-            old_clone = self.model.clone
+            clone_original = self.model.clone
             self.model.clone = lambda model_name: client._model_gen(model_name)
 
             model = super(Response, self).__getattr__(attr)
 
-            self.model.clone = old_clone
+            self.model.clone = clone_original
 
             return model
 
@@ -148,8 +148,8 @@ class ProxyClient(client.Client):
 
         # overwrite manager
         model.objects = Manager(model)
-        model.old_save = model.save
-        model.old_delete = model.delete
+        model.save_original = model.save
+        model.delete_original = model.delete
 
         def break_cache(obj):
             url = '/%s%s/' % (settings.API_PATH,
@@ -164,11 +164,11 @@ class ProxyClient(client.Client):
 
         def save(obj): 
             break_cache(obj)
-            model.old_save(obj)
+            model.save_original(obj)
 
         def delete(obj):
             break_cache(obj)
-            model.old_delete(obj)
+            model.delete_original(obj)
 
         model.save = save
         model.delete = delete
@@ -213,16 +213,22 @@ class ProxyClient(client.Client):
 
 class Proxy(object):
 
-    def __init__(self):
+    def __init__(self, **kwargs):
 
-        if not getattr(settings, 'API_URL', None):
-            raise ProxyException(_(u'API_URL not found in settings.'))
+        api_url = getattr(settings, 'API_URL', None) or kwargs.get('api_url', None)
+        namespace = kwargs.get('namespace',
+                               '/'.join(self.__module__.split('.')[:-2]))
+        resource_name = kwargs.get('resource_name',
+                                   self.__class__.__name__[:-5].lower())
 
-        self._client = ProxyClient.get('%s%s/' % (settings.API_URL,
-                           '/'.join(self.__module__.split('.')[:-2])))
+        if not api_url:
+            raise ProxyException(_(u'"API_URL" not found in settings or ' +
+                                   u'"api_url" not found in kwargs'))
+
+        self._client = ProxyClient.get('%s%s/' % (api_url,
+                                                  namespace))
 
         try:
-            resource_name = self.__class__.__name__[:-5].lower()
             self._resource = getattr(self._client,
                                      resource_name)
         except AttributeError, e:

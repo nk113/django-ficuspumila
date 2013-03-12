@@ -13,6 +13,7 @@ from tastypie.validation import CleanedDataFormValidation
 from .auth import SSOAuthenticator
 
 
+EXACT = ('exact',)
 EXACT_IN = ('exact', 'in',)
 EXACT_IN_CONTAINS = EXACT_IN + ('contains',)
 EXACT_IN_GTE_LTE = EXACT_IN + ('gte', 'lte',)

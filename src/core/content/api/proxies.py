@@ -40,6 +40,26 @@ class SourceNotificationProxy(Proxy):
     pass
 
 
+class FileTypeProxy(Proxy):
+
+    pass
+
+
+class ResourceTypeProxy(Proxy):
+
+    pass
+
+
+class FileSpecificationProxy(Proxy):
+
+    pass
+
+
+class FileSpecificationAttributeProxy(Proxy):
+
+    pass
+
+
 class OwnerProxy(Proxy):
 
     pass
@@ -51,4 +71,7 @@ Source             = get('Source', COMMON_MODELS)
 SourceAttribute    = get('SourceAttribute', COMMON_MODELS)
 SourceEvent        = get('SourceEvent', COMMON_MODELS)
 SourceNotification = get('SourceNotification', COMMON_MODELS)
-Owner              = get('Owner')
+FileType           = get('FileType', COMMON_MODELS)
+ResourceType       = get('ResourceType', COMMON_MODELS)
+FileSpecification  = get('FileSpecification')
+FileSpecificationAttribute = get('FileSpecificationAttribute')

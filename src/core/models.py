@@ -27,6 +27,7 @@ trans = Transcoder()
 class Choice(object):
 
     class __metaclass__(type):
+
         def __init__(self, *args, **kwargs):
             self._data = []
             for name, value in inspect.getmembers(self):
@@ -57,7 +58,7 @@ class CSVField(models.CharField):
     def to_python(self, value):
         if isinstance(value, basestring):
             try:
-                return value.split(',')
+                return [element.strip() for element in value.split(',')]
             except:
                 logger.exception(u'Failed to convert CSV field ' +
                                  u'to python: %s' % value)
@@ -67,7 +68,7 @@ class CSVField(models.CharField):
 
     def get_prep_value(self, value):
         try:
-            return ','.join(value)
+            return ', '.join(value)
         except:
             logger.exception(u'Failed to prep data for CSV field: ' +
                              u'%s' % value)
@@ -103,6 +104,7 @@ class JSONField(models.TextField):
 class Model(models.Model):
 
     class Meta:
+
         abstract = True
 
     objects = import_module('settings.database.managers').Manager()
@@ -128,9 +130,11 @@ class Model(models.Model):
 class Subject(models.Model):
 
     class Meta:
+
         abstract = True
 
     class Attributes(Choice):
+
         NAME = 0
         DEFAULT = NAME
 
@@ -189,6 +193,7 @@ class Attribute(Model):
 class Localizable(models.Model):
 
     class Meta:
+
         abstract = True
 
     def localize(self, language_code=None):
@@ -208,6 +213,7 @@ class Localizable(models.Model):
 class Localization(Model):
 
     class Meta:
+
         abstract = True
 
     language_code = models.CharField(max_length=2,
@@ -221,9 +227,11 @@ class Localization(Model):
 class Logger(models.Model):
 
     class Meta:
+
         abstract = True
 
     class Events(Choice):
+
         DEFAULT = 0
 
     auto_initial_event = True
@@ -253,6 +261,7 @@ class Logger(models.Model):
 class Event(Model):
 
     class Meta:
+
         abstract = True
 
     # event field must be specified as a choice field
@@ -282,16 +291,19 @@ class Event(Model):
 class Stateful(Logger):
 
     class Meta:
+
         abstract = True
 
     @property
     def state(self):
+
         return self.latest
 
 
 class Notifier(Logger):
 
     class Meta:
+
         abstract = True
 
     auto_initial_event = False
@@ -321,6 +333,7 @@ class Notifier(Logger):
 class Notification(Model):
 
     class Meta:
+
         abstract = True
 
     # foreign key to the event must be specified
@@ -342,6 +355,7 @@ class Notification(Model):
 class User(Model):
 
     class Meta:
+
         abstract = True
 
     user = models.OneToOneField(AuthUser,
@@ -352,6 +366,7 @@ class User(Model):
 class Service(User, Notifier, Subject):
 
     class Meta:
+
         abstract = True
 
     token_key = models.CharField(max_length=255,

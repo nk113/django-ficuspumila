@@ -13,7 +13,7 @@ Ficuspumila is a django application suite which helps you to build comprehensive
 Structure
 ---------
 
-Ficuspumila is designed to process media files in destributed environment so you don't need to bother about scaling up your system as encoding or download session grows, just add servers.
+Ficuspumila is designed to process media files in destributed environment so you don't need to bother on thinking scaling storategy as encoding or download sessions grow, just add boxes.
 
 Requirements
 ------------
@@ -24,7 +24,7 @@ Requirements
 
 ### External Services
 
-* AMQP service, [RabbitMQ](http://www.rabbitmq.com/ "RabbitMQ") is recommended.
+* AMQP service, [RabbitMQ](http://www.rabbitmq.com/ "RabbitMQ") is recommended
 
 ### Media Tools
 

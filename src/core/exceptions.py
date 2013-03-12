@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 
 
 class CoreException(Exception):
+
     def __init__(self, message, *args, **kwargs):
         self.errors = kwargs.get('errors', None)
 
@@ -15,13 +16,16 @@ class CoreException(Exception):
 
 
 class AuthException(CoreException):
+
     pass
 
 
 class ModelException(CoreException):
+
     pass
 
 
 class ProxyException(CoreException):
+
     pass
 

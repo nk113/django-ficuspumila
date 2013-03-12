@@ -16,10 +16,12 @@ logger = logging.getLogger(__name__)
 class Country(Model):
 
     class Meta:
+
         verbose_name = _(u'Country')
         verbose_name_plural = _(u'Countries')
 
     class Continents(Choice):
+
         ANTARCTICA     = 'AN'
         ASIA           = 'AS'
         EUROPE         = 'EU'

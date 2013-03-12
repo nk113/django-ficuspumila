@@ -57,6 +57,7 @@ class SSOAuthenticator(object):
         } )
       ]
     """
+
     AUTH_TYPE = 'sso'
 
     TOKEN_PARAM = 'token'

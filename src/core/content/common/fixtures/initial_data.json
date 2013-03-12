@@ -11,5 +11,247 @@
     }, 
     "model": "common.source", 
     "pk": 1
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "bmp", 
+      "mime": "image/bmp", 
+      "name": "Windows Bitmap", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 1
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "gif", 
+      "mime": "image/gif", 
+      "name": "Graphics Interchange Format", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 2
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "jpg", 
+      "mime": "image/jpg, image/jpeg", 
+      "name": "Joint Photographic Experts Group", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 3
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "png", 
+      "mime": "image/png", 
+      "name": "Portable Network Graphics", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 4
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "svg", 
+      "mime": "image/svg+xml", 
+      "name": "Scalable Vector Graphics", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 5
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "tiff", 
+      "mime": "image/tiff", 
+      "name": "Tagged Image File Format", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 6
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "wav", 
+      "mime": "audio/x-wav, audio/wav", 
+      "name": "RIFF Waveform Audio", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 7
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "aac", 
+      "mime": "audio/aac, audio/x-m4a", 
+      "name": "Advanced Audio Coding", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 8
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "mp3", 
+      "mime": "audio/mpeg, audio/mp3", 
+      "name": "MPEG Audio Stream Layer 3", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 9
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "wma", 
+      "mime": "audio/x-ms-wma", 
+      "name": "Windows Media Audio", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 10
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "avi", 
+      "mime": "audio/avi, video/avi", 
+      "name": "Audio Video Interleaving", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 11
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "ts", 
+      "mime": "video/mp2t", 
+      "name": "MPEG2 Transport Stream", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 12
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "mpg", 
+      "mime": "video/mpeg, video/mp2p, audio/x-mpg", 
+      "name": "MPEG", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 13
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "mp4", 
+      "mime": "video/mp4", 
+      "name": "MPEG 4", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 14
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "mov", 
+      "mime": "video/quicktime", 
+      "name": "Quick Time", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 15
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "flv", 
+      "mime": "video/x-flv", 
+      "name": "Flash Video", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 16
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "3gpp", 
+      "mime": "video/3gpp", 
+      "name": "Third Generation Partnership Project", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 17
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "asf", 
+      "mime": "video/x-ms-asf", 
+      "name": "Advanced Systems Format", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 18
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "wmv", 
+      "mime": "video/x-ms-wmv", 
+      "name": "Windows Media Video", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 19
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "swf", 
+      "mime": "application/x-shockwave-flash", 
+      "name": "Shockwave Flash", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 20
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "srt", 
+      "mime": "text/plain, text/srt, application/x-subrip", 
+      "name": "SubRip Subtitle Format", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 21
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "extension": "m3u8", 
+      "mime": "application/x-mpegurl, application/vnd.apple.mpegurl, audio/x-mpegurl, audio/mpegurl", 
+      "name": "UTF-8 M3U Playlist", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "common.filetype", 
+    "pk": 22
   }
 ]
