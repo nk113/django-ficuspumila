@@ -167,8 +167,6 @@ warnings.filterwarnings(action='ignore',
 # core
 SYSTEM_USERNAME = '<django auth username>'
 SYSTEM_PASSWORD = '<django auth password>'
-API_VERSION = 'v1'
-API_PATH = 'api/%s/' % API_VERSION
 SERVICES = {
     'core.content.common.models.Source': {
         'user': 'core.content.api.models.Owner',

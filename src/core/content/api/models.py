@@ -5,18 +5,42 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from core.content.common.models import (\
+from core.content.common.models import (
     FileType, Source
 )
 from core.models import (
-    Attribute, Choice, Localizable, Localization,
-    Model, Subject, User
+    Attribute, Choice, Event,
+    Localizable, Localization,
+    Model, Notification, Subject, User
 )
 
 
 MODULE = __name__.split('.')[-3].lower()
 
 logger = logging.getLogger(__name__)
+
+
+class SourceEvent(Event):
+
+    class Meta:
+
+        db_table = '%s_sourceevent' % MODULE
+
+    source = models.ForeignKey(Source,
+                         related_name='events',
+                         verbose_name=_(u'Content source'))
+    event = models.SmallIntegerField(choices=Source.Events,
+                         default=Source.Events.DEFAULT)
+
+
+class SourceNotification(Notification):
+
+    class Meta:
+
+        db_table = '%s_sourcenotification' % MODULE
+
+    event = models.ForeignKey(SourceEvent,
+                         related_name='notifications')
 
 
 class FileSpecification(Model, Subject):

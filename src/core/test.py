@@ -25,15 +25,17 @@ class TestCase(DjangoTestCase):
 class ResourceTestCase(TastypieResourceTestCase):
 
     fixtures = FIXTURES
+    version  = 1
     api_name = 'core'
     resource_name = 'user'
 
     def setUp(self):
         super(ResourceTestCase, self).setUp()
 
-        self.list_endpoint = '/%s%s/%s/' % (settings.API_PATH,
-                                            self.api_name,
-                                            self.resource_name,)
+        self.list_endpoint = '/%s%s/%s/%s/' % (settings.API_PATH,
+                                 settings.API_VERSION_FORMAT % self.version,
+                                 self.api_name,
+                                 self.resource_name,)
         self.detail_endpoint = '%s1/' % self.list_endpoint
 
     def get_credentials(self):

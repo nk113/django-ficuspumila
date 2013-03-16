@@ -3,14 +3,14 @@ import logging
 
 from django.conf import settings
 from django.db import models
+from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 
 from core.cache import cache
 from core.models import (
-    Attribute, Choice, CSVField, Event,
+    Attribute, Choice, CSVField,
     Localizable, Localization,
-    Logger, Model,
-    Notification, Notifier,
+    Logger, Model, Notifier,
     Service, Subject,
 )
 
@@ -77,6 +77,15 @@ class Source(Service):
         RESOURCE_ACCESSED = 1
         DEFAULT = ITEM_READY
 
+    def __init__(self, *args, **kwargs):
+        if getattr(self, 'notification_model', None) is None:
+            api_models = import_module('core.content.api.models')
+            self.notification_model = getattr(api_models,
+                                              'SourceNotification')
+            self.event_model = getattr(api_models,
+                                       'SourceEvent')
+        return super(Notifier, self).__init__(*args, **kwargs)
+
     name = models.CharField(max_length=255)
 
     def __unicode__(self):
@@ -94,29 +103,6 @@ class SourceAttribute(Attribute):
                          verbose_name=_(u'Content source'))
     name = models.SmallIntegerField(choices=Source.Attributes,
                          default=Source.Attributes.DEFAULT)
-
-
-class SourceEvent(Event):
-
-    class Meta:
-
-        db_table = '%s_sourceevent' % MODULE
-
-    source = models.ForeignKey(Source,
-                         related_name='events',
-                         verbose_name=_(u'Content source'))
-    event = models.SmallIntegerField(choices=Source.Events,
-                         default=Source.Events.DEFAULT)
-
-
-class SourceNotification(Notification):
-
-    class Meta:
-
-        db_table = '%s_sourcenotification' % MODULE
-
-    event = models.ForeignKey(SourceEvent,
-                         related_name='notifications')
 
 
 class FileType(Model):

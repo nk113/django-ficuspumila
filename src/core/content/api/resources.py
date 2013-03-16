@@ -29,11 +29,11 @@ from core.resources import (
 from core.content.common.models import (
     FileType, Genre, GenreLocalization,
     ResourceType, Source, SourceAttribute,
-    SourceEvent, SourceNotification,
 )
 from .models import (
     FileSpecification, FileSpecificationAttribute,
     Owner,
+    SourceEvent, SourceNotification,
 )
 
 
@@ -225,22 +225,21 @@ class OwnerResource(ContentResource):
                                'source')
 
 
-def get():
+def get_urls(version=1):
     api = Api(api_name='content')
 
-    api.register(GenreResource())
-    api.register(GenreLocalizationResource())
-    api.register(SourceResource())
-    api.register(SourceAttributeResource())
-    api.register(SourceEventResource())
-    api.register(SourceNotificationResource())
-    api.register(FileTypeResource())
-    api.register(FileSpecificationResource())
-    api.register(FileSpecificationAttributeResource())
-    api.register(ResourceTypeResource())
+    if version == 1:
+        api.register(GenreResource())
+        api.register(GenreLocalizationResource())
+        api.register(SourceResource())
+        api.register(SourceAttributeResource())
+        api.register(SourceEventResource())
+        api.register(SourceNotificationResource())
+        api.register(FileTypeResource())
+        api.register(FileSpecificationResource())
+        api.register(FileSpecificationAttributeResource())
+        api.register(ResourceTypeResource())
 
-    api.register(OwnerResource())
+        api.register(OwnerResource())
 
     return api.urls
-
-urls = get()

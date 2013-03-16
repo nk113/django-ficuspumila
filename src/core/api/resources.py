@@ -3,6 +3,7 @@ import logging
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from tastypie import fields
 from tastypie.api import Api
 from tastypie.cache import SimpleCache
 
@@ -31,6 +32,12 @@ class UserResource(Resource):
         filtering = {
            'username': EXACT_IN,
         }
+
+    source = fields.ForeignKey('core.content.api.resources.SourceResource',
+                               'source')
+    owner = fields.ForeignKey('core.content.api.resources.OwnerResource',
+                              'owner')
+
 
     def obj_create(self, bundle, request=None, **kwargs):
         # TODO
@@ -74,11 +81,11 @@ class CountryResource(Resource):
         }
 
 
-def get():
+def get_urls(version=1):
     api = Api(api_name='core')
-    api.register(UserResource())
-    api.register(CountryResource())
+
+    if version == 1:
+        api.register(UserResource())
+        api.register(CountryResource())
 
     return api.urls
-
-urls = get()

@@ -9,6 +9,7 @@ from django.conf import settings
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext as _
 from queryset_client import client
+from urlparse import urlparse
 
 from . import cache
 from .exceptions import ProxyException
@@ -53,14 +54,26 @@ class Response(client.Response):
         except KeyError, e:
             # handles foreign key references in another api namespace
             # expects to be called with detail url like /api/v1/<resource>/<id>/
-            url = '%s%s/' % (settings.API_URL,
-                      '/'.join(
-                          self._response[attr][1:-1].replace(settings.API_PATH,
-                                                             '').split('/')[:-2]))
+            #
+            # CAVEAT: resource_url of referred resource has to have the same version
+            base_client = self.model._base_client
+            api_url = base_client._api_url
+            version = base_client._version
+            paths   = self._response[attr].replace(
+                          base_client._api_path, '')[:-1].split('/')[:-2]
+            if version in paths: paths.remove(version)
+            namespace = '/'.join(paths)
 
-            logger.debug(u'need namespace schema (%s)' % url)
+            logger.debug(u'%s, need namespace schema (%s)' % (
+                self._response[attr],
+                '%s%s/%s/' % (base_client._api_url,
+                           base_client._version,
+                           namespace,)))
 
-            client = ProxyClient.get(url)
+            client = ProxyClient.get(base_client._api_url,
+                                     version=base_client._version,
+                                     namespace=namespace,
+                                     auth=base_client._auth)
             client.schema()
 
             clone_original = self.model.clone
@@ -123,18 +136,39 @@ class ProxyClient(client.Client):
     _instances = {}
 
     def __new__(cls, *args, **kwargs):
-        if len(args):
-            if not args[0] in cls._instances:
-                cls._instances[args[0]] = super(ProxyClient,
-                                                cls).__new__(cls,
-                                                             *args,
-                                                             **kwargs)
-            return cls._instances[args[0]]
+        if len(args): 
+            key = args[0]
+            if len(kwargs.keys()):
+                key = '%s%s/%s' % (args[0],
+                                   kwargs.get('version', ''),
+                                   kwargs.get('namespace', ''))
+
+            if not key in cls._instances:
+                cls._instances[key] = super(ProxyClient,
+                                            cls).__new__(cls,
+                                                         *args,
+                                                         **kwargs)
+            return cls._instances[key]
         return cls._instances[cls._instances.keys()[0]]
 
-    def __init__(self, base_url, auth=None, strict_field=True, client=None):
+    def __init__(self, base_url, auth=None, strict_field=True, client=None, **kwargs):
+
+        self._api_url   = '%s%s' % (base_url,
+                                    '/' if not base_url.endswith('/') else '')
+
+        parsed = urlparse(self._api_url)
+
+        self._api_path  = parsed.path
+        self._version   = kwargs.get('version', None)
+        self._namespace = kwargs.get('namespace', None)
+        self._auth      = kwargs.get('auth', auth)
+
+        base_url = '%s%s%s' % (self._api_url,
+                               '%s/' % self._version if self._version else '',
+                               '%s/' % self._namespace if self._namespace else '')
+
         super(ProxyClient, self).__init__(base_url,
-                                          auth,
+                                          self._auth,
                                           strict_field,
                                           client)
 
@@ -152,9 +186,9 @@ class ProxyClient(client.Client):
         model.delete_original = model.delete
 
         def break_cache(obj):
-            url = '/%s%s/' % (settings.API_PATH,
+            url = '%s%s/' % (obj._base_client._api_path,
                               obj._client._store['base_url'].replace(
-                                  settings.API_URL,
+                                  obj._base_client._api_url,
                                   ''))
 
             if hasattr(obj, 'id'):
@@ -176,11 +210,15 @@ class ProxyClient(client.Client):
         return model
 
     @staticmethod
-    def get(url):
-        return ProxyClient._instances.get(url,
+    def get(url, **kwargs):
+        key = url
+        if kwargs.get('version'):
+            key = '%s%s/%s/' % (url,
+                               kwargs.get('version'),
+                               kwargs.get('namespace'))
+        return ProxyClient._instances.get(key,
                                           ProxyClient(url,
-                                                      (settings.SYSTEM_USERNAME,
-                                                       settings.SYSTEM_PASSWORD)))
+                                                      **kwargs))
 
     @staticmethod
     def get_by_schema(schema):
@@ -191,13 +229,15 @@ class ProxyClient(client.Client):
 
     def schema(self, model_name=None, namespace=None):
         namespace = namespace or self._namespace_gen(
-                        self._base_url.replace(settings.API_URL, ''))
+                        self._base_url.replace(self._api_url, ''))
 
         if model_name is None:
             model_name = namespace
             url = self._base_url
         else:
             url = self._url_gen('%s/schema/' % model_name)
+
+        # logger.debug(u'schema %s (%s)' % (model_name, url,))
 
         if not model_name in self._schema_store:
             self._schema_store[model_name] = self.request(url)
@@ -206,7 +246,8 @@ class ProxyClient(client.Client):
 
     @cache.cache(keyarg=1,
                  breakson=lambda *args, **kwargs: len(args) >= 3 and args[2] is not 'GET',
-                 nocacheonbreak=True)
+                 nocacheonbreak=True,
+                 timeout=60*60)
     def request(self, url, method='GET'):
         return super(ProxyClient, self).request(url, method)
 
@@ -216,17 +257,25 @@ class Proxy(object):
     def __init__(self, **kwargs):
 
         api_url = getattr(settings, 'API_URL', None) or kwargs.get('api_url', None)
-        namespace = kwargs.get('namespace',
-                               '/'.join(self.__module__.split('.')[:-2]))
-        resource_name = kwargs.get('resource_name',
-                                   self.__class__.__name__[:-5].lower())
 
         if not api_url:
             raise ProxyException(_(u'"API_URL" not found in settings or ' +
                                    u'"api_url" not found in kwargs'))
 
-        self._client = ProxyClient.get('%s%s/' % (api_url,
-                                                  namespace))
+        version   = kwargs.get('version', 'v1')
+        namespace = kwargs.get('namespace',
+                               '/'.join(self.__module__.split('.')[:-2]))
+        auth      = kwargs.get('auth', (settings.SYSTEM_USERNAME,
+                                        settings.SYSTEM_PASSWORD))
+
+        resource_name = kwargs.get('resource_name',
+                                   self.__class__.__name__[:-5].lower())
+
+
+        self._client = ProxyClient.get(api_url,
+                                       version=version,
+                                       namespace=namespace,
+                                       auth=auth)
 
         try:
             self._resource = getattr(self._client,
