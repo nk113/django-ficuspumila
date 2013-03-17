@@ -46,8 +46,6 @@ Provides fundamental core components including authentication, caching, api reso
 
 #### cache
 
-::
-
     > from ficuspumila.core import cache
     ...
     > @cache.cache(keyargs=[0, 1],
@@ -62,8 +60,6 @@ Provides fundamental core components including authentication, caching, api reso
 
 #### crypto
 
-::
-
     > from ficuspumila.core import crypto
     > transcoder = crypto.Transcoder(algorithm='AES',
     ...                              key='f29c34dc6add7a1c7da53ad41b04974caa44d71ffb71c5d8ccedde7ed8a30fff',
@@ -76,14 +72,12 @@ Provides fundamental core components including authentication, caching, api reso
 
 #### proxies
 
-::
-
     > from ficuspumila.core import proxy
-    > Owner = Proxy(api_url='http://some.tastypie.api/',
-    ...             version='v1',
-    ...             namespace='core/content'
-    ...             resource_name='owner',
-    ...             auth=('dev', 'dev',))
+    > Owner = proxy.Proxy(api_url='http://some.tastypie.api/',
+    ...                   version='v1',
+    ...                   namespace='core/content'
+    ...                   resource_name='owner',
+    ...                   auth=('dev', 'dev',))
     > owner = Owner.objects.all()[0]
     > owner.user.username
     u'dev'
