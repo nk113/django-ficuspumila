@@ -48,45 +48,45 @@ Provides fundamental core components including authentication, caching, api reso
 
 ::
 
-  > from ficuspumila.core import cache
-  ...
-  > @cache.cache(keyargs=[0, 1],
-  >              breakson=lambda *args, **kwargs: kwargs.get('cachebreak'),
-  >              timeout=60*60)
-  > dif do_some_stuff(arg1, arg2, **kwargs):
-  >     return arg1 + arg2
-  ...
-  > cache.get_or_set('key', lambda: 2 + 3)
-  > cache.get('key')
-  5
+    > from ficuspumila.core import cache
+    ...
+    > @cache.cache(keyargs=[0, 1],
+    >              breakson=lambda *args, **kwargs: kwargs.get('cachebreak'),
+    >              timeout=60*60)
+    > dif do_some_stuff(arg1, arg2, **kwargs):
+    >     return arg1 + arg2
+    ...
+    > cache.get_or_set('key', lambda: 2 + 3)
+    > cache.get('key')
+    5
 
 #### crypto
 
 ::
 
-  > from ficuspumila.core import crypto
-  > transcoder = crypto.Transcoder(algorithm='AES',
-  ...                              key='f29c34dc6add7a1c7da53ad41b04974caa44d71ffb71c5d8ccedde7ed8a30fff',
-  ...                              iv='98ef088fc3dd58a2077901b4d7b190a5')
-  > encrypted = transcoder.algorithm.encrypt('test text')
-  > encrypted
-  '967347ae0b937981f32a47d193ec41c7'
-  > transcoder.algorithm.decrypt(encrypted)
-  'test text'
+    > from ficuspumila.core import crypto
+    > transcoder = crypto.Transcoder(algorithm='AES',
+    ...                              key='f29c34dc6add7a1c7da53ad41b04974caa44d71ffb71c5d8ccedde7ed8a30fff',
+    ...                              iv='98ef088fc3dd58a2077901b4d7b190a5')
+    > encrypted = transcoder.algorithm.encrypt('test text')
+    > encrypted
+    '967347ae0b937981f32a47d193ec41c7'
+    > transcoder.algorithm.decrypt(encrypted)
+    'test text'
 
 #### proxies
 
 ::
 
-  > from ficuspumila.core import proxy
-  > Owner = Proxy(api_url='http://some.tastypie.api/',
-  ...             version='v1',
-  ...             namespace='core/content'
-  ...             resource_name='owner',
-  ...             auth=('dev', 'dev',))
-  > owner = Owner.objects.all()[0]
-  > owner.user.username
-  u'dev'
+    > from ficuspumila.core import proxy
+    > Owner = Proxy(api_url='http://some.tastypie.api/',
+    ...             version='v1',
+    ...             namespace='core/content'
+    ...             resource_name='owner',
+    ...             auth=('dev', 'dev',))
+    > owner = Owner.objects.all()[0]
+    > owner.user.username
+    u'dev'
 
 ### core.content
 
