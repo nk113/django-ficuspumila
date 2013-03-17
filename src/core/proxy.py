@@ -33,7 +33,8 @@ def get(name, model_module=None):
             module = import_module(model_module)
 
     if getattr(settings, 'API_URL', None):
-        return getattr(module, '%sProxy' % name)()
+        return getattr(module, '%sProxy' % name)(auth=(settings.SYSTEM_USERNAME,
+                                                       settings.SYSTEM_PASSWORD))
     else:
         return getattr(module, name)
 
@@ -256,7 +257,7 @@ class Proxy(object):
 
     def __init__(self, **kwargs):
 
-        api_url = getattr(settings, 'API_URL', None) or kwargs.get('api_url', None)
+        api_url = kwargs.get('api_url', None) or getattr(settings, 'API_URL', None)
 
         if not api_url:
             raise ProxyException(_(u'"API_URL" not found in settings or ' +
@@ -265,8 +266,7 @@ class Proxy(object):
         version   = kwargs.get('version', 'v1')
         namespace = kwargs.get('namespace',
                                '/'.join(self.__module__.split('.')[:-2]))
-        auth      = kwargs.get('auth', (settings.SYSTEM_USERNAME,
-                                        settings.SYSTEM_PASSWORD))
+        auth      = kwargs.get('auth', None)
 
         resource_name = kwargs.get('resource_name',
                                    self.__class__.__name__[:-5].lower())

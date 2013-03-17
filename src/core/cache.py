@@ -42,7 +42,7 @@ def delete(key, **kwargs):
 
     return djcache.delete(_generate_key(key, **kwargs))
 
-def get_or_set_cache(key, value=None, expiration=TIMEOUT, **kwargs):
+def get_or_set(key, value=None, expiration=TIMEOUT, **kwargs):
     cached = get(key)
 
     if cached:
@@ -99,14 +99,14 @@ def cache(**decorator_kwargs):
             if donothing:
                 return func(*args, **kwargs) 
 
-            value = get_or_set_cache(key)
+            value = get_or_set(key)
 
             if value:
                 return value
 
-            return get_or_set_cache(key,
-                                    func(*args, **kwargs),
-                                    decorator_kwargs.get('timeout', TIMEOUT))
+            return get_or_set(key,
+                              func(*args, **kwargs),
+                              decorator_kwargs.get('timeout', TIMEOUT))
         return wraps(func)(wrapper)
 
     return decorator

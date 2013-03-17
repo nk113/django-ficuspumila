@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from core.proxies import get, Proxy
+from core.proxy import get, Proxy
 from . import models
 
 
