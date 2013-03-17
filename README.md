@@ -63,7 +63,8 @@ Provides fundamental core components including authentication, caching, api reso
     > from ficuspumila.core import crypto
     > transcoder = crypto.Transcoder(algorithm='AES',
     ...                              key='f29c34dc6add7a1c7da53ad41b04974caa44d71ffb71c5d8ccedde7ed8a30fff',
-    ...                              iv='98ef088fc3dd58a2077901b4d7b190a5')
+    ...                              iv='98ef088fc3dd58a2077901b4d7b190a5',
+    ...                              hex=True)
     > encrypted = transcoder.algorithm.encrypt('test text')
     > encrypted
     '967347ae0b937981f32a47d193ec41c7'
