@@ -44,7 +44,7 @@ Modules
 
 Provides fundamental core components including authentication, caching, api resources, proxies and so on. It's worth enough just only to employ them in your project.
 
-#### cache
+##### cache
 
     > from ficuspumila.core import cache
     ...
@@ -58,20 +58,19 @@ Provides fundamental core components including authentication, caching, api reso
     > cache.get('key')
     5
 
-#### crypto
+##### crypto
 
     > from ficuspumila.core import crypto
     > transcoder = crypto.Transcoder(algorithm='AES',
     ...                              key='f29c34dc6add7a1c7da53ad41b04974caa44d71ffb71c5d8ccedde7ed8a30fff',
-    ...                              iv='98ef088fc3dd58a2077901b4d7b190a5',
-    ...                              hex=True)
+    ...                              iv='98ef088fc3dd58a2077901b4d7b190a5')
     > encrypted = transcoder.algorithm.encrypt('test text')
     > encrypted
     '967347ae0b937981f32a47d193ec41c7'
     > transcoder.algorithm.decrypt(encrypted)
     'test text'
 
-#### proxies
+##### proxy
 
     > from ficuspumila.core import proxy
     > Owner = proxy.Proxy(api_url='http://some.tastypie.api/',
