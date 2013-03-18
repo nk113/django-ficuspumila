@@ -188,9 +188,9 @@ class ProxyClient(client.Client):
 
         def break_cache(obj):
             url = '%s%s/' % (obj._base_client._api_path,
-                              obj._client._store['base_url'].replace(
-                                  obj._base_client._api_url,
-                                  ''))
+                             obj._client._store['base_url'].replace(
+                                 obj._base_client._api_url,
+                                 ''))
 
             if hasattr(obj, 'id'):
                 url = '%s%s/' % (url, obj.id,)
@@ -215,8 +215,8 @@ class ProxyClient(client.Client):
         key = url
         if kwargs.get('version'):
             key = '%s%s/%s/' % (url,
-                               kwargs.get('version'),
-                               kwargs.get('namespace'))
+                                kwargs.get('version'),
+                                kwargs.get('namespace'))
         return ProxyClient._instances.get(key,
                                           ProxyClient(url,
                                                       **kwargs))

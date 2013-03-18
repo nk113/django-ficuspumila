@@ -30,18 +30,20 @@ class _AES(object):
     def __init__(self, *args, **kwargs):
         self.key = kwargs.get('key', None)
         self.iv = kwargs.get('iv', None)
+
         self.hex = kwargs.get('hex', True)
 
         if not self.key or not self.iv:
             self.key = self.generate_key()
             self.iv = self.generate_iv()
 
-        if self.hex:
-            self.key = unhexlify(self.key)
-            self.iv = unhexlify(self.iv)
-
     def __str__(self):
         return 'AES'
+
+    def _get_key_iv(self):
+        if self.hex:
+            return unhexlify(self.key), unhexlify(self.iv)
+        return self.key, self.iv
 
     def generate_key(self):
         key = os.urandom(32)
@@ -55,10 +57,11 @@ class _AES(object):
 
     def encrypt(self, text):
         try:
-            encrypted = AES.new(self.key,
+            key, iv = self._get_key_iv()
+            encrypted = AES.new(key,
                                 AES.MODE_CBC,
-                                self.iv).encrypt(self.add_padding(AES.block_size,
-                                                                  text))
+                                iv).encrypt(self.add_padding(AES.block_size,
+                                                             text))
             if self.hex:
                 return hexlify(encrypted)
             else:
@@ -69,13 +72,14 @@ class _AES(object):
 
     def decrypt(self, encrypted):
         try:
+            key, iv = self._get_key_iv()
             if self.hex:
                 encrypted = unhexlify(encrypted)
 
             return self.remove_padding(AES.block_size,
-                                       (AES.new(self.key,
+                                       (AES.new(key,
                                                 AES.MODE_CBC,
-                                                self.iv).decrypt(encrypted)))
+                                                iv).decrypt(encrypted)))
         except Exception, e:
             logger.exception(u'failed to decrypt (%s)' % e)
             raise e

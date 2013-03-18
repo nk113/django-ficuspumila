@@ -61,14 +61,15 @@ Provides fundamental core components including authentication, caching, api reso
 ##### crypto
 
     > from ficuspumila.core import crypto
-    > transcoder = crypto.Transcoder(algorithm='AES',
-    ...                              key='f29c34dc6add7a1c7da53ad41b04974caa44d71ffb71c5d8ccedde7ed8a30fff',
-    ...                              iv='98ef088fc3dd58a2077901b4d7b190a5')
+    > transcoder = crypto.Transcoder()
     > encrypted = transcoder.algorithm.encrypt('test text')
-    > encrypted
-    '967347ae0b937981f32a47d193ec41c7'
+    '8a514d9f4d907102ba9657cd1098fd04'
     > transcoder.algorithm.decrypt(encrypted)
     'test text'
+    > transcoder.key
+    'dfbaa4a01bc2b80458df045f4c973f390d516bbc564cee5d0baee807c2726137'
+    > transcoder.iv
+    '8a514d9f4d907102ba9657cd1098fd04'
 
 ##### proxy
 
@@ -79,7 +80,7 @@ Provides fundamental core components including authentication, caching, api reso
     ...                   resource_name='owner',
     ...                   auth=('dev', 'dev',))
     > owner = Owner.objects.all()[0]
-    > owner.user.username
+    > owner.user.source.name
     u'dev'
 
 ### core.content
