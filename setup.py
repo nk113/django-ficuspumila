@@ -15,8 +15,8 @@ setup(
     long_description=open('README.rst', 'r').read(),
     url='http://github.com/nk113/ficuspumila/',
     packages=find_packages(),
-    package_dir={'': 'src'},
-    zip_safe=False,
+    zip_safe=False, 
+    tests_require=('mock',),
     install_requires=[
         'celery',
         'Django',
@@ -26,7 +26,6 @@ setup(
         'south',
         'tastypie-queryset-client',
     ],
-    tests_require=('mock',),
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Environment :: Web Environment',

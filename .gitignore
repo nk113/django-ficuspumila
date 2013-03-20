@@ -1,0 +1,13 @@
+*~
+*.db
+*.egg-info
+*.log
+*.pot
+*.pyc
+.DS_Store
+bin
+build
+dist
+env
+local.py
+virtualenv.py
