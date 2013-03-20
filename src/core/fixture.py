@@ -31,7 +31,8 @@ class Generator(object):
                 try:
                     self.data = json.loads(fixture.read())
                 except Exception, e:
-                    logger.exception(u'an error occurred during parsing fixture: %s' % e)
+                    logger.exception(u'an error occurred during parsing ' +
+                                     u'fixture: %s' % e)
 
                     self.data = json.loads('[]')
 

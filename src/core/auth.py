@@ -158,7 +158,7 @@ class SSOAuthenticator(object):
         logger.debug(u'token decrypted: %s' % token)
 
         if token[0]:
-            if float(token[0]) > time.time() + settings.TOKEN_TIMEOUT:
+            if token[0] > time.time() + settings.TOKEN_TIMEOUT:
                 logger.debug(u'token expiration is bigger than expected: token %s > %s' % (
                                  token[0],
                                  timezone.now() + settings.TOKEN_TIMEOUT,))
@@ -166,7 +166,7 @@ class SSOAuthenticator(object):
                 raise AuthException(_(u'Expiration specified in token is '
                                       u'bigger than expected.'))
         
-            if float(token[0]) < time.time():
+            if token[0] < time.time():
                 logger.debug(u'token is expired: token %s < %s')
 
                 raise AuthException(_(u'Token expired.'))
@@ -206,13 +206,13 @@ class SSOAuthenticator(object):
                 service: id,
                 SSOAuthenticator.TOKEN_PARAM: token,
             }
-            authenticator = SSOAuthenticator(**kwargs).is_authenticated()
         else:
             kwargs = request.GET.copy()
             kwargs.update(request.POST.copy())
             kwargs.update(request.COOKIES.copy())
             kwargs['data'] = request.body
-            authenticator = SSOAuthenticator(**kwargs)
+
+        authenticator = SSOAuthenticator(**kwargs)
 
         if authenticator.is_authenticated():
             request.user = authenticator.user.user

@@ -67,9 +67,10 @@ class Response(client.Response):
 
             logger.debug(u'%s, need namespace schema (%s)' % (
                 self._response[attr],
-                '%s%s/%s/' % (base_client._api_url,
-                           base_client._version,
-                           namespace,)))
+                ProxyClient.build_base_url(base_client._api_url, **{
+                    'version': base_client._version,
+                    'namespace': namespace
+                })))
 
             client = ProxyClient.get(base_client._api_url,
                                      version=base_client._version,
@@ -138,11 +139,7 @@ class ProxyClient(client.Client):
 
     def __new__(cls, *args, **kwargs):
         if len(args): 
-            key = args[0]
-            if len(kwargs.keys()):
-                key = '%s%s/%s' % (args[0],
-                                   kwargs.get('version', ''),
-                                   kwargs.get('namespace', ''))
+            key = ProxyClient.build_base_url(args[0], **kwargs)
 
             if not key in cls._instances:
                 cls._instances[key] = super(ProxyClient,
@@ -164,17 +161,11 @@ class ProxyClient(client.Client):
         self._namespace = kwargs.get('namespace', None)
         self._auth      = kwargs.get('auth', auth)
 
-        base_url = '%s%s%s' % (self._api_url,
-                               '%s/' % self._version if self._version else '',
-                               '%s/' % self._namespace if self._namespace else '')
-
-        super(ProxyClient, self).__init__(base_url,
+        super(ProxyClient, self).__init__(ProxyClient.build_base_url(base_url,
+                                                                     **kwargs),
                                           self._auth,
                                           strict_field,
                                           client)
-
-    def _namespace_gen(self, path):
-        return '.'.join(path.split('/')[:-1])
 
     def _model_gen(self, model_name, strict_field=True, base_client=None):
         model = super(ProxyClient, self)._model_gen(model_name,
@@ -212,11 +203,7 @@ class ProxyClient(client.Client):
 
     @staticmethod
     def get(url, **kwargs):
-        key = url
-        if kwargs.get('version'):
-            key = '%s%s/%s/' % (url,
-                                kwargs.get('version'),
-                                kwargs.get('namespace'))
+        key = ProxyClient.build_base_url(url, **kwargs)
         return ProxyClient._instances.get(key,
                                           ProxyClient(url,
                                                       **kwargs))
@@ -228,9 +215,16 @@ class ProxyClient(client.Client):
                 return instance
         return None
 
+    @staticmethod
+    def build_base_url(url, **kwargs):
+        return '%s%s%s' % (url,
+                   '%s/' % kwargs.get('version') if kwargs.get('version') else '',
+                   '%s/' % kwargs.get('namespace') if kwargs.get('namespace') else '')
+
     def schema(self, model_name=None, namespace=None):
-        namespace = namespace or self._namespace_gen(
-                        self._base_url.replace(self._api_url, ''))
+        namespace = namespace or '.'.join(
+                        self._base_url.replace(self._api_url,
+                                               '').split('/')[:-1])
 
         if model_name is None:
             model_name = namespace

@@ -1,13 +1,1 @@
-[
-  {
-    "fields": {
-      "ctime": "2013-02-17T11:55:40Z", 
-      "source": 1, 
-      "source_owner_id": "dev", 
-      "user": 1,
-      "utime": "2013-02-17T11:55:40Z"
-    }, 
-    "model": "api.owner", 
-    "pk": 1
-  }
-]
+[]

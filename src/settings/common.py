@@ -168,8 +168,8 @@ warnings.filterwarnings(action='ignore',
 SYSTEM_USERNAME = '<django auth username>'
 SYSTEM_PASSWORD = '<django auth password>'
 SERVICES = {
-    'core.content.common.models.Source': {
-        'user': 'core.content.api.models.Owner',
+    'core.content.api.proxies.Source': {
+        'user': 'core.content.api.proxies.Owner',
     },
     # 'core.product.models.Store': {
     #     'user': 'core.product.models.Consumer',
@@ -180,6 +180,8 @@ SERVICES = {
 }
 CACHE_TIMEOUT = CACHES['default']['TIMEOUT']
 TOKEN_TIMEOUT = 60 * 2
+GC_DAYS_BEFORE = 60
+GC_PROBABILITY = 0.1
 
 
 # core.common

@@ -27,3 +27,8 @@ CELERY_ALWAYS_EAGER = True
 
 # test
 # TEST_RUNNER = 'djcelery.contrib.test_runner.CeleryTestSuiteRunner'
+
+
+# core
+SYSTEM_USERNAME = 'test'
+SYSTEM_PASSWORD = 'test'

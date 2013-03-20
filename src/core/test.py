@@ -1,30 +1,35 @@
 # -*- coding: utf-8 -*-
+import inspect
+import json
 import logging
+import os
 
 from django.conf import settings
+from django.core.management import call_command
 from django.test import TestCase as DjangoTestCase
+from django.utils.importlib import import_module
+from operator import itemgetter
 from tastypie.test import ResourceTestCase as TastypieResourceTestCase
 
 
-FIXTURES = ('initial_data.json', 'core',)
+INITIAL_FIXTURES = ('initial_data', 'core',)
+TEST_FIXTURES = ('test_data', 'core',)
+API_PATH = '/api/v1/'
 
 logger = logging.getLogger(__name__)
 
 
 class TestCase(DjangoTestCase):
 
-    fixtures = FIXTURES
+    fixtures = INITIAL_FIXTURES
 
     def setUp(self):
-        pass
-
-    def tearDown(self):
-        pass
+        call_command('loaddata', *TEST_FIXTURES)
+        super(TestCase, self).setUp()
 
 
-class ResourceTestCase(TastypieResourceTestCase):
+class ResourceTestCase(TestCase, TastypieResourceTestCase):
 
-    fixtures = FIXTURES
     version  = 1
     api_name = 'core'
     resource_name = 'user'
@@ -32,8 +37,7 @@ class ResourceTestCase(TastypieResourceTestCase):
     def setUp(self):
         super(ResourceTestCase, self).setUp()
 
-        self.list_endpoint = '/%s%s/%s/%s/' % (settings.API_PATH,
-                                 settings.API_VERSION_FORMAT % self.version,
+        self.list_endpoint = '%s%s/%s/' % (API_PATH,
                                  self.api_name,
                                  self.resource_name,)
         self.detail_endpoint = '%s1/' % self.list_endpoint
@@ -64,3 +68,13 @@ class ResourceTestCase(TastypieResourceTestCase):
         self.assertValidJSONResponse(r)
         return r
 
+
+class AuthTestCase(TestCase):
+
+    def setUp(self):
+
+        self.service = getattr(import_module('core.content.common.models'),
+                               'Source').objects.get(pk=1)
+        self.token = self.service.generate_token({'source_owner_id': ''})
+
+        super(AuthTestCase, self).setup()

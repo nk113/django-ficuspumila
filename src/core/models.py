@@ -156,7 +156,8 @@ class Subject(models.Model):
         try:
             attribute = self.attributes.get(name=name)
         except self.attribute_model.DoesNotExist:
-            self.attributes.create(name=name, value=value)
+            attribute = self.attribute_model(name=name, value=value)
+            self.attributes.add(attribute)
         else:
             attribute.value = value
             attribute.save()
@@ -381,9 +382,9 @@ class Service(User, Notifier, Subject):
             return Transcoder(
                        key=self.token_key,
                        iv=self.token_iv).algorithm.encrypt(
-                           json.dumps([
-                               int(time.time()) + settings.TOKEN_TIMEOUT,
-                               data,]))
+                           json.dumps((
+                               time.time() + settings.TOKEN_TIMEOUT,
+                               data,)))
         except:
             return None
 
