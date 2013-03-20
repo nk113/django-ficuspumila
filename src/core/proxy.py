@@ -28,15 +28,13 @@ def get(name, model_module=None):
     if splitted.pop() != 'proxies':
         if model_module is None:
             splitted.append('models')
-            module = import_module('.'.join(splited))
-        else:
-            module = import_module(model_module)
+            model_module = '.'.join(splited)
 
     if getattr(settings, 'API_URL', None):
         return getattr(module, '%sProxy' % name)(auth=(settings.SYSTEM_USERNAME,
                                                        settings.SYSTEM_PASSWORD))
     else:
-        return getattr(module, name)
+        return getattr(import_module(model_module), name)
 
 
 class QuerySet(client.QuerySet):

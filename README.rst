@@ -46,41 +46,45 @@ Provides fundamental core components including authentication, caching, api reso
 
 ##### cache
 
-    > from ficuspumila.core import cache
+    >>> from ficuspumila.core import cache
     ...
-    > @cache.cache(keyargs=[0, 1],
-    >              breakson=lambda *args, **kwargs: kwargs.get('cachebreak'),
-    >              timeout=60*60)
-    > dif do_some_stuff(arg1, arg2, **kwargs):
-    >     return arg1 + arg2
+    >>> @cache.cache(keyargs=[0, 1],
+    >>>              breakson=lambda *args, **kwargs: kwargs.get('cachebreak'),
+    >>>              timeout=60*60)
+    >>> dif do_some_stuff(arg1, arg2, **kwargs):
+    >>>     return arg1 + arg2
     ...
-    > cache.get_or_set('key', lambda: 2 + 3)
-    > cache.get('key')
+    >>> cache.get_or_set('key', lambda: 2 + 3)
+    5
+    >>> cache.get('key')
     5
 
 ##### crypto
 
-    > from ficuspumila.core import crypto
-    > transcoder = crypto.Transcoder()
-    > encrypted = transcoder.algorithm.encrypt('test text')
+    >>> from ficuspumila.core import crypto
+    >>> transcoder = crypto.Transcoder()
+    >>> print transcoder.algorithm
+    AES
+    >>> encrypted = transcoder.algorithm.encrypt('test text')
+    >>> encrypted
     '8a514d9f4d907102ba9657cd1098fd04'
-    > transcoder.algorithm.decrypt(encrypted)
+    >>> transcoder.algorithm.decrypt(encrypted)
     'test text'
-    > transcoder.key
+    >>> transcoder.key
     'dfbaa4a01bc2b80458df045f4c973f390d516bbc564cee5d0baee807c2726137'
-    > transcoder.iv
+    >>> transcoder.iv
     '8a514d9f4d907102ba9657cd1098fd04'
 
 ##### proxy
 
-    > from ficuspumila.core import proxy
-    > Owner = proxy.Proxy(api_url='http://some.tastypie.api/',
-    ...                   version='v1',
-    ...                   namespace='core/content'
-    ...                   resource_name='owner',
-    ...                   auth=('dev', 'dev',))
-    > owner = Owner.objects.all()[0]
-    > owner.user.source.name
+    >>> from ficuspumila.core import proxy
+    >>> Owner = proxy.Proxy(api_url='http://some.tastypie.api/',
+    ...                     version='v1',
+    ...                     namespace='core/content'
+    ...                     resource_name='owner',
+    ...                     auth=('dev', 'dev',))
+    >>> owner = Owner.objects.all()[0]
+    >>> owner.user.source.name
     u'dev'
 
 ### core.content
