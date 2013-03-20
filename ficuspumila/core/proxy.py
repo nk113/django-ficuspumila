@@ -19,16 +19,13 @@ logger = logging.getLogger(__name__)
 
 
 def get(name, model_module=None):
-
     frame = inspect.stack()[1]
     module = inspect.getmodule(frame[0])
 
-    splitted = module.__name__.split('.')
-
-    if splitted.pop() != 'proxies':
-        if model_module is None:
-            splitted.append('models')
-            model_module = '.'.join(splited)
+    if model_module is None:
+        splitted = module.__name__.split('.')
+        splitted[-1] = 'models'
+        model_module = '.'.join(splitted)
 
     if getattr(settings, 'API_URL', None):
         return getattr(module, '%sProxy' % name)(auth=(settings.SYSTEM_USERNAME,
@@ -257,7 +254,7 @@ class Proxy(object):
 
         version   = kwargs.get('version', 'v1')
         namespace = kwargs.get('namespace',
-                               '/'.join(self.__module__.split('.')[:-2]))
+                               '/'.join(self.__module__.split('.')[1:-2]))
         auth      = kwargs.get('auth', None)
 
         resource_name = kwargs.get('resource_name',

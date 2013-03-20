@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from tastypie.exceptions import ImmediateHttpResponse
 from tastypie.http import HttpForbidden
 
-from core.resources import Resource
+from ficuspumila.core.resources import Resource
 
 
 logger = logging.getLogger(__name__)

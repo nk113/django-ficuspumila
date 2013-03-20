@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from core.proxy import get, Proxy
+from ficuspumila.core.proxy import get, Proxy
 
 
 logger = logging.getLogger(__name__)
@@ -18,4 +18,4 @@ class CountryProxy(Proxy):
 
 
 User    = get('User', 'django.contrib.auth.models')
-Country = get('Country', 'core.common.models')
+Country = get('Country', 'ficuspumila.core.common.models')

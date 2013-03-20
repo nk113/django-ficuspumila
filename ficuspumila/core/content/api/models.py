@@ -5,10 +5,10 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from core.content.common.models import (
+from ficuspumila.core.content.common.models import (
     FileType, Source
 )
-from core.models import (
+from ficuspumila.core.models import (
     Attribute, Choice, Event,
     Localizable, Localization,
     Model, Notification, Subject, User

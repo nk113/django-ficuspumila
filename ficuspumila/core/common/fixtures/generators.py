@@ -8,7 +8,7 @@ import StringIO
 from django.conf import settings
 from django.utils import timezone
 
-from core import fixture
+from ficuspumila.core import fixture
 
 
 logger = logging.getLogger(__name__)

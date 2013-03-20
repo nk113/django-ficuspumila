@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from core.test import TestCase
-from core.common.models import Country
+from ficuspumila.core.test import TestCase
+from ficuspumila.core.common.models import Country
 
 
 logger = logging.getLogger(__name__)

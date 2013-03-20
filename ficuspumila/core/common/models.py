@@ -6,8 +6,8 @@ from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from core.models import Choice, CSVField, Model
-from core.cache import cache
+from ficuspumila.core.models import Choice, CSVField, Model
+from ficuspumila.core.cache import cache
 
 
 logger = logging.getLogger(__name__)

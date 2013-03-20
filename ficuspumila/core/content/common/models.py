@@ -6,8 +6,8 @@ from django.db import models
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 
-from core.cache import cache
-from core.models import (
+from ficuspumila.core.cache import cache
+from ficuspumila.core.models import (
     Attribute, Choice, CSVField,
     Localizable, Localization,
     Logger, Model, Notifier,

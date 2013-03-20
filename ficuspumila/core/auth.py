@@ -11,9 +11,9 @@ from django.utils.importlib import import_module
 from django.utils.translation import ugettext as _
 from functools import wraps
 
-from crypto import Transcoder
-from exceptions import AuthException
-from utils import generate_hmac_digest
+from .crypto import Transcoder
+from .exceptions import AuthException
+from .utils import generate_hmac_digest
 
 
 logger = logging.getLogger(__name__)

@@ -7,8 +7,8 @@ from tastypie import fields
 from tastypie.api import Api
 from tastypie.cache import SimpleCache
 
-from core.common.models import Country
-from core.resources import (
+from ficuspumila.core.common.models import Country
+from ficuspumila.core.resources import (
     EXACT_IN,
     EXACT_IN_CONTAINS,
     EXACT_IN_GTE_LTE,
@@ -33,9 +33,9 @@ class UserResource(Resource):
            'username': EXACT_IN,
         }
 
-    source = fields.ForeignKey('core.content.api.resources.SourceResource',
+    source = fields.ForeignKey('ficuspumila.core.content.api.resources.SourceResource',
                                'source')
-    owner = fields.ForeignKey('core.content.api.resources.OwnerResource',
+    owner = fields.ForeignKey('ficuspumila.core.content.api.resources.OwnerResource',
                               'owner')
 
 

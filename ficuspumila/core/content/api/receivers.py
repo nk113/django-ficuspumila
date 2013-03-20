@@ -4,7 +4,7 @@ import logging
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from core.utils import random
+from ficuspumila.core.utils import random
 from .models import (
     SourceEvent,
 )

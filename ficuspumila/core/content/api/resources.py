@@ -15,9 +15,9 @@ from tastypie.exceptions import (
 from tastypie.http import HttpForbidden
 from tastypie.resources import ALL, ALL_WITH_RELATIONS
 
-from core.api.resources import UserResource
-from core.content.resources import ContentResource
-from core.resources import (
+from ficuspumila.core.api.resources import UserResource
+from ficuspumila.core.content.resources import ContentResource
+from ficuspumila.core.resources import (
     EXACT,
     EXACT_IN,
     EXACT_IN_CONTAINS,
@@ -26,7 +26,7 @@ from core.resources import (
     EXACT_IN_STARTSWITH,
     Meta, ServiceMeta,
 )
-from core.content.common.models import (
+from ficuspumila.core.content.common.models import (
     FileType, Genre, GenreLocalization,
     ResourceType, Source, SourceAttribute,
 )

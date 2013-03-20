@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from core.proxy import get, Proxy
+from ficuspumila.core.proxy import get, Proxy
 from . import models
 
 
-COMMON_MODELS = 'core.content.common.models'
+COMMON_MODELS = 'ficuspumila.core.content.common.models'
 
 logger = logging.getLogger(__name__)
 
