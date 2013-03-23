@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from core.test import ResourceTestCase
+from ficuspumila.core.test import ResourceTestCase
 
 
 class CountryResourceTestCase(ResourceTestCase):

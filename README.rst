@@ -19,7 +19,7 @@ Requirements
 Python Libraries
 ----------------
 
-* python modules in `requirements.txt <src/requirements.txt>`_
+* python modules in `requirements.txt <requirements.txt>`_
 
 External Services
 -----------------

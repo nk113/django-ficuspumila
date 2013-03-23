@@ -1,10 +1,12 @@
 *~
 *.db
-*.egg-info
+*.egg*
 *.log
 *.pot
 *.pyc
 .DS_Store
+.noseids
+.tox
 bin
 build
 dist

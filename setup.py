@@ -1,5 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+# import to get rid of an error in atexit._run_exitfuncs
+import logging
+import multiprocessing
+
 try:
     from setuptools import setup, find_packages
 except ImportError:
@@ -16,7 +21,8 @@ setup(
     url='http://github.com/nk113/ficuspumila/',
     packages=find_packages(),
     zip_safe=False, 
-    tests_require=('mock',),
+    tests_require=('mock', 'django_nose',),
+    test_suite = 'ficuspumila.runtests.runtests',
     install_requires=[
         'celery',
         'Django',
