@@ -5,54 +5,65 @@ import os
 
 from operator import itemgetter
 
+from .exceptions import FixtureException
+
 
 logger = logging.getLogger(__name__)
 
 
 class Generator(object):
 
-    fixture = '%s/initial_data.json' % os.path.dirname(__file__)
+    fixture_dir = None
+    fixtures = ('initial_data.json',)
     data = None
 
-    def __init__(self, fixture=None):
-        self.fixture = fixture if fixture else self.fixture
+    def __init__(self, fixtures=None):
+        if self.fixture_dir is None:
+            raise FixtureException(u'"fixture_dir" needs to be specified ' +
+                                   u'in subclasses.')
+        self.fixtures = fixtures if fixtures is not None else self.fixtures
 
     def generate(self):
-        logger.info(u'generating fixture...')
+        logger.info(u'generating fixtures...')
 
         return self.update()
 
     def update(self):
-        logger.info(u'updating fixture: %s' % self.fixture)
+        logger.info(u'updating fixtures: %s' % str(self.fixtures))
 
-        try:
-            with open(self.fixture, 'r') as fixture:
-                # load json into memory
-                try:
-                    self.data = json.loads(fixture.read())
-                except Exception, e:
-                    logger.exception(u'an error occurred during parsing ' +
-                                     u'fixture: %s' % e)
+        for fixture in self.fixtures:
+            try:
+                with open('%s/%s' % (self.fixture_dir,
+                                     fixture,), 'r') as fixture_file:
+                    # load json into memory
+                    try:
+                        self.data = json.loads(fixture_file.read())
+                    except Exception, e:
+                        logger.exception(u'an error occurred during parsing ' +
+                                         u'fixture: %s' % e)
 
-                    self.data = json.loads('[]')
+                        self.data = json.loads('[]')
 
-                # update objects
-                self.update_objects()
+                    # update objects
+                    self.update_objects()
 
-                # sort objects
-                self.data = sorted(self.data, key=itemgetter('pk'))
-                self.data = sorted(self.data, key=itemgetter('model'))
+                    # sort objects
+                    self.data = sorted(self.data, key=itemgetter('pk'))
+                    self.data = sorted(self.data, key=itemgetter('model'))
 
-            with open(self.fixture, 'w') as fixture:
-                # overwrite initial_data
-                fixture.write(json.dumps(self.data, sort_keys=True, indent=2))
+                with open('%s/%s' % (self.fixture_dir,
+                                     fixture,), 'w') as fixture_file:
+                    # overwrite initial_data
+                    fixture_file.write(json.dumps(self.data,
+                                                  sort_keys=True,
+                                                  indent=2))
 
-        except Exception, e:
-            logger.exception(u'an error has occurred during update (%s)' % e)
+            except Exception, e:
+                logger.exception(u'an error has occurred during update (%s)' % e)
 
-            return 1
+                return 1
 
-        logger.info(u'fixture has successfully been updated.')
+        logger.info(u'fixtures have successfully been updated.')
         return 0
 
     def update_objects(self):

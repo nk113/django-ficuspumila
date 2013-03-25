@@ -87,7 +87,7 @@ class Country(Model):
                                 response.status_code,
                                 response.json,))
 
-                return Country.objects.get(alpha2=response.json['countryCode'])
+                return Country.objects.get(alpha2=response.json()['countryCode'])
         except Exception, e:
             pass
 

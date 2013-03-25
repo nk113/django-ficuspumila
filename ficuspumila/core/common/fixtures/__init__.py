@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-
-from .generators import *
+from .generator import *

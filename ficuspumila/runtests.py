@@ -10,7 +10,7 @@ from django.test.utils import get_runner
 
 def runtests():
     runner = get_runner(settings)(verbosity=1, interactive=True)
-    sys.exit(bool(runner.run_tests(['ficuspumila',])))
+    sys.exit(bool(runner.run_tests(('ficuspumila',))))
 
 if __name__ == '__main__':
     runtests()

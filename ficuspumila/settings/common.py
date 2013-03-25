@@ -64,7 +64,7 @@ WSGI_APPLICATION = 'wsgi.local.application'
 INSTALLED_APPS += (
     'django.contrib.admin',
     'south',
-    'core.common',
+    'ficuspumila.core.common',
 )
 
 

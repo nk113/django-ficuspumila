@@ -16,7 +16,7 @@ logger = logging.getLogger(__name__)
 
 class Generator(fixture.Generator):
 
-    fixture = '%s/initial_data.json' % os.path.dirname(__file__)
+    fixture_dir = os.path.dirname(__file__)
 
     def update_objects(self):
         Country(self).update_objects()

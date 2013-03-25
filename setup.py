@@ -14,12 +14,13 @@ except ImportError:
 
 
 setup(
-    name='ficuspumila',
+    name='django-ficuspumila',
     version='0.0.1',
     description='A Django application suite which helps building media distribution service.',
     long_description=open('README.rst', 'r').read(),
-    url='http://github.com/nk113/ficuspumila/',
+    url='http://github.com/nk113/django-ficuspumila/',
     packages=find_packages(),
+    package_data={'': ['*/fixtures/*.json']},
     zip_safe=False, 
     tests_require=('mock', 'django_nose',),
     test_suite = 'ficuspumila.runtests.runtests',

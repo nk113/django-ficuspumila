@@ -7,7 +7,7 @@ import os
 from django.conf import settings
 from django.core.management import call_command
 from django.utils.importlib import import_module
-from django_nose import FastFixtureTestCase
+from django_nose import FastFixtureTestCase as DjangoTestCase
 from operator import itemgetter
 from tastypie.test import ResourceTestCase as TastypieResourceTestCase
 
@@ -19,12 +19,12 @@ API_PATH = '/api/v1/'
 logger = logging.getLogger(__name__)
 
 
-class TestCase(FastFixtureTestCase):
+class TestCase(DjangoTestCase):
 
     fixtures = INITIAL_DATA
 
     def setUp(self):
-        call_command('loaddata', *TEST_DATA)
+        call_command('loaddata', *TEST_DATA, verbosity=2)
         super(TestCase, self).setUp()
 
 

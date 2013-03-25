@@ -20,6 +20,11 @@ class AuthException(CoreException):
     pass
 
 
+class FixtureException(CoreException):
+
+    pass
+
+
 class ModelException(CoreException):
 
     pass

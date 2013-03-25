@@ -34,7 +34,10 @@ CELERY_ALWAYS_EAGER = True
 # test
 # TEST_RUNNER = 'djcelery.contrib.test_runner.CeleryTestSuiteRunner'
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-NOSE_ARGS = ('--with-fixture-bundling', '--failed', '--stop',)
+NOSE_ARGS = ('--with-fixture-bundling',
+             '--failed',
+             '--stop',
+             )
 
 # core
 API_URL = None
