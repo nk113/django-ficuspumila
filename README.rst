@@ -1,8 +1,12 @@
 ...earnestly developping!
 
 ===========
-Ficuspumila
+django-ficuspumila
 ===========
+
+.. image:: https://travis-ci.org/nk113/django-ficuspumila.png?branch=master
+    :alt: Build Status
+    :target: http://travis-ci.org/nk113/django-ficuspumila
 
 Ficuspumila (creeping fig or climbing fig, AKA pumila) is a species of flowering plant in the family Moraceae, native to East Asia... As the common name "creeping fig" indicates, the plant has a creeping / vining habit and is often used in gardens and landscapes... (`Wikipedia <http://en.wikipedia.org/wiki/Ficus_pumila>`_)
 
