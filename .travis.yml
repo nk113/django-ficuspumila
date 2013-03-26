@@ -1,16 +1,11 @@
 language: python
 
 python:
-  - '2.5'
   - '2.6'
   - '2.7'
 
 env:
-  - TOXENV=py25,py26,py27
-
-matrix:
-  allow_failures:
-    - env: TOXENV=py25,py27
+  - TOXENV=py26,py27
 
 # command to install dependencies
 install:
