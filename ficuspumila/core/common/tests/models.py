@@ -30,9 +30,3 @@ class CountryTestCase(TestCase):
         self.assertEqual(type(c.languages) == list, True)
         self.assertEqual(c.languages[0], 'ja')
         self.assertEqual(c.neighbours[0], 'JP')
-
-    def test_get_by_ip(self):
-        c = Country.get_by_ip('183.177.146.33')
-
-        self.assertEqual(c.name, 'Japan')
-        self.assertEqual(c.alpha2, 'JP')

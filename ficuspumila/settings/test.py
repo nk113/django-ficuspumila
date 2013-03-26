@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-                                     
-from .local import *
+from .vagrant import *
 
 
 # database
@@ -35,11 +35,10 @@ CELERY_ALWAYS_EAGER = True
 # TEST_RUNNER = 'djcelery.contrib.test_runner.CeleryTestSuiteRunner'
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 NOSE_ARGS = ('--with-fixture-bundling',
-             '--failed',
-             '--stop',
+             # '--failed',
+             # '--stop',
              )
 
 # core
-API_URL = None
 SYSTEM_USERNAME = 'test'
 SYSTEM_PASSWORD = 'test'

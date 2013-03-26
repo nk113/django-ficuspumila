@@ -13,6 +13,7 @@ from urlparse import urlparse
 
 from . import cache
 from .exceptions import ProxyException
+from .utils import extend
 
 
 logger = logging.getLogger(__name__)
@@ -27,11 +28,14 @@ def get(name, model_module=None):
         splitted[-1] = 'models'
         model_module = '.'.join(splitted)
 
+    proxy = getattr(module, '%sProxy' % name)
+
     if getattr(settings, 'API_URL', None):
-        return getattr(module, '%sProxy' % name)(auth=(settings.SYSTEM_USERNAME,
-                                                       settings.SYSTEM_PASSWORD))
+        return proxy(auth=(settings.SYSTEM_USERNAME,
+                           settings.SYSTEM_PASSWORD))
     else:
-        return getattr(import_module(model_module), name)
+        return extend(getattr(import_module(model_module), name),
+                      proxy)
 
 
 class QuerySet(client.QuerySet):
@@ -273,7 +277,7 @@ class Proxy(object):
             raise ProxyException(_(u'API seems not to have endpoint ' +
                                    u'for the resource: %s' % resource_name))
 
-        # support timezone
+        # support special fields
         def _setfield(self, attr, value):
             try:
                 self._setfield_original(attr, value)
@@ -281,15 +285,13 @@ class Proxy(object):
                 error = '%s' % e
                 if '\'datetime\'' in error:
                     self._fields[attr] = parser.parse(value)
+                elif '\'list\'' in error:
+                    self._fields[attr] = value
                 else:
                     raise e
 
         self._resource._setfield_original = self._resource._setfield
         self._resource._setfield = _setfield
 
-        # proxy fields on resource
-        for field, value in inspect.getmembers(self._resource):
-            try:
-                setattr(self, field, value)
-            except:
-                pass
+    def __getattr__(self, name):
+        return getattr(self._resource, name)

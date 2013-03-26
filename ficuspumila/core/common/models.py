@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import logging
-import requests
 
 from django.conf import settings
 from django.db import models
@@ -71,31 +70,3 @@ class Country(Model):
 
     def __unicode__(self):
         return '(%s): %s' % (self.alpha2, self.name)
-
-    @staticmethod
-    @cache(keyarg=0)
-    def get_by_ip(ip):
-        response = requests.get(settings.IPINFODB_API_URL,
-                              params={'key': settings.IPINFODB_API_KEY,
-                                      'ip': ip,
-                                      'format': 'json'})
-
-        try:
-            if response.status_code == 200:
-                logger.debug(u'api response (%s -> HTTP %s: %s)' % (
-                                ip,
-                                response.status_code,
-                                response.json,))
-
-                return Country.objects.get(alpha2=response.json()['countryCode'])
-        except Exception, e:
-            pass
-
-        logger.exception(u'failed to retrieve country (%s -> HTTP %s: %s: %s)' % (
-                             ip,
-                             response.status_code,
-                             response.text,
-                             e if 'e' in locals() else None,))
-
-        return None
-

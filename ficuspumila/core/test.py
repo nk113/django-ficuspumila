@@ -24,7 +24,7 @@ class TestCase(DjangoTestCase):
     fixtures = INITIAL_DATA
 
     def setUp(self):
-        call_command('loaddata', *TEST_DATA, verbosity=2)
+        call_command('loaddata', *TEST_DATA)
         super(TestCase, self).setUp()
 
 

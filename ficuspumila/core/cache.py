@@ -33,9 +33,8 @@ def get(key, default=None, **kwargs):
         logger.debug(u'not in cache (%s)' % key)
         return default
 
-    logger.debug(u'found in cache (%s)' % key)
-    return value        
-
+    logger.debug(u'found in cache (%s -> %s)' % (key, value,))
+    return value
 
 def delete(key, **kwargs):
     logger.debug(u'deleting cache (%s)' % key)

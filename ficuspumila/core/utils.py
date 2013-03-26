@@ -25,6 +25,16 @@ class Singleton(object):
         return cls._instance
 
 
+# class inheritence
+def extend(instance, new_class):
+    instance.__class__ = type('%s_extended_with_%s' % (
+                                  instance.__class__.__name__,
+                                  new_class.__name__), 
+                              (instance.__class__, new_class), 
+                              {})
+    return instance
+
+    
 # locale
 def get_default_language_code():
     return settings.LANGUAGE_CODE.split('-')[0].lower()

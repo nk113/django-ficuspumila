@@ -80,6 +80,9 @@ class CountryResource(Resource):
             'equivalent_fips_code': EXACT_IN,
         }
 
+    languages = fields.ListField('languages')
+    neighbours = fields.ListField('neighbours')
+
 
 def get_urls(version=1):
     api = Api(api_name='core')
