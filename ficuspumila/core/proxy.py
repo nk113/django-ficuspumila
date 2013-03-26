@@ -294,4 +294,6 @@ class Proxy(object):
         self._resource._setfield = _setfield
 
     def __getattr__(self, name):
+        if name == '_resource':
+            raise AttributeError()
         return getattr(self._resource, name)

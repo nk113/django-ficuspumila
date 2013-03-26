@@ -18,9 +18,16 @@ INSTALLED_APPS += (
 
 
 # logging
+LOGGING['handlers'] = {
+    'console': {
+        'level': 'DEBUG',
+        'class': 'logging.StreamHandler',
+        'formatter': 'normal',
+    },
+}
 LOGGING['loggers'] = {
     '': {
-        'handlers': ('console', 'test_log',),
+        'handlers': ('console',),
         'level': 'INFO',
         'propagate': True,
     },
