@@ -5,7 +5,7 @@ import os
 
 from operator import itemgetter
 
-from .exceptions import FixtureException
+from ficuspumila.core.exceptions import FixtureException
 
 
 logger = logging.getLogger(__name__)

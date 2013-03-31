@@ -14,7 +14,7 @@ from tastypie.test import ResourceTestCase as TastypieResourceTestCase
 
 INITIAL_DATA = ('initial_data', 'ficuspumila',)
 TEST_DATA = ('test_data', 'ficuspumila',)
-API_PATH = '/api/v1/'
+API_PATH = '/api/v1/core/'
 
 logger = logging.getLogger(__name__)
 
@@ -31,7 +31,7 @@ class TestCase(DjangoTestCase):
 class ResourceTestCase(TestCase, TastypieResourceTestCase):
 
     version  = 1
-    api_name = 'core'
+    api_name = 'auth'
     resource_name = 'user'
 
     def setUp(self):
@@ -73,7 +73,7 @@ class AuthTestCase(TestCase):
 
     def setUp(self):
 
-        self.service = getattr(import_module('core.content.common.models'),
+        self.service = getattr(import_module('core.content.models'),
                                'Source').objects.get(pk=1)
         self.token = self.service.generate_token({'source_owner_id': ''})
 

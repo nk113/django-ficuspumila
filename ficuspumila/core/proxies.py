@@ -13,6 +13,7 @@ from urlparse import urlparse
 
 from . import cache
 from .exceptions import ProxyException
+from .models import Choice
 from .utils import extend
 
 
@@ -52,7 +53,7 @@ class Response(client.Response):
         try:
             return super(Response, self).__getattr__(attr)
         except KeyError, e:
-            # handles foreign key references in another api namespace
+            # resolves foreign key references in another api namespace
             # expects to be called with detail url like /api/v1/<resource>/<id>/
             #
             # CAVEAT: resource_url of referred resource has to have the same version
@@ -258,7 +259,7 @@ class Proxy(object):
 
         version   = kwargs.get('version', 'v1')
         namespace = kwargs.get('namespace',
-                               '/'.join(self.__module__.split('.')[1:-2]))
+                               '/'.join(self.__module__.split('.')[1:-1]))
         auth      = kwargs.get('auth', None)
 
         resource_name = kwargs.get('resource_name',
@@ -297,3 +298,56 @@ class Proxy(object):
         if name == '_resource':
             raise AttributeError()
         return getattr(self._resource, name)
+
+
+class SubjectProxy(Proxy):
+
+    class Attributes(Choice):
+
+        NAME = 0
+        DEFAULT = NAME
+
+    attribute_model = None
+
+    def __init__(self, *args, **kwargs):
+        if self.attribute_model is None:
+            self.attribute_model = getattr(import_module(self.__module__),
+                                           '%sAttribute' % self.__class__.__name__)
+        return super(Subject, self).__init__(*args, **kwargs)
+
+    def getattr(self, name, default=None):
+        try:
+            return self.attributes.get(name=name).value
+        except self.attribute_model.DoesNotExist:
+            return default
+
+    def setattr(self, name, value):
+        try:
+            attribute = self.attributes.get(name=name)
+        except self.attribute_model.DoesNotExist:
+            attribute = self.attribute_model(name=name, value=value)
+            self.attributes.add(attribute)
+        else:
+            attribute.value = value
+            attribute.save()
+
+    def delattr(self, name):
+        try:
+            attribute = self.attributes.get(name=name)
+        except self.attribute_model.DoesNotExist:
+            raise KeyError(name)
+        else:
+            attribute.delete()
+
+
+class AttributeProxy(Proxy):
+
+    def __init__(self, *args, **kwargs):
+        if self.logger_model is None:
+            self.logger_model = getattr(import_module(self.__module__),
+                                        self.__class__.__name__[:-9])
+        return super(Attribute, self).__init__(*args, **kwargs)
+
+    def __unicode__(self):
+        return u'%s: %s' % (self.get_name_display(),
+                            self.value,)

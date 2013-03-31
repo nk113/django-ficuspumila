@@ -3,8 +3,10 @@ celery
 Django
 django-celery
 django-nose
+django-queued-storage
 fluent-logger
 MySQL-python
+mock
 pycrypto
 python-memcached
 south
@@ -12,4 +14,4 @@ tastypie-queryset-client
 tox
 
 # specific revision
--e git+https://github.com/toastdriven/django-tastypie.git@32dae8d259#egg=django-tastypie
+-e git+https://github.com/toastdriven/django-tastypie.git#egg=django-tastypie

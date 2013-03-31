@@ -1,18 +1,18 @@
 [
   {
     "fields": {
-      "date_joined": "2013-03-19T17:46:01Z", 
+      "date_joined": "2013-02-17T03:20:27Z", 
       "email": "", 
       "first_name": "", 
       "groups": [], 
       "is_active": true, 
       "is_staff": true, 
       "is_superuser": true, 
-      "last_login": "2013-03-19T17:46:01Z", 
+      "last_login": "2013-03-19T17:45:43Z", 
       "last_name": "", 
-      "password": "pbkdf2_sha256$10000$VNPW2Dp56kg0$OprYCepepiprZnc8Y8Zg5sQvab2w1D1ipsFUPpP4QkM=", 
+      "password": "pbkdf2_sha256$10000$n5xAYZnuwVre$n1lNIpdlab5gPhT520kprslcbBICDCAhDWh6S1Fub/I=", 
       "user_permissions": [], 
-      "username": "test"
+      "username": "dev"
     }, 
     "model": "auth.user", 
     "pk": 1

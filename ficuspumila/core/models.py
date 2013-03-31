@@ -11,7 +11,7 @@ from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 from urllib import urlencode
 
-from .auth import SSOAuthenticator
+from .auth.sso import Authenticator
 from .crypto import Transcoder
 from .exceptions import ModelException
 from .utils import (
@@ -21,7 +21,7 @@ from .utils import (
 
 
 logger = logging.getLogger(__name__)
-trans = Transcoder()
+transcoder = Transcoder()
 
 
 class Choice(object):
@@ -133,42 +133,42 @@ class Subject(models.Model):
 
         abstract = True
 
-    class Attributes(Choice):
+    # class Attributes(Choice):
 
-        NAME = 0
-        DEFAULT = NAME
+    #     NAME = 0
+    #     DEFAULT = NAME
 
-    attribute_model = None
+    # attribute_model = None
 
-    def __init__(self, *args, **kwargs):
-        if self.attribute_model is None:
-            self.attribute_model = getattr(import_module(self.__module__),
-                                           '%sAttribute' % self.__class__.__name__)
-        return super(Subject, self).__init__(*args, **kwargs)
+    # def __init__(self, *args, **kwargs):
+    #     if self.attribute_model is None:
+    #         self.attribute_model = getattr(import_module(self.__module__),
+    #                                        '%sAttribute' % self.__class__.__name__)
+    #     return super(Subject, self).__init__(*args, **kwargs)
 
-    def getattr(self, name, default=None):
-        try:
-            return self.attributes.get(name=name).value
-        except self.attribute_model.DoesNotExist:
-            return default
+    # def getattr(self, name, default=None):
+    #     try:
+    #         return self.attributes.get(name=name).value
+    #     except self.attribute_model.DoesNotExist:
+    #         return default
 
-    def setattr(self, name, value):
-        try:
-            attribute = self.attributes.get(name=name)
-        except self.attribute_model.DoesNotExist:
-            attribute = self.attribute_model(name=name, value=value)
-            self.attributes.add(attribute)
-        else:
-            attribute.value = value
-            attribute.save()
+    # def setattr(self, name, value):
+    #     try:
+    #         attribute = self.attributes.get(name=name)
+    #     except self.attribute_model.DoesNotExist:
+    #         attribute = self.attribute_model(name=name, value=value)
+    #         self.attributes.add(attribute)
+    #     else:
+    #         attribute.value = value
+    #         attribute.save()
 
-    def delattr(self, name):
-        try:
-            attribute = self.attributes.get(name=name)
-        except self.attribute_model.DoesNotExist:
-            raise KeyError(name)
-        else:
-            attribute.delete()
+    # def delattr(self, name):
+    #     try:
+    #         attribute = self.attributes.get(name=name)
+    #     except self.attribute_model.DoesNotExist:
+    #         raise KeyError(name)
+    #     else:
+    #         attribute.delete()
 
 
 class Attribute(Model):
@@ -177,18 +177,20 @@ class Attribute(Model):
         abstract = True
         ordering = ('name',)
 
+    # logger_model = None
+
     # name field must be specified as a choice field
     value = models.CharField(max_length=512)
 
-    def __init__(self, *args, **kwargs):
-        if logger_model is None:
-            self.logger_model = getattr(import_module(self.__module__),
-                                        self.__class__.__name__[:-9])
-        return super(Attribute, self).__init__(*args, **kwargs)
+    # def __init__(self, *args, **kwargs):
+    #     if self.logger_model is None:
+    #         self.logger_model = getattr(import_module(self.__module__),
+    #                                     self.__class__.__name__[:-9])
+    #     return super(Attribute, self).__init__(*args, **kwargs)
 
-    def __unicode__(self):
-        return u'%s: %s' % (self.get_name_display(),
-                            self.value,)
+    # def __unicode__(self):
+    #     return u'%s: %s' % (self.get_name_display(),
+    #                         self.value,)
 
 
 class Localizable(models.Model):
@@ -371,10 +373,10 @@ class Service(User, Notifier, Subject):
         abstract = True
 
     token_key = models.CharField(max_length=255,
-                         default=trans.algorithm.generate_key,
+                         default=transcoder.algorithm.generate_key,
                          verbose_name=_(u'Key for the SSO auth token'))
     token_iv = models.CharField(max_length=255,
-                         default=trans.algorithm.generate_iv,
+                         default=transcoder.algorithm.generate_iv,
                          verbose_name=_(u'IV for the SSO auth token'))
 
     def generate_token(self, data={}):

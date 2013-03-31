@@ -5,44 +5,18 @@ import time
 
 from django.conf import settings
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
-from django.http import HttpResponseForbidden
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext as _
-from functools import wraps
 
-from .crypto import Transcoder
-from .exceptions import AuthException
-from .utils import generate_hmac_digest
+from ficuspumila.core.crypto import Transcoder
+from ficuspumila.core.exceptions import AuthException
+from ficuspumila.core.utils import generate_hmac_digest
 
 
 logger = logging.getLogger(__name__)
 
 
-class SSOBackend(object):
-
-    DELIMITER = '$'
-
-    supports_inactive_user = False; 
-
-    def authenticate(self, username=None, password=None):
-        logger.debug(u'trying to authenticate with sso (%s / %s)' % (username,
-                                                                     password,))
-        try:
-            service, id = username.split(SSOBackend.DELIMITER)
-            user = SSOAuthenticator(**{
-                service: int(id),
-                SSOAuthenticator.TOKEN_PARAM: password,
-            }).user.user
-        except Exception, e:
-            logger.exception(u'failed to authenticate user: %s, %s' % (username,
-                                                                       password,))
-
-            user = None
-        return user
-
-
-class SSOAuthenticator(object):
+class Authenticator(object):
     """
     Expects decrypted SSO token to contain following parameters:
 
@@ -100,9 +74,9 @@ class SSOAuthenticator(object):
             # validate token
             self.token = self.validate_token(
                          self.service,
-                         kwargs.get(SSOAuthenticator.TOKEN_PARAM, None),
-                         kwargs.get(SSOAuthenticator.FORMAT_PARAM, None),
-                         kwargs.get(SSOAuthenticator.DATA_PARAM, None))
+                         kwargs.get(Authenticator.TOKEN_PARAM, None),
+                         kwargs.get(Authenticator.FORMAT_PARAM, None),
+                         kwargs.get(Authenticator.DATA_PARAM, None))
 
             if self.token.get('username'):
                 # TODO: detect service user from django user
@@ -195,24 +169,24 @@ class SSOAuthenticator(object):
     def from_request(request):
         if (request.META.get('HTTP_AUTHORIZATION') and
             request.META['HTTP_AUTHORIZATION'].lower().startswith(
-                '%s ' % SSOAuthenticator.AUTH_TYPE)):
+                '%s ' % Authenticator.AUTH_TYPE)):
             (auth_type, data) = request.META['HTTP_AUTHORIZATION'].split()
 
-            if auth_type.lower() != SSOAuthenticator.AUTH_TYPE:
+            if auth_type.lower() != Authenticator.AUTH_TYPE:
                 raise ValueError(u'Incorrect authorization header')
             
             service, id, token = data.split(':', 2)
             kwargs = {
                 service: id,
-                SSOAuthenticator.TOKEN_PARAM: token,
+                Authenticator.TOKEN_PARAM: token,
             }
         else:
             kwargs = request.GET.copy()
             kwargs.update(request.POST.copy())
             kwargs.update(request.COOKIES.copy())
-            kwargs['data'] = request.body
+            kwargs[Authenticator.DATA_PARAM] = request.body
 
-        authenticator = SSOAuthenticator(**kwargs)
+        authenticator = Authenticator(**kwargs)
 
         if authenticator.is_authenticated():
             request.user = authenticator.user.user

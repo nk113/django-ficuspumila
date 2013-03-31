@@ -2,23 +2,28 @@
 import logging
 
 from django.conf import settings
+from django.contrib.auth.models import User as AuthUser
 from tastypie.authentication import BasicAuthentication
 from tastypie.authorization import DjangoAuthorization
+from tastypie.cache import SimpleCache
 from tastypie.exceptions import ImmediateHttpResponse, InvalidFilterError
+from tastypie import fields
 from tastypie.http import HttpUnauthorized
-from tastypie.resources import ModelResource
+from tastypie.resources import ModelDeclarativeMetaclass, ModelResource
 from tastypie.throttle import CacheThrottle
 from tastypie.validation import CleanedDataFormValidation
 
-from .auth import SSOAuthenticator
+from .auth.sso import Authenticator
 
 
+ALL_METHODS = ('get', 'post', 'put', 'patch', 'delete',)
 EXACT = ('exact',)
 EXACT_IN = ('exact', 'in',)
 EXACT_IN_CONTAINS = EXACT_IN + ('contains',)
 EXACT_IN_GTE_LTE = EXACT_IN + ('gte', 'lte',)
 EXACT_IN_GET_LTE_DATE = EXACT_IN_GTE_LTE + ('date',)
 EXACT_IN_STARTSWITH = EXACT_IN + ('startswith',)
+
 
 logger = logging.getLogger(__name__)
 
@@ -29,10 +34,12 @@ class Authentication(BasicAuthentication):
         authenticated = super(Authentication,
                               self).is_authenticated(request, **kwargs)
         if not authenticated or isinstance(authenticated, HttpUnauthorized):
-            authenticated = SSOAuthenticator.from_request(
+            authenticated = Authenticator.from_request(
                                 request).is_authenticated()
 
-        logger.debug(u'authenticated as user (%s)' % request.user)
+        logger.debug(u'authenticated as (%s%s)' % (
+                         request.user,
+                         ' - superuser' if request.user.is_superuser else '',))
 
         return authenticated
 
@@ -45,15 +52,15 @@ class Authorization(DjangoAuthorization):
     pass
 
 
-class AdminAuthentication(Authentication):
+class SuperuserAuthentication(Authentication):
 
     def is_authenticated(self, request, **kwargs):
-        authenticated = super(AdminAuthentication,
+        authenticated = super(SuperuserAuthentication,
                               self).is_authenticated(request, **kwargs)
         return request.user.is_superuser
 
 
-class AdminAuthorization(Authorization):
+class SuperuserAuthorization(Authorization):
 
     pass
 
@@ -61,14 +68,16 @@ class AdminAuthorization(Authorization):
 class Throttle(CacheThrottle):
 
     def should_be_throttled(self, identifier, **kwargs):
-        if identifier == settings.SYSTEM_USERNAME:
-            return False
+        try:
+            user = AuthUser.objects.get(username=identifier)
+            if user.is_superuser:
+                return False
+        except AuthUser.DoesNotExist, e:
+            pass
+
         return super(Throttele, self).should_be_throttled(self,
                                                           identifier,
                                                           **kwargs)
-
-    def accessed(self, identifier, **kwargs):
-        pass
 
 
 class FormValidation(CleanedDataFormValidation):
@@ -101,21 +110,20 @@ class Resource(ModelResource):
     def debug(self, request, response, log=logger.debug):
         info = log if log == logger.exception else logger.info
 
-        info('API (%s): %s %s %s' % (
+        info(u'API (%s): %s %s %s' % (
              request.user,
              request.method, response.status_code,
              request.META.get('PATH_INFO')))
 
         if len(request.raw_post_data):
-            log('API (%s): Data: %s' % (
+            log(u'API (%s): Data: %s' % (
                 request.user, request.raw_post_data,))
 
         if len(response.content):
-            log('API (%s): Content: %s' % (request.user,
+            log(u'API (%s): Content: %s' % (request.user,
                                            response.content,))
 
     def dispatch(self, request_type, request, **kwargs):
-
         response = super(Resource, self).dispatch(request_type,
                                                   request,
                                                   **kwargs)
@@ -123,6 +131,22 @@ class Resource(ModelResource):
         self.debug(request, response)
 
         return response
+
+    def is_authenticated(self, request):
+        super(Resource, self).is_authenticated(request)
+
+        # allow superuser all operations dynamically
+        if request.user.is_superuser:
+
+            logger.debug(u'allow all operations for superuser...')
+
+            self._meta.list_allowed_methods = ALL_METHODS
+            self._meta.detail_allowed_methods = ALL_METHODS
+
+            for field in self._meta.excludes:
+                self.fields[field] = fields.CharField(attribute=field,
+                                                      blank=True,
+                                                      null=True)
 
     def _handle_500(self, request, exception):
         response = super(Resource, self)._handle_500(request, exception)
@@ -164,16 +188,15 @@ class Meta(object):
     allowed_methods = ('get',)
     authentication = Authentication()
     authorization = Authorization()
+    cache = SimpleCache()
     throttle = Throttle()
-    excludes = ('utime',)
-    ordering = ('id',)
 
 
-class AdminMeta(Meta):
+class SuperuserMeta(Meta):
 
-    allowed_methods = ('get', 'post', 'put', 'patch', 'delete',)
-    authentication = AdminAuthentication()
-    authorization = AdminAuthorization()
+    allowed_methods = ALL_METHODS
+    authentication = SuperuserAuthentication()
+    authorization = SuperuserAuthorization()
 
 
 class ServiceMeta(Meta):

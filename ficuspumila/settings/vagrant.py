@@ -26,9 +26,9 @@ ROOT_URLCONF = 'urls.vagrant'
 
 # apps
 INSTALLED_APPS += (
-    'ficuspumila.core.api',
-    'ficuspumila.core.content.api',
-    'ficuspumila.core.content.common',
+    'ficuspumila.core.auth',
+    'ficuspumila.core.common',
+    'ficuspumila.core.content',
 )
 
 

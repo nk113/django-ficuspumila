@@ -3,21 +3,105 @@ import logging
 
 from django.conf import settings
 from django.db import models
+from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 
-from ficuspumila.core.content.common.models import (
-    FileType, Source
-)
 from ficuspumila.core.models import (
-    Attribute, Choice, Event,
+    Attribute, Choice, CSVField, Event,
     Localizable, Localization,
-    Model, Notification, Subject, User
+    Logger, Model, Notification, Notifier,
+    Service, Subject, User,
 )
 
 
-MODULE = __name__.split('.')[-3].lower()
+MODULE = __name__.split('.')[-2].lower()
 
 logger = logging.getLogger(__name__)
+
+
+class Categories(Choice):
+
+    AUDIO   = 0
+    VIDEO   = 1
+    PICTURE = 2
+    TEXT    = 3
+    DEFAULT = AUDIO
+
+
+class Genre(Localizable):
+
+    class Meta:
+
+        db_table = '%s_genre' % MODULE
+
+    type = models.SmallIntegerField(default=Categories.AUDIO,
+                         choices=Categories,
+                         verbose_name=_(u'Genre type'))
+
+    def __unicode__(self):
+        localization = self.localize()
+        return '%s (%s): %s' % (self.get_type_display(),
+                                localization.language_code,
+                                localization.name,)
+
+
+class GenreLocalization(Localization):
+
+    class Meta:
+        db_table = '%s_genrelocalization' % MODULE
+
+    genre = models.ForeignKey(Genre)
+    name = models.CharField(max_length=128,
+                            verbose_name=_(u'Genre name'))
+
+    def __unicode__(self):
+        return '(%s): %s' % (self.language_code,
+                             self.name,)
+
+
+class Source(Service):
+
+    class Meta:
+
+        db_table = '%s_source' % MODULE
+
+    class Attributes(Choice):
+
+        DELETE_FROM_RESOURCE_ON_ITEM_READY = 0
+        DEFAULT = DELETE_FROM_RESOURCE_ON_ITEM_READY
+
+    class Events(Choice):
+
+        ITEM_READY = 0
+        RESOURCE_ACCESSED = 1
+        DEFAULT = ITEM_READY
+
+    def __init__(self, *args, **kwargs):
+        if getattr(self, 'notification_model', None) is None:
+            models = import_module('core.content.models')
+            self.notification_model = getattr(models,
+                                              'SourceNotification')
+            self.event_model = getattr(models,
+                                       'SourceEvent')
+        return super(Notifier, self).__init__(*args, **kwargs)
+
+    name = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return self.name
+
+
+class SourceAttribute(Attribute):
+
+    class Meta:
+        db_table = '%s_sourceattribute' % MODULE
+        unique_together = ('source', 'name',)
+
+    source = models.ForeignKey(Source,
+                         related_name='attributes',
+                         verbose_name=_(u'Content source'))
+    name = models.SmallIntegerField(choices=Source.Attributes,
+                         default=Source.Attributes.DEFAULT)
 
 
 class SourceEvent(Event):
@@ -41,6 +125,35 @@ class SourceNotification(Notification):
 
     event = models.ForeignKey(SourceEvent,
                          related_name='notifications')
+
+
+class Owner(User):
+
+    class Meta:
+
+        db_table = '%s_owner' % MODULE
+        unique_together = ('source', 'source_owner_id',)
+
+    source = models.ForeignKey(Source)
+    source_owner_id = models.CharField(max_length=255)
+
+    def __unicode__(self):
+        return '%s@%s' % (self.source_owner_id, self.source.name,)
+
+
+class FileType(Model):
+
+    class Meta:
+
+        db_table = '%s_filetype' % MODULE
+        ordering = ('name',)
+
+    name = models.CharField(max_length=128)
+    mime = CSVField(max_length=128)
+    extension = models.CharField(max_length=5)
+
+    def __unicode__(self):
+        return self.name
 
 
 class FileSpecification(Model, Subject):
@@ -100,20 +213,6 @@ class FileSpecificationAttribute(Attribute):
         return '%s: %s' % (self.name, self.value)
 
 
-class Owner(User):
-
-    class Meta:
-
-        db_table = '%s_owner' % MODULE
-        unique_together = ('source', 'source_owner_id',)
-
-    source = models.ForeignKey(Source)
-    source_owner_id = models.CharField(max_length=255)
-
-    def __unicode__(self):
-        return '%s@%s' % (self.source_owner_id, self.source.name,)
-
-
 # class Item(Model):
 
 #     class Meta:
@@ -156,6 +255,24 @@ class Owner(User):
 #                        'metadata%s' % self.get_type_display().replace(' ',
 #                                                                       '').lower(),
 #                        None)
+
+
+class ResourceType(Model):
+
+    class Meta:
+
+        db_table = '%s_resourcetype' % MODULE
+        ordering = ('name',)
+
+    name = models.CharField(max_length=128)
+    category = models.SmallIntegerField(choices=Categories,
+                                        default=Categories.DEFAULT)
+    limited = models.BooleanField(default=True)
+    streamable = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return self.name
+
 
 # class Resource(Model):
 

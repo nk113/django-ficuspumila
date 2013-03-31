@@ -17,7 +17,7 @@ Ficuspumila is a django application suite which helps you to build comprehensive
 Structure
 =========
 
-Ficuspumila is designed to process media files in destributed environment so you don't need to bother on thinking scaling storategy as encoding or download sessions grow, just add boxes.
+Ficuspumila is designed to process media files in destributed environment so you don't need to bother on scaling storategy as encoding or download sessions grow, just add boxes.
 
 Requirements
 ============
@@ -30,10 +30,12 @@ Python Libraries
 External Services
 -----------------
 
-* AMQP service, `RabbitMQ <http://www.rabbitmq.com/>`_ is recommended
-* optional, `Red5 <http://www.red5.org/>`_ to stream FLV and MP3
-* optional, `DSS <http://dss.macosforge.org/>`_ to stream MPEG-4 and 3GPP
-* optional, `Microsoft PlayReady <http://www.microsoft.com/playready/>`_ to support DRM with PlayReady
+* Database like MySQL, mandatory
+* AMQP service, `RabbitMQ <http://www.rabbitmq.com/>`_ is recommended, mandatory
+* Setting up cache backend, such as memcache, would be strongly recommended
+* `Red5 <http://www.red5.org/>`_ to stream FLV and MP3, optional
+* `DSS <http://dss.macosforge.org/>`_ to stream MPEG-4 and 3GPP, optional
+* `Microsoft PlayReady <http://www.microsoft.com/playready/>`_ to support DRM with PlayReady, optional
 
 Media Tools
 -----------
@@ -95,8 +97,8 @@ Provides fundamental core components including authentication, caching, api reso
 
 ::
 
-    >>> from ficuspumila.core import proxy
-    >>> Owner = proxy.Proxy(api_url='http://some.tastypie.api/',
+    >>> from ficuspumila.core import proxies
+    >>> Owner = proxies.Proxy(api_url='http://some.tastypie.api/',
     ...                     version='v1',
     ...                     namespace='core/content'
     ...                     resource_name='owner',

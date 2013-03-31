@@ -3,7 +3,7 @@ from ficuspumila.core.test import ResourceTestCase
 
 
 class CountryResourceTestCase(ResourceTestCase):
-    api_name = 'core'
+    api_name = 'common'
     resource_name = 'country'
 
     def setUp(self):

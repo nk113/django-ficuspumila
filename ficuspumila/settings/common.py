@@ -56,6 +56,10 @@ CACHES = {
 }
 
 
+# secrets
+SECRET_KEY = '<overwrite with some unique value>'
+
+
 # wsgi   
 WSGI_APPLICATION = 'wsgi.local.application'
 
@@ -63,15 +67,15 @@ WSGI_APPLICATION = 'wsgi.local.application'
 # apps
 INSTALLED_APPS += (
     'django.contrib.admin',
+    'queued_storage',
     'south',
-    'ficuspumila.core.common',
 )
 
 
 # auth
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    'core.auth.SSOBackend'
+    'ficuspumila.core.auth.backends.SSO',
 )
 
 
@@ -165,11 +169,12 @@ warnings.filterwarnings(action='ignore',
 
 
 # core
+#API_URL = '<url of the api server, https connection is strongly recommended for security>'
 SYSTEM_USERNAME = '<django auth username>'
 SYSTEM_PASSWORD = '<django auth password>'
 SERVICES = {
-    'ficuspumila.core.content.api.proxies.Source': {
-        'user': 'ficuspumila.core.content.api.proxies.Owner',
+    'ficuspumila.core.content.proxies.Source': {
+        'user': 'ficuspumila.core.content.proxies.Owner',
     },
     # 'core.product.models.Store': {
     #     'user': 'core.product.models.Consumer',

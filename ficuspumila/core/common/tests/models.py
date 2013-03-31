@@ -10,11 +10,6 @@ logger = logging.getLogger(__name__)
 
 class CountryTestCase(TestCase):
 
-    def test_get(self):
-        c = Country.objects.get(pk='IN')
-
-        self.assertEqual(c.name, 'India')
-
     def test_get_csv_fields(self):
         c = Country.objects.get(pk='ZW')
 

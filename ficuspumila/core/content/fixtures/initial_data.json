@@ -7,7 +7,7 @@
       "name": "Windows Bitmap", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 1
   }, 
   {
@@ -18,7 +18,7 @@
       "name": "Graphics Interchange Format", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 2
   }, 
   {
@@ -29,7 +29,7 @@
       "name": "Joint Photographic Experts Group", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 3
   }, 
   {
@@ -40,7 +40,7 @@
       "name": "Portable Network Graphics", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 4
   }, 
   {
@@ -51,7 +51,7 @@
       "name": "Scalable Vector Graphics", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 5
   }, 
   {
@@ -62,7 +62,7 @@
       "name": "Tagged Image File Format", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 6
   }, 
   {
@@ -73,7 +73,7 @@
       "name": "RIFF Waveform Audio", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 7
   }, 
   {
@@ -84,7 +84,7 @@
       "name": "Advanced Audio Coding", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 8
   }, 
   {
@@ -95,7 +95,7 @@
       "name": "MPEG Audio Stream Layer 3", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 9
   }, 
   {
@@ -106,7 +106,7 @@
       "name": "Windows Media Audio", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 10
   }, 
   {
@@ -117,7 +117,7 @@
       "name": "Audio Video Interleaving", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 11
   }, 
   {
@@ -128,7 +128,7 @@
       "name": "MPEG2 Transport Stream", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 12
   }, 
   {
@@ -139,7 +139,7 @@
       "name": "MPEG", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 13
   }, 
   {
@@ -150,7 +150,7 @@
       "name": "MPEG 4", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 14
   }, 
   {
@@ -161,7 +161,7 @@
       "name": "Quick Time", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 15
   }, 
   {
@@ -172,7 +172,7 @@
       "name": "Flash Video", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 16
   }, 
   {
@@ -183,7 +183,7 @@
       "name": "Third Generation Partnership Project", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 17
   }, 
   {
@@ -194,7 +194,7 @@
       "name": "Advanced Systems Format", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 18
   }, 
   {
@@ -205,7 +205,7 @@
       "name": "Windows Media Video", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 19
   }, 
   {
@@ -216,7 +216,7 @@
       "name": "Shockwave Flash", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 20
   }, 
   {
@@ -227,7 +227,7 @@
       "name": "SubRip Subtitle Format", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 21
   }, 
   {
@@ -238,7 +238,7 @@
       "name": "UTF-8 M3U Playlist", 
       "utime": "2013-02-17T03:24:43Z"
     }, 
-    "model": "common.filetype", 
+    "model": "content.filetype", 
     "pk": 22
   }
 ]

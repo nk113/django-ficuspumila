@@ -7,7 +7,7 @@
       "user": 1,
       "utime": "2013-02-17T11:55:40Z"
     }, 
-    "model": "api.owner", 
+    "model": "content.owner", 
     "pk": 1
   }
 ]

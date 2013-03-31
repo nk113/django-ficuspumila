@@ -11,7 +11,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     # api
-    url(r'^', include('ficuspumila.urls.api')),
+    url(r'^api/', include('ficuspumila.urls.api')),
 )
 
 urlpatterns += staticfiles_urlpatterns()
