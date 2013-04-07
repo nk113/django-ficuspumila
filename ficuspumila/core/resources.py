@@ -9,7 +9,7 @@ from tastypie.cache import SimpleCache
 from tastypie.exceptions import ImmediateHttpResponse, InvalidFilterError
 from tastypie import fields
 from tastypie.http import HttpUnauthorized
-from tastypie.resources import ModelDeclarativeMetaclass, ModelResource
+from tastypie.resources import ModelResource as TastypieModelResource
 from tastypie.throttle import CacheThrottle
 from tastypie.validation import CleanedDataFormValidation
 
@@ -75,9 +75,8 @@ class Throttle(CacheThrottle):
         except AuthUser.DoesNotExist, e:
             pass
 
-        return super(Throttele, self).should_be_throttled(self,
-                                                          identifier,
-                                                          **kwargs)
+        return super(Throttle, self).should_be_throttled(identifier,
+                                                         **kwargs)
 
 
 class FormValidation(CleanedDataFormValidation):
@@ -105,7 +104,14 @@ class FormValidation(CleanedDataFormValidation):
         return errors
 
 
-class Resource(ModelResource):
+class ModelResource(TastypieModelResource):
+
+    def __init__(self):
+        # to support to_many related field filtering
+        self._meta.filtering.update({
+            'id': EXACT_IN,
+        })
+        super(ModelResource, self).__init__()
 
     def debug(self, request, response, log=logger.debug):
         info = log if log == logger.exception else logger.info
@@ -124,7 +130,7 @@ class Resource(ModelResource):
                                            response.content,))
 
     def dispatch(self, request_type, request, **kwargs):
-        response = super(Resource, self).dispatch(request_type,
+        response = super(ModelResource, self).dispatch(request_type,
                                                   request,
                                                   **kwargs)
 
@@ -133,12 +139,12 @@ class Resource(ModelResource):
         return response
 
     def is_authenticated(self, request):
-        super(Resource, self).is_authenticated(request)
+        super(ModelResource, self).is_authenticated(request)
 
         # allow superuser all operations dynamically
         if request.user.is_superuser:
 
-            logger.debug(u'allow all operations for superuser...')
+            logger.debug(u'hello superuser you can do anything with this resource...')
 
             self._meta.list_allowed_methods = ALL_METHODS
             self._meta.detail_allowed_methods = ALL_METHODS
@@ -149,14 +155,14 @@ class Resource(ModelResource):
                                                       null=True)
 
     def _handle_500(self, request, exception):
-        response = super(Resource, self)._handle_500(request, exception)
+        response = super(ModelResource, self)._handle_500(request, exception)
         self.debug(request, response, logger.exception)
         return response
 
     def build_filters(self, filters=None):
         if filters is None:
             filters = {}
-        orm_filters = super(Resource, self).build_filters(filters)
+        orm_filters = super(ModelResource, self).build_filters(filters)
 
         if('Q' in filters):
             if (not 'Q' in self._meta.filtering
@@ -173,8 +179,18 @@ class Resource(ModelResource):
 
         return orm_filters
 
+    def build_schema(self):
+        schema = super(ModelResource, self).build_schema()
+
+        # add schema url of to_class to the field schema
+        for field_name, field_object in self.fields.items():
+            if isinstance(field_object, fields.RelatedField):
+                schema['fields'][field_name]['schema'] = field_object.to_class().get_resource_uri(url_name='api_get_schema')
+
+        return schema
+
     def apply_filters(self, request, applicable_filters):
-        filtered = super(Resource, self).apply_filters(request,
+        filtered = super(ModelResource, self).apply_filters(request,
                                                        applicable_filters)
 
         if applicable_filters and 'Q' in applicable_filters:

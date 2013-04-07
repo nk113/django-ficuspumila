@@ -133,43 +133,6 @@ class Subject(models.Model):
 
         abstract = True
 
-    # class Attributes(Choice):
-
-    #     NAME = 0
-    #     DEFAULT = NAME
-
-    # attribute_model = None
-
-    # def __init__(self, *args, **kwargs):
-    #     if self.attribute_model is None:
-    #         self.attribute_model = getattr(import_module(self.__module__),
-    #                                        '%sAttribute' % self.__class__.__name__)
-    #     return super(Subject, self).__init__(*args, **kwargs)
-
-    # def getattr(self, name, default=None):
-    #     try:
-    #         return self.attributes.get(name=name).value
-    #     except self.attribute_model.DoesNotExist:
-    #         return default
-
-    # def setattr(self, name, value):
-    #     try:
-    #         attribute = self.attributes.get(name=name)
-    #     except self.attribute_model.DoesNotExist:
-    #         attribute = self.attribute_model(name=name, value=value)
-    #         self.attributes.add(attribute)
-    #     else:
-    #         attribute.value = value
-    #         attribute.save()
-
-    # def delattr(self, name):
-    #     try:
-    #         attribute = self.attributes.get(name=name)
-    #     except self.attribute_model.DoesNotExist:
-    #         raise KeyError(name)
-    #     else:
-    #         attribute.delete()
-
 
 class Attribute(Model):
 
@@ -177,54 +140,12 @@ class Attribute(Model):
         abstract = True
         ordering = ('name',)
 
-    # logger_model = None
-
     # name field must be specified as a choice field
     value = models.CharField(max_length=512)
 
-    # def __init__(self, *args, **kwargs):
-    #     if self.logger_model is None:
-    #         self.logger_model = getattr(import_module(self.__module__),
-    #                                     self.__class__.__name__[:-9])
-    #     return super(Attribute, self).__init__(*args, **kwargs)
-
-    # def __unicode__(self):
-    #     return u'%s: %s' % (self.get_name_display(),
-    #                         self.value,)
-
-
-class Localizable(models.Model):
-
-    class Meta:
-
-        abstract = True
-
-    def localize(self, language_code=None):
-        manager = getattr(self,
-                          '%slocalization_set' % self.__class__.__name__.lower())
-        if language_code:
-            localizations = manager.filter(language_code=language_code.lower())
-        if len(localizations) < 1:
-            localizations = manager.filter(
-                language_code=get_default_language_code())
-        if len(localizations) < 1:
-            return getattr(import_module(self.__module__),
-                           '%sLocalization' % self.__class__.__name__)()
-        return localizations[0]
-
-
-class Localization(Model):
-
-    class Meta:
-
-        abstract = True
-
-    language_code = models.CharField(max_length=2,
-                         choices=settings.LANGUAGES,
-                         blank=False,
-                         null=False,
-                         verbose_name=_(u'Language code'),
-                         help_text=_(u'Language code'))
+    def __unicode__(self):
+        return u'%s: %s' % (self.get_name_display(),
+                            self.value,)
 
 
 class Logger(models.Model):
@@ -353,6 +274,40 @@ class Notification(Model):
 
     def __unicode__(self):
         return '%s: Event（%s）' % (self.ctime, self.event,)
+
+
+class Localizable(models.Model):
+
+    class Meta:
+
+        abstract = True
+
+    def localize(self, language_code=None):
+        manager = getattr(self,
+                          '%slocalization_set' % self.__class__.__name__.lower())
+        if language_code:
+            localizations = manager.filter(language_code=language_code.lower())
+        if len(localizations) < 1:
+            localizations = manager.filter(
+                language_code=get_default_language_code())
+        if len(localizations) < 1:
+            return getattr(import_module(self.__module__),
+                           '%sLocalization' % self.__class__.__name__)()
+        return localizations[0]
+
+
+class Localization(Model):
+
+    class Meta:
+
+        abstract = True
+
+    language_code = models.CharField(max_length=2,
+                         choices=settings.LANGUAGES,
+                         blank=False,
+                         null=False,
+                         verbose_name=_(u'Language code'),
+                         help_text=_(u'Language code'))
 
 
 class User(Model):

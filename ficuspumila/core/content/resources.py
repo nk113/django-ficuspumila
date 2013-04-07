@@ -14,16 +14,17 @@ from tastypie.exceptions import (
 from tastypie.http import HttpForbidden
 from tastypie.resources import ALL, ALL_WITH_RELATIONS
 
+from ficuspumila.core.auth.resources import UserResource
 from ficuspumila.core.resources import (
+    ALL_METHODS,
     EXACT,
     EXACT_IN,
     EXACT_IN_CONTAINS,
     EXACT_IN_GTE_LTE,
     EXACT_IN_GET_LTE_DATE,
     EXACT_IN_STARTSWITH,
-    Meta, Resource, ServiceMeta,
+    Meta, ModelResource, ServiceMeta,
 )
-from ficuspumila.core.auth.resources import UserResource
 from .models import (
     FileSpecification, FileSpecificationAttribute,
     FileType, Genre, GenreLocalization,
@@ -35,18 +36,17 @@ from .models import (
 logger = logging.getLogger(__name__)
 
 
-class ContentResource(Resource):
+class ContentResource(ModelResource):
 
-    def obj_create(self, bundle, request=None, **kwargs):
-        if hasattr(request.user, 'owner'):
+    def obj_create(self, bundle, **kwargs):
+        if hasattr(bundle.request.user, 'owner'):
             if hasattr(self._meta.object_class, 'source'):
-                kwargs['source'] = request.user.owner.source
+                kwargs['source'] = bundle.request.user.owner.source
             if hasattr(self._meta.object_class, 'owner'):
-                kwargs['owner'] = request.user.owner
+                kwargs['owner'] = bundle.request.user.owner
             if hasattr(self._meta.object_class, 'event'):
-                kwargs['event__source'] = request.user.owner.source
-            return super(ResourceBase, self).obj_create(bundle,
-                                                        request,
+                kwargs['event__source'] = bundle.request.user.owner.source
+            return super(ContentResource, self).obj_create(bundle,
                                                         **kwargs)
 
         raise ImmediateHttpResponse(response=HttpForbidden())
@@ -103,6 +103,12 @@ class SourceResource(ContentResource):
         }
 
     user = fields.ForeignKey(UserResource, 'user')
+    attributes = fields.ToManyField(
+                         'ficuspumila.core.content.resources.SourceAttributeResource',
+                         'attributes')
+    events = fields.ToManyField(
+                         'ficuspumila.core.content.resources.SourceEventResource',
+                         'events')
 
 
 class SourceAttributeResource(ContentResource):
@@ -111,9 +117,10 @@ class SourceAttributeResource(ContentResource):
 
         queryset = SourceAttribute.objects.all()
         resource_name = 'sourceattribute'
+        allowed_methods = ALL_METHODS
         filtering = {
             'source': ALL_WITH_RELATIONS,
-            'name'  : EXACT_IN_STARTSWITH,
+            'name'  : EXACT_IN,
             'value' : EXACT_IN_STARTSWITH,
         }
 

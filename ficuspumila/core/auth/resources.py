@@ -6,14 +6,14 @@ from tastypie import fields
 from tastypie.api import Api
 
 from ficuspumila.core.resources import (
-    EXACT_IN, Meta, Resource,
+    EXACT_IN, Meta, ModelResource,
 )
 
 
 logger = logging.getLogger(__name__)
 
 
-class UserResource(Resource):
+class UserResource(ModelResource):
 
     class Meta(Meta):
         queryset = User.objects.filter(is_active=True)

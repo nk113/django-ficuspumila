@@ -6,6 +6,8 @@ import logging
 
 from dateutil import parser
 from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
+from django.db import models
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext as _
 from queryset_client import client
@@ -13,9 +15,11 @@ from urlparse import urlparse
 
 from . import cache
 from .exceptions import ProxyException
-from .models import Choice
+from .models import Attribute, Choice, Model
 from .utils import extend
 
+
+PK_ID = ('pk', 'id',)
 
 logger = logging.getLogger(__name__)
 
@@ -35,9 +39,32 @@ def get(name, model_module=None):
         return proxy(auth=(settings.SYSTEM_USERNAME,
                            settings.SYSTEM_PASSWORD))
     else:
-        return extend(getattr(import_module(model_module), name),
-                      proxy)
+        model = getattr(import_module(model_module), name)
 
+        # implement proxy mixin
+        def __init__(obj, *args, **kwargs):
+            super(obj.__class__, obj).__init__(*args, **kwargs)
+            extend(obj, proxy, None, True)
+
+        model.__init__ = __init__
+
+        return model
+
+def get_pk(obj):
+    """
+    For resources that do not have default ``id`` primary key
+
+    TODO: think better way
+    """
+    foreign_keys = ('user',)
+    for key in foreign_keys:
+        if hasattr(obj, key):
+            try:
+                return getattr(obj, key).id
+            except AttributeError, e:
+                pass
+    raise AttributeError()
+            
 
 class QuerySet(client.QuerySet):
 
@@ -49,24 +76,53 @@ class QuerySet(client.QuerySet):
 
 class Response(client.Response):
 
-    def __getattr__(self, attr):
+    def __init__(self, model, response=None, url=None, **kwargs):
+
+        # implement proxy mixin
+        if model._model_name in model._base_client._proxies:
+            extend(self, model._base_client._proxies[model._model_name].__class__)
+
+        super(Response, self).__init__(model, response, url, **kwargs)
+
+    def __repr__(self):
+        if hasattr(self, 'resource_uri'):
+            return self.resource_uri
+        return super(Response, self).__repr__()
+
+    def __getattr__(self, name):
+        base_client = self.model._base_client
+
         try:
-            return super(Response, self).__getattr__(attr)
+            return super(Response, self).__getattr__(name)
+        except AttributeError, e:
+            if name in PK_ID:
+                return get_pk(self)
+            return getattr(base_client, name)
         except KeyError, e:
             # resolves foreign key references in another api namespace
-            # expects to be called with detail url like /api/v1/<resource>/<id>/
+            # expects to be called with detail url like /api/v1/<resource>/<id>|schema/
             #
-            # CAVEAT: resource_url of referred resource has to have the same version
-            base_client = self.model._base_client
+            # CAVEAT: resource_uri of referred resource has to have the same version
+            schema = self._schema['fields'][name]
+            if schema['related_type'] in ('to_one', 'to_many',):
+                resource_uri = schema.get('schema')
+            else:
+                resource_uri = self._response[name]
+
             api_url = base_client._api_url
             version = base_client._version
-            paths   = self._response[attr].replace(
-                          base_client._api_path, '')[:-1].split('/')[:-2]
+            paths   = resource_uri.replace(
+                          base_client._api_path, '')[:-1].split('/')
+
+            # strip <id> or "schema" part and extract resource_name
+            paths.pop()
+            resource_name = paths.pop()
+
             if version in paths: paths.remove(version)
             namespace = '/'.join(paths)
 
             logger.debug(u'%s, need namespace schema (%s)' % (
-                self._response[attr],
+                self._response[name],
                 ProxyClient.build_base_url(base_client._api_url, **{
                     'version': base_client._version,
                     'namespace': namespace
@@ -78,15 +134,22 @@ class Response(client.Response):
                                      auth=base_client._auth)
             client.schema()
 
-            clone_original = self.model.clone
-            self.model.clone = lambda model_name: client._model_gen(model_name)
+            # set manager alias
+            if name is not resource_name:
+                setattr(self.model, resource_name, getattr(self.model, name))
 
-            model = super(Response, self).__getattr__(attr)
+            clone_original = self.model.clone
+            self.model.clone = lambda model_name: client._model_gen(resource_name)
+
+            model = super(Response, self).__getattr__(name)
 
             self.model.clone = clone_original
 
             return model
 
+    def invalidate(self):
+        resource = getattr(self.model._main_client, self.model._model_name)
+        self.__response = resource(client.parse_id(self.resource_uri)).get()
 
     @property
     def _response(self):
@@ -136,6 +199,7 @@ class ManyToManyManager(client.ManyToManyManager):
 class ProxyClient(client.Client):
 
     _instances = {}
+    _proxies = {}
 
     def __new__(cls, *args, **kwargs):
         if len(args): 
@@ -146,6 +210,11 @@ class ProxyClient(client.Client):
                                             cls).__new__(cls,
                                                          *args,
                                                          **kwargs)
+
+            proxy = kwargs.get('proxy')
+            if proxy:
+                cls._proxies[proxy.__class__.__name__.lower().replace('proxy', '')] = proxy
+
             return cls._instances[key]
         return cls._instances[cls._instances.keys()[0]]
 
@@ -171,7 +240,7 @@ class ProxyClient(client.Client):
         model = super(ProxyClient, self)._model_gen(model_name,
                                                     strict_field,
                                                     self)
-
+ 
         # overwrite manager
         model.objects = Manager(model)
         model.save_original = model.save
@@ -232,8 +301,6 @@ class ProxyClient(client.Client):
         else:
             url = self._url_gen('%s/schema/' % model_name)
 
-        # logger.debug(u'schema %s (%s)' % (model_name, url,))
-
         if not model_name in self._schema_store:
             self._schema_store[model_name] = self.request(url)
 
@@ -249,7 +316,11 @@ class ProxyClient(client.Client):
 
 class Proxy(object):
 
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
+
+        if isinstance(self, Model):
+            super(Proxy, self).__init__(*args, **kwargs)
+            return
 
         api_url = kwargs.get('api_url', None) or getattr(settings, 'API_URL', None)
 
@@ -269,7 +340,8 @@ class Proxy(object):
         self._client = ProxyClient.get(api_url,
                                        version=version,
                                        namespace=namespace,
-                                       auth=auth)
+                                       auth=auth,
+                                       proxy=self)
 
         try:
             self._resource = getattr(self._client,
@@ -279,15 +351,15 @@ class Proxy(object):
                                    u'for the resource: %s' % resource_name))
 
         # support special fields
-        def _setfield(self, attr, value):
+        def _setfield(self, name, value):
             try:
-                self._setfield_original(attr, value)
+                self._setfield_original(name, value)
             except client.FieldTypeError, e:
                 error = '%s' % e
                 if '\'datetime\'' in error:
-                    self._fields[attr] = parser.parse(value)
+                    self._fields[name] = parser.parse(value)
                 elif '\'list\'' in error:
-                    self._fields[attr] = value
+                    self._fields[name] = value
                 else:
                     raise e
 
@@ -295,9 +367,26 @@ class Proxy(object):
         self._resource._setfield = _setfield
 
     def __getattr__(self, name):
-        if name == '_resource':
-            raise AttributeError()
-        return getattr(self._resource, name)
+        if name in PK_ID:
+            return get_pk(self)
+
+        if not isinstance(self, Model):
+            if name is not '_resource':
+                return getattr(self._resource, name)
+        raise AttributeError()
+
+    def invalidate(self):
+        if isinstance(self, Model):
+            pass
+        else:
+            super(Proxy, self).invalidate()
+
+    @property
+    def model_name(self):
+        if isinstance(self, Model):
+            return self.__class__.__name__.lower()
+        else:
+            return self.model._model_name
 
 
 class SubjectProxy(Proxy):
@@ -307,47 +396,74 @@ class SubjectProxy(Proxy):
         NAME = 0
         DEFAULT = NAME
 
-    attribute_model = None
+    _attribute = None
 
-    def __init__(self, *args, **kwargs):
-        if self.attribute_model is None:
-            self.attribute_model = getattr(import_module(self.__module__),
-                                           '%sAttribute' % self.__class__.__name__)
-        return super(Subject, self).__init__(*args, **kwargs)
+    @property
+    def attribute(self):
+        if not self._attribute:
+            if isinstance(self, Model):
+                self._attribute = getattr(import_module(self.__module__),
+                                          '%sAttribute' % self.__class__.__name__)
+            else:
+                self._attribute =  getattr(import_module(self.__module__),
+                                           '%sAttribute' %
+                                               self.__class__.__name__.replace(
+                                                   'Response_extended_with_',
+                                                   '').replace('Proxy', ''))
+        return self._attribute
+
+    def get_attribute(self, name):
+        kwargs = {
+            self.model_name: self.id,
+            'name': name,
+        }
+        return self.attributes.get(**kwargs)
 
     def getattr(self, name, default=None):
         try:
-            return self.attributes.get(name=name).value
-        except self.attribute_model.DoesNotExist:
+            return self.get_attribute(name).value
+        except (client.ObjectDoesNotExist,
+                ObjectDoesNotExist) as e:
             return default
 
     def setattr(self, name, value):
         try:
-            attribute = self.attributes.get(name=name)
-        except self.attribute_model.DoesNotExist:
-            attribute = self.attribute_model(name=name, value=value)
-            self.attributes.add(attribute)
+            attribute = self.get_attribute(name)
+        except (client.ObjectDoesNotExist,
+                ObjectDoesNotExist) as e:
+            kwargs = {
+                self.model_name: self,
+                'name': name,
+                'value': value,
+            }
+            attribute = self.attribute.objects.create(**kwargs)
+            self.invalidate()
         else:
             attribute.value = value
             attribute.save()
 
     def delattr(self, name):
         try:
-            attribute = self.attributes.get(name=name)
-        except self.attribute_model.DoesNotExist:
+            attribute = self.get_attribute(name=name)
+        except (client.ObjectDoesNotExist,
+                ObjectDoesNotExist) as e:
             raise KeyError(name)
         else:
             attribute.delete()
+            self.invalidate()
 
 
 class AttributeProxy(Proxy):
 
-    def __init__(self, *args, **kwargs):
-        if self.logger_model is None:
-            self.logger_model = getattr(import_module(self.__module__),
-                                        self.__class__.__name__[:-9])
-        return super(Attribute, self).__init__(*args, **kwargs)
+    _logger = None
 
-    def __unicode__(self):
-        return u'%s: %s' % (self.get_name_display(),
-                            self.value,)
+    @property
+    def logger(self):
+        if self._logger:
+            return self._logger
+        if isinstance(self, Model):
+            return getattr(import_module(self.__module__),
+                           self.__class__.__name__.replace('Attribute', ''))
+        else:
+            return getattr(import_module(self.__module__),
+                           self.__class__.__name__.replace('Response_extended_with_',                                     '').replace('AttributeProxy', ''))

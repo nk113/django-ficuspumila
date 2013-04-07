@@ -76,15 +76,6 @@ class Source(Service):
         RESOURCE_ACCESSED = 1
         DEFAULT = ITEM_READY
 
-    def __init__(self, *args, **kwargs):
-        if getattr(self, 'notification_model', None) is None:
-            models = import_module('core.content.models')
-            self.notification_model = getattr(models,
-                                              'SourceNotification')
-            self.event_model = getattr(models,
-                                       'SourceEvent')
-        return super(Notifier, self).__init__(*args, **kwargs)
-
     name = models.CharField(max_length=255)
 
     def __unicode__(self):

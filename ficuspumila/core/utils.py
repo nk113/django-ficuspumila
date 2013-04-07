@@ -27,15 +27,21 @@ class Singleton(object):
 
 
 # class inheritence
-def extend(instance, new_class):
-    instance.__class__ = type('%s_extended_with_%s' % (
+def extend(instance, new_class, attrs={}, base=False, **kwargs):
+    name = kwargs.get('name', '%s_extended_with_%s' % (
                                   instance.__class__.__name__,
-                                  new_class.__name__), 
-                              (instance.__class__, new_class), 
-                              {})
+                                  new_class.__name__))
+    if base:
+        if new_class not in instance.__class__.__bases__:
+            instance.__class__.__bases__ = (new_class,) + instance.__class__.__bases__
+    else:
+        instance.__class__ = type(name, 
+                                  (instance.__class__, new_class), 
+                                  attrs)
+    instance.__module__ = new_class.__module__
     return instance
 
-    
+
 # locale
 def get_default_language_code():
     return settings.LANGUAGE_CODE.split('-')[0].lower()

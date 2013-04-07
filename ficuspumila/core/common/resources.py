@@ -10,7 +10,7 @@ from ficuspumila.core.resources import (
     EXACT_IN_GTE_LTE,
     EXACT_IN_GET_LTE_DATE,
     EXACT_IN_STARTSWITH,
-    Meta, Resource,
+    Meta, ModelResource,
 )
 from .models import Country
 
@@ -18,7 +18,7 @@ from .models import Country
 logger = logging.getLogger(__name__)
 
 
-class CountryResource(Resource):
+class CountryResource(ModelResource):
 
     class Meta(Meta):
         queryset = Country.objects.all()

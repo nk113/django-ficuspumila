@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from ficuspumila.core.proxies import get, Proxy
+from ficuspumila.core.proxies import (
+    AttributeProxy,
+    get, Proxy,
+    SubjectProxy,
+)
 from ficuspumila.core.content import models
 
 
@@ -18,12 +22,13 @@ class GenreLocalizationProxy(Proxy):
     pass
 
 
-class SourceProxy(Proxy):
+class SourceProxy(SubjectProxy):
 
-    pass
+    Attributes = models.Source.Attributes
+    Events = models.Source.Events
 
 
-class SourceAttributeProxy(Proxy):
+class SourceAttributeProxy(AttributeProxy):
 
     pass
 
