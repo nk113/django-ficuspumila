@@ -20,7 +20,7 @@ def query_country_code(ip):
 class CountryTestCase(TestCase):
 
     # FIXME: how do I get this decorator to work?
-    # @skipIf(not getattr(settings, 'IPINFODB_API_KEY', False),
+    # @skipIf('IPINFODB_API_KEY' not in settings.FICUSPUMILA,
     #         u'"IPINFODB_API_KEY" is not defined in settings, skipping...')
     # @patch('ficuspumila.core.common.proxies.Country.query_country_code', query_country_code)
     # def test_get_by_ip(self):

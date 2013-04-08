@@ -2,6 +2,11 @@
 from .common import *
 
 
+# ficuspumila
+FICUSPUMILA['SYSTEM_USERNAME'] = 'dev'
+FICUSPUMILA['SYSTEM_PASSWORD'] = 'dev'
+
+
 # debug
 DEBUG = True
 TAMPLATE_DEBUG = DEBUG
@@ -50,8 +55,3 @@ LOGGING['loggers'] = {
         'propagate': False,
     },
 }
-
-
-# core
-SYSTEM_USERNAME = 'dev'
-SYSTEM_PASSWORD = 'dev'

@@ -17,14 +17,14 @@ logger = logging.getLogger(__name__)
 def post_save_SourceEvent(sender, instance, created, **kwargs):
     logger.debug(u'handling post save event...')
 
-    if random(settings.GC_PROBABILITY):
+    if random(settings.FICUSPUMILA['GC_PROBABILITY']):
 
         events = SourceEvent.objects.filter(source=instance.source,
                                             ctime__lte=date.today()-timedelta(
-                                                days=settings.GC_DAYS_BEFORE))
+                                                days=settings.FICUSPUMILA['GC_DAYS_BEFORE']))
 
         logger.debug(u'processing garbage collection (ctime < %s, %s events)' % (
-                         date.today()-timedelta(days=settings.GC_DAYS_BEFORE),
+                         date.today()-timedelta(days=settings.FICUSPUMILA['GC_DAYS_BEFORE']),
                          len(events)))
 
         for event in events:

@@ -88,9 +88,9 @@ Provides fundamental core components including authentication, caching, api reso
     '8a514d9f4d907102ba9657cd1098fd04'
     >>> transcoder.algorithm.decrypt(encrypted)
     'test text'
-    >>> transcoder.key
+    >>> transcoder.algorithm.key
     'dfbaa4a01bc2b80458df045f4c973f390d516bbc564cee5d0baee807c2726137'
-    >>> transcoder.iv
+    >>> transcoder.algorithm.iv
     '8a514d9f4d907102ba9657cd1098fd04'
 
 **proxy**

@@ -8,7 +8,7 @@ from django.core.cache import cache as djcache
 from functools import wraps
 
 
-TIMEOUT = settings.CACHE_TIMEOUT
+TIMEOUT = settings.FICUSPUMILA['CACHE_TIMEOUT']
 
 logger = logging.getLogger(__name__)
 

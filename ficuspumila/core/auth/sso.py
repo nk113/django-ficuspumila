@@ -22,7 +22,7 @@ class Authenticator(object):
 
     format: json
       [
-        <timestamp, now + settings.TOKEN_TIMEOUT>
+        <timestamp, now + settings.FICUSPUMILA['TOKEN_TIMEOUT']>
         (, {
           ("<service>_<user>_id": "<service user id>")
           (, "username": "<Django Auth username>")
@@ -52,7 +52,7 @@ class Authenticator(object):
         try:
             # import modules
             services = {}
-            for k, v in settings.SERVICES.iteritems():
+            for k, v in settings.FICUSPUMILA['SERVICES'].iteritems():
                 service = k.split('.')
                 user = v['user'].split('.')
                 services[get_name(k)] = {
@@ -132,10 +132,10 @@ class Authenticator(object):
         logger.debug(u'token decrypted: %s' % token)
 
         if token[0]:
-            if token[0] > time.time() + settings.TOKEN_TIMEOUT:
+            if token[0] > time.time() + settings.FICUSPUMILA['TOKEN_TIMEOUT']:
                 logger.debug(u'token expiration is bigger than expected: token %s > %s' % (
                                  token[0],
-                                 timezone.now() + settings.TOKEN_TIMEOUT,))
+                                 timezone.now() + settings.FICUSPUMILA['TOKEN_TIMEOUT'],))
 
                 raise AuthException(_(u'Expiration specified in token is '
                                       u'bigger than expected.'))

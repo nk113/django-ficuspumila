@@ -43,8 +43,8 @@ class ResourceTestCase(TestCase, TastypieResourceTestCase):
         self.detail_endpoint = '%s1/' % self.list_endpoint
 
     def get_credentials(self):
-        return self.create_basic(username=settings.SYSTEM_USERNAME,
-                                 password=settings.SYSTEM_PASSWORD)
+        return self.create_basic(username=settings.FICUSPUMILA['SYSTEM_USERNAME'],
+                                 password=settings.FICUSPUMILA['SYSTEM_PASSWORD'])
 
     def test_get_list_unauthorzied(self):
         r = self.api_client.get(self.list_endpoint)

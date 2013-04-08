@@ -19,12 +19,12 @@ class CountryProxy(Proxy):
     @cache(keyarg=1)
     def query_country_code(cls, ip):
 
-        if not getattr(settings, 'IPINFODB_API_KEY'):
+        if 'IPINFODB_API_KEY' not in settings.FICUSPUMILA:
             raise ProxyException(u'"IPINFODB_API_KEY" is not defiend in settings.')
 
         try:
-            response = requests.get(settings.IPINFODB_API_URL,
-                                    params={'key': settings.IPINFODB_API_KEY,
+            response = requests.get(settings.FICUSPUMILA['IPINFODB_API_URL'],
+                                    params={'key': settings.FICUSPUMILA['IPINFODB_API_KEY'],
                                             'ip': ip,
                                             'format': 'json'})
 

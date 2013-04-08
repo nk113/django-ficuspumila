@@ -340,7 +340,7 @@ class Service(User, Notifier, Subject):
                        key=self.token_key,
                        iv=self.token_iv).algorithm.encrypt(
                            json.dumps((
-                               time.time() + settings.TOKEN_TIMEOUT,
+                               time.time() + settings.FICUSPUMILA['TOKEN_TIMEOUT'],
                                data,)))
         except:
             return None

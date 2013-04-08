@@ -2,6 +2,11 @@
 from .vagrant import *
 
 
+# ficuspumila
+FICUSPUMILA['SYSTEM_USERNAME'] = 'test'
+FICUSPUMILA['SYSTEM_PASSWORD'] = 'test'
+
+
 # database
 DATABASES = {
     'default': {
@@ -45,7 +50,3 @@ NOSE_ARGS = ('--with-fixture-bundling',
              # '--failed',
              # '--stop',
              )
-
-# core
-SYSTEM_USERNAME = 'test'
-SYSTEM_PASSWORD = 'test'

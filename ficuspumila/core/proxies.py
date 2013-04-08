@@ -35,9 +35,9 @@ def get(name, model_module=None):
 
     proxy = getattr(module, '%sProxy' % name)
 
-    if getattr(settings, 'API_URL', None):
-        return proxy(auth=(settings.SYSTEM_USERNAME,
-                           settings.SYSTEM_PASSWORD))
+    if 'API_URL' in settings.FICUSPUMILA:
+        return proxy(auth=(settings.FICUSPUMILA['SYSTEM_USERNAME'],
+                           settings.FICUSPUMILA['SYSTEM_PASSWORD']))
     else:
         model = getattr(import_module(model_module), name)
 
@@ -105,16 +105,29 @@ class Response(client.Response):
             # CAVEAT: resource_uri of referred resource has to have the same version
             schema = self._schema['fields'][name]
             if schema['related_type'] in ('to_one', 'to_many',):
-                resource_uri = schema.get('schema')
+                if schema.get('schema'):
+                    resource_uri = schema.get('schema')
+                else:
+                    try:
+                        resource_uri = self._response[name]
+                        resource_uri = resource_uri[0] if (
+                            isinstance(resource_uri, list)) else resource_uri
+
+                        logger.debug(u'trying to identify schema info from ' +
+                                     u'resource_uri (%s).' % resource_uri)
+                    except Exception, e:
+                        raise ProxyException(u'Couldn\'t identify related ' +
+                                             u'field schema (%s).' % name)
             else:
-                resource_uri = self._response[name]
+                raise ProxyException(u'The field "%s" seems not to be defined ' +
+                                     u'in the schema.')
 
             api_url = base_client._api_url
             version = base_client._version
             paths   = resource_uri.replace(
                           base_client._api_path, '')[:-1].split('/')
 
-            # strip <id> or "schema" part and extract resource_name
+            # strip <id> or ``schema`` part and extract resource_name
             paths.pop()
             resource_name = paths.pop()
 
@@ -322,11 +335,12 @@ class Proxy(object):
             super(Proxy, self).__init__(*args, **kwargs)
             return
 
-        api_url = kwargs.get('api_url', None) or getattr(settings, 'API_URL', None)
+        api_url = kwargs.get('api_url', None) or settings.FICUSPUMILA['API_URL'] if (
+                      'API_URL' in settings.FICUSPUMILA) else None
 
         if not api_url:
             raise ProxyException(_(u'"API_URL" not found in settings or ' +
-                                   u'"api_url" not found in kwargs'))
+                                   u'"api_url" not found in kwargs.'))
 
         version   = kwargs.get('version', 'v1')
         namespace = kwargs.get('namespace',
@@ -348,7 +362,7 @@ class Proxy(object):
                                      resource_name)
         except AttributeError, e:
             raise ProxyException(_(u'API seems not to have endpoint ' +
-                                   u'for the resource: %s' % resource_name))
+                                   u'for the resource (%s).' % resource_name))
 
         # support special fields
         def _setfield(self, name, value):
