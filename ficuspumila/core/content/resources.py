@@ -26,10 +26,10 @@ from ficuspumila.core.resources import (
     Meta, ModelResource, ServiceMeta,
 )
 from .models import (
-    FileSpecification, FileSpecificationAttribute,
+    FileSpecification, FileSpecificationAttribute, FileSpecificationAttributeName,
     FileType, Genre, GenreLocalization,
-    Owner, ResourceType, Source, SourceAttribute,
-    SourceEvent, SourceNotification,
+    Owner, ResourceType, Source, SourceAttribute, SourceAttributeName,
+    SourceEvent, SourceEventName, SourceNotification,
 )
 
 
@@ -111,20 +111,42 @@ class SourceResource(ContentResource):
                          'events')
 
 
+class SourceAttributeNameResource(ContentResource):
+
+    class Meta(Meta):
+
+        queryset = SourceAttributeName.objects.all()
+        resource_name = 'sourceattributename'
+        filtering = {
+            'name'  : EXACT_IN,
+        }
+
+
 class SourceAttributeResource(ContentResource):
 
     class Meta(Meta):
 
         queryset = SourceAttribute.objects.all()
         resource_name = 'sourceattribute'
-        allowed_methods = ALL_METHODS
         filtering = {
             'source': ALL_WITH_RELATIONS,
-            'name'  : EXACT_IN,
+            'name'  : ALL_WITH_RELATIONS,
             'value' : EXACT_IN_STARTSWITH,
         }
 
     source = fields.ForeignKey(SourceResource, 'source')
+    name = fields.ForeignKey(SourceAttributeNameResource, 'name')
+
+
+class SourceEventNameResource(ContentResource):
+
+    class Meta(Meta):
+
+        queryset = SourceEventName.objects.all()
+        resource_name = 'sourceeventname'
+        filtering = {
+            'name'  : EXACT_IN,
+        }
 
 
 class SourceEventResource(ContentResource):
@@ -135,13 +157,14 @@ class SourceEventResource(ContentResource):
         resource_name = 'sourceevent'
         filtering = {
             'source' : ALL_WITH_RELATIONS,
-            'event'  : EXACT_IN,
+            'name'   : ALL_WITH_RELATIONS,
             'message': EXACT_IN_CONTAINS,
             'ctime'  : EXACT_IN_GET_LTE_DATE,
             'utime'  : EXACT_IN_GET_LTE_DATE,
         }
 
     source = fields.ForeignKey(SourceResource, 'source')
+    name = fields.ForeignKey(SourceEventNameResource, 'name')
 
 
 class SourceNotificationResource(ContentResource):
@@ -160,6 +183,23 @@ class SourceNotificationResource(ContentResource):
         }
 
     event = fields.ForeignKey(SourceEventResource, 'event')
+
+
+class OwnerResource(ContentResource):
+
+    class Meta(Meta):
+
+        queryset = Owner.objects.all()
+        resource_name = 'owner'
+        filtering = {
+            'user'  : ALL_WITH_RELATIONS,
+            'source': ALL_WITH_RELATIONS,
+            'source_owner_id': EXACT_IN_STARTSWITH,
+        }
+
+    user = fields.ForeignKey(UserResource, 'user')
+    source = fields.ForeignKey(SourceResource,
+                               'source')
 
 
 class FileTypeResource(ContentResource):
@@ -181,15 +221,25 @@ class FileSpecificationResource(ContentResource):
 
         queryset = FileSpecification.objects.all()
         resource_name = 'filespecification'
-        allowed_methods = ('get', 'post', 'put', 'patch',)
         filtering = {
-            'source': ALL_WITH_RELATIONS,
-            'name'  : EXACT_IN_STARTSWITH,
-            'type'  : ALL_WITH_RELATIONS,
+            'owner': ALL_WITH_RELATIONS,
+            'name' : EXACT_IN_STARTSWITH,
+            'type' : ALL_WITH_RELATIONS,
         }
 
-    source = fields.ForeignKey(SourceResource, 'source')
+    owner = fields.ForeignKey(SourceResource, 'owner')
     type = fields.ForeignKey(FileTypeResource, 'type')
+
+
+class FileSpecificationAttributeNameResource(ContentResource):
+
+    class Meta(Meta):
+
+        queryset = FileSpecificationAttributeName.objects.all()
+        resource_name = 'filespecificationattributename'
+        filtering = {
+            'name'  : EXACT_IN,
+        }
 
 
 class FileSpecificationAttributeResource(ContentResource):
@@ -198,14 +248,14 @@ class FileSpecificationAttributeResource(ContentResource):
 
         queryset = FileSpecificationAttribute.objects.all()
         resource_name = 'filespecificationattribute'
-        allowed_methods = ('get', 'post', 'put', 'patch', 'delete',)
         filtering = {
             'spec' : ALL_WITH_RELATIONS,
-            'name' : EXACT_IN_STARTSWITH,
+            'name' : ALL_WITH_RELATIONS,
             'value': EXACT_IN_STARTSWITH,
         }
 
     spec = fields.ForeignKey(FileSpecificationResource, 'spec')
+    name = fields.ForeignKey(FileSpecificationAttributeNameResource, 'name')
 
 
 class ResourceTypeResource(ContentResource):
@@ -222,23 +272,6 @@ class ResourceTypeResource(ContentResource):
         }
 
 
-class OwnerResource(ContentResource):
-
-    class Meta(Meta):
-
-        queryset = Owner.objects.all()
-        resource_name = 'owner'
-        filtering = {
-            'user'  : ALL_WITH_RELATIONS,
-            'source': ALL_WITH_RELATIONS,
-            'source_owner_id': EXACT_IN_STARTSWITH,
-        }
-
-    user = fields.ForeignKey(UserResource, 'user')
-    source = fields.ForeignKey(SourceResource,
-                               'source')
-
-
 def get_urls(version=1):
     api = Api(api_name='content')
 
@@ -246,11 +279,14 @@ def get_urls(version=1):
         api.register(GenreResource())
         api.register(GenreLocalizationResource())
         api.register(SourceResource())
+        api.register(SourceAttributeNameResource())
         api.register(SourceAttributeResource())
+        api.register(SourceEventNameResource())
         api.register(SourceEventResource())
         api.register(SourceNotificationResource())
         api.register(FileTypeResource())
         api.register(FileSpecificationResource())
+        api.register(FileSpecificationAttributeNameResource())
         api.register(FileSpecificationAttributeResource())
         api.register(ResourceTypeResource())
 

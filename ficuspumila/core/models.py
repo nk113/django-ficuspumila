@@ -127,6 +127,18 @@ class Model(models.Model):
         return super(Model, self).__setitem__(field, value)
 
 
+class Name(Model):
+
+    class Meta:
+        abstract = True
+        ordering = ('name',)
+
+    name = models.CharField(max_length=64)
+
+    def __unicode__(self):
+        return self.name
+
+
 class Subject(models.Model):
 
     class Meta:
@@ -138,13 +150,15 @@ class Attribute(Model):
 
     class Meta:
         abstract = True
-        ordering = ('name',)
+        ordering = ('name__name',)
 
-    # name field must be specified as a choice field
-    value = models.CharField(max_length=512)
+    # name field must be specified as a foreign key to the Name
+    value = models.CharField(max_length=512,
+                         blank=False,
+                         null=False)
 
     def __unicode__(self):
-        return u'%s: %s' % (self.get_name_display(),
+        return u'%s: %s' % (self.name.name,
                             self.value,)
 
 
@@ -153,10 +167,6 @@ class Logger(models.Model):
     class Meta:
 
         abstract = True
-
-    class Events(Choice):
-
-        DEFAULT = 0
 
     auto_initial_event = True
 
@@ -173,13 +183,13 @@ class Logger(models.Model):
         except:
             return None
 
-    def track(self, event, **kwargs):
-        self.events.create(event=event, **kwargs)
+    def track(self, name, **kwargs):
+        self.events.create(name=name, **kwargs)
 
     def save(self, *args, **kwargs):
         super(Logger, self).save(*args, **kwargs)
         if self.event_model and self.auto_initial_event and self.latest is None:
-            self.track(self.Events.DEFAULT)
+            self.track(1) # TODO
 
 
 class Event(Model):
@@ -188,7 +198,7 @@ class Event(Model):
 
         abstract = True
 
-    # event field must be specified as a choice field
+    # name field must be specified as a foreign key to the Name
     message = JSONField(blank=True,
                          null=False,
                          verbose_name=_(u'Message'))
@@ -264,7 +274,7 @@ class Notification(Model):
 
     url = models.CharField(max_length=255,
                          blank=True,
-                         null=True,
+                         null=False,
                          verbose_name=_(u'Notification URL'))
     status_code = models.IntegerField(default=200,
                          verbose_name=_(u'HTTP status code'))

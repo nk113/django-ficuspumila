@@ -240,5 +240,32 @@
     }, 
     "model": "content.filetype", 
     "pk": 22
+  },
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "name": "ITEM_READY", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "content.sourceeventname", 
+    "pk": 1
+  },
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "name": "RESOURCE_ACCESSED", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "content.sourceeventname", 
+    "pk": 2
+  },
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "name": "DELETE_SOURCE_RESOURCE_ON_ITEM_READY", 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "content.sourceattributename", 
+    "pk": 1
   }
 ]

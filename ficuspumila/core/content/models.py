@@ -9,7 +9,7 @@ from django.utils.translation import ugettext_lazy as _
 from ficuspumila.core.models import (
     Attribute, Choice, CSVField, Event,
     Localizable, Localization,
-    Logger, Model, Notification, Notifier,
+    Logger, Model, Name, Notification, Notifier,
     Service, Subject, User,
 )
 
@@ -65,11 +65,6 @@ class Source(Service):
 
         db_table = '%s_source' % MODULE
 
-    class Attributes(Choice):
-
-        DELETE_FROM_RESOURCE_ON_ITEM_READY = 0
-        DEFAULT = DELETE_FROM_RESOURCE_ON_ITEM_READY
-
     class Events(Choice):
 
         ITEM_READY = 0
@@ -82,17 +77,29 @@ class Source(Service):
         return self.name
 
 
+class SourceAttributeName(Name):
+
+    class Meta:
+        db_table = '%s_sourceattributename' % MODULE
+
+
 class SourceAttribute(Attribute):
 
     class Meta:
         db_table = '%s_sourceattribute' % MODULE
+        ordering = ('name__name',)
         unique_together = ('source', 'name',)
 
     source = models.ForeignKey(Source,
                          related_name='attributes',
                          verbose_name=_(u'Content source'))
-    name = models.SmallIntegerField(choices=Source.Attributes,
-                         default=Source.Attributes.DEFAULT)
+    name = models.ForeignKey(SourceAttributeName)
+
+
+class SourceEventName(Name):
+
+    class Meta:
+        db_table = '%s_sourceeventname' % MODULE
 
 
 class SourceEvent(Event):
@@ -104,8 +111,7 @@ class SourceEvent(Event):
     source = models.ForeignKey(Source,
                          related_name='events',
                          verbose_name=_(u'Content source'))
-    event = models.SmallIntegerField(choices=Source.Events,
-                         default=Source.Events.DEFAULT)
+    name = models.ForeignKey(SourceEventName)
 
 
 class SourceNotification(Notification):
@@ -152,33 +158,9 @@ class FileSpecification(Model, Subject):
     class Meta:
 
         db_table = '%s_filespecification' % MODULE
-        unique_together = ('source', 'name',),
+        unique_together = ('owner', 'name',),
 
-    class Attributes(Choice):
-
-        WIDTH            = 0
-        HEIGHT           = 1
-        CANVAS_COLOR     = 2
-        CLIP_POSITION    = 3
-        LETTERBOX        = 4
-        QUALITY          = 5
-        FRAMERATE        = 6
-        SAMPLERATE       = 7
-        AUDIO_BITRATE    = 8
-        AUDIO_CODEC      = 9
-        AUDIO_PARAMS     = 10
-        VIDEO_BITRATE    = 11
-        VIDEO_CODEC      = 12
-        VIDEO_PARAMS     = 13
-        VIDEO_PRESET     = 14
-        SEGMENT_DURATION = 15
-        ASPECT           = 16
-        ENCRYPTED        = 17
-        TRIAL            = 18
-        ITEM_FILE_TYPE   = 19
-        DEFAULT          = WIDTH
-
-    source = models.ForeignKey(Source,
+    owner = models.ForeignKey(Owner,
                          blank=True,
                          null=True)
     name = models.CharField(max_length=128)
@@ -188,20 +170,22 @@ class FileSpecification(Model, Subject):
         return '%s: %s' % (self.source, self.name,)
 
 
+class FileSpecificationAttributeName(Name):
+
+    class Meta:
+        db_table = '%s_filespecificationatteibutename' % MODULE
+
+
 class FileSpecificationAttribute(Attribute):
 
     class Meta:
 
         db_table = '%s_filespecificationatteibute' % MODULE
-        ordering = ('name',)
+        ordering = ('name__name',)
         unique_together = ('spec', 'name',)
 
     spec = models.ForeignKey(FileSpecification)
-    name = models.SmallIntegerField(choices=FileSpecification.Attributes,
-                         default=FileSpecification.Attributes.DEFAULT)
-
-    def __unicode__(self):
-        return '%s: %s' % (self.name, self.value)
+    name = models.ForeignKey(FileSpecificationAttributeName)
 
 
 # class Item(Model):

@@ -115,7 +115,7 @@ class Country(object):
                         columns = prevline[1:].strip().split(self.DELIMITER)
                         # interrupt if column structure has changed
                         if columns != [c for c, f in self.COLUMN_FIELD_MAP]:
-                            raise Exception('Column structure seems to have changed!')
+                            raise Exception(u'Column structure seems to have changed!')
 
                     # fill missing columns
                     row = line.strip().split(self.DELIMITER)
@@ -129,5 +129,5 @@ class Country(object):
 
         else:
             logger.warning(u'failed to fetch the source (HTTP %s: %s)' % (
-                             response.status_code,
-                             response.text))
+                               response.status_code,
+                               response.text))

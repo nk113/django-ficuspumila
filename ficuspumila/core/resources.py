@@ -13,7 +13,7 @@ from tastypie.resources import ModelResource as TastypieModelResource
 from tastypie.throttle import CacheThrottle
 from tastypie.validation import CleanedDataFormValidation
 
-from .auth.sso import Authenticator
+from .auth.sso import Authenticator as SsoAuthenticator
 
 
 ALL_METHODS = ('get', 'post', 'put', 'patch', 'delete',)
@@ -34,7 +34,7 @@ class Authentication(BasicAuthentication):
         authenticated = super(Authentication,
                               self).is_authenticated(request, **kwargs)
         if not authenticated or isinstance(authenticated, HttpUnauthorized):
-            authenticated = Authenticator.from_request(
+            authenticated = SsoAuthenticator.from_request(
                                 request).is_authenticated()
 
         logger.debug(u'authenticated as (%s%s)' % (

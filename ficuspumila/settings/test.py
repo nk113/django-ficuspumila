@@ -8,6 +8,10 @@ FICUSPUMILA['SYSTEM_PASSWORD'] = 'test'
 
 
 # database
+DATABASE_ENGINE = 'sqlite3'
+DATABASE_NAME = 'ficuspumila'
+TEST_DATABASE_NAME = 'ficuspumila-test.db'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -25,7 +29,7 @@ INSTALLED_APPS += (
 # logging
 LOGGING['handlers'] = {
     'console': {
-        'level': 'DEBUG',
+        'level': 'INFO',
         'class': 'logging.StreamHandler',
         'formatter': 'normal',
     },

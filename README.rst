@@ -99,10 +99,10 @@ Provides fundamental core components including authentication, caching, api reso
 
     >>> from ficuspumila.core import proxies
     >>> Owner = proxies.Proxy(api_url='http://some.tastypie.api/',
-    ...                     version='v1',
-    ...                     namespace='core/content'
-    ...                     resource_name='owner',
-    ...                     auth=('dev', 'dev',))
+    ...                       version='v1',
+    ...                       namespace='core/content'
+    ...                       resource_name='owner',
+    ...                       auth=('dev', 'dev',))
     >>> owner = Owner.objects.all()[0]
     >>> owner.user.source.name
     u'dev'

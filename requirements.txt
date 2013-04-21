@@ -5,8 +5,8 @@ django-celery
 django-nose
 django-queued-storage
 fluent-logger
-MySQL-python
 mock
+MySQL-python
 pycrypto
 python-memcached
 south

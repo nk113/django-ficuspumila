@@ -9,5 +9,19 @@
     }, 
     "model": "content.owner", 
     "pk": 1
+  },
+  {
+    "fields": {
+      "ctime": "2013-02-17T11:55:40Z", 
+      "hmac_key": "a34ae9c337ac6f68933b76bdee3840f50b2fba79ec72b29bed9f5cb48b3660e0",
+      "name": "dev",
+      "notification_url": null,
+      "token_iv": "eb3d5b10321a131869e67688979964a1",
+      "token_key": "b3ff64dba4fae71bc718481cc12d998fc27d66d2632658cd7a742c923fd9fcfe",
+      "user": 1,
+      "utime": "2013-02-17T11:55:40Z"
+    }, 
+    "model": "content.source", 
+    "pk": 1
   }
 ]

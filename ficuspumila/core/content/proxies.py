@@ -6,7 +6,6 @@ from ficuspumila.core.proxies import (
     get, Proxy,
     SubjectProxy,
 )
-from ficuspumila.core.content import models
 
 
 logger = logging.getLogger(__name__)
@@ -24,11 +23,20 @@ class GenreLocalizationProxy(Proxy):
 
 class SourceProxy(SubjectProxy):
 
-    Attributes = models.Source.Attributes
-    Events = models.Source.Events
+    pass
+
+
+class SourceAttributeNameProxy(Proxy):
+
+    pass
 
 
 class SourceAttributeProxy(AttributeProxy):
+
+    pass
+
+
+class SourceEventNameProxy(Proxy):
 
     pass
 
@@ -43,12 +51,12 @@ class SourceNotificationProxy(Proxy):
     pass
 
 
-class FileTypeProxy(Proxy):
+class OwnerProxy(Proxy):
 
     pass
 
 
-class ResourceTypeProxy(Proxy):
+class FileTypeProxy(Proxy):
 
     pass
 
@@ -58,24 +66,33 @@ class FileSpecificationProxy(Proxy):
     pass
 
 
+class FileSpecificationAttributeNameProxy(Proxy):
+
+    pass
+
+
 class FileSpecificationAttributeProxy(Proxy):
 
     pass
 
 
-class OwnerProxy(Proxy):
+class ResourceTypeProxy(Proxy):
 
     pass
 
 
-Genre              = get('Genre')
-GenreLocaliazation = get('GenreLocalization')
-Source             = get('Source')
-SourceAttribute    = get('SourceAttribute')
-SourceEvent        = get('SourceEvent')
-SourceNotification = get('SourceNotification')
-FileType           = get('FileType')
-ResourceType       = get('ResourceType')
-FileSpecification  = get('FileSpecification')
+# FIXME: uncomment the line below causes maximum recursion error...
+# Genre               = get('Genre')
+GenreLocaliazation  = get('GenreLocalization')
+Source              = get('Source')
+SourceAttributeName = get('SourceAttributeName')
+SourceAttribute     = get('SourceAttribute')
+SourceEventName     = get('SourceEventName')
+SourceEvent         = get('SourceEvent')
+SourceNotification  = get('SourceNotification')
+Owner               = get('Owner')
+FileType            = get('FileType')
+FileSpecification   = get('FileSpecification')
+FileSpecificationAttributeName = get('FileSpecificationAttributeName')
 FileSpecificationAttribute = get('FileSpecificationAttribute')
-Owner              = get('Owner')
+ResourceType        = get('ResourceType')
