@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
+import gc
 import inspect
 import json
 import logging
-import time
 
-from django.conf import settings
 from django.contrib.auth.models import User as AuthUser
 from django.db import models
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
-from urllib import urlencode
 
+from ficuspumila.settings import (
+    get as settings_get,
+    ficuspumila as settings,
+)
 from .auth.sso import Authenticator
 from .crypto import Transcoder
 from .exceptions import ModelException
@@ -22,6 +24,36 @@ from .utils import (
 
 logger = logging.getLogger(__name__)
 transcoder = Transcoder()
+
+
+def iterator(queryset, chunksize=1000, reverse=False):
+    """
+    Iterate over a Django Queryset ordered by the primary key
+
+    This method loads a maximum of chunksize (default: 1000) rows in it's
+    memory at the same time while django normally would load all rows in it's
+    memory. Using the iterator() method only causes it to not preload all the
+    classes.
+ 
+    Note that the implementation of the iterator does not support ordered query sets.
+    """
+    ordering = '-' if reverse else ''
+    queryset = queryset.order_by(ordering + 'pk')
+    last_pk = None
+    new_items = True
+    while new_items:
+        new_items = False
+        chunk = queryset
+        if last_pk is not None:
+            func = 'lt' if reverse else 'gt'
+            chunk = chunk.filter(**{'pk__' + func: last_pk})
+        chunk = chunk[:chunksize]
+        row = None
+        for row in chunk:
+            yield row
+        if row is not None:
+            last_pk = row.pk
+            new_items = True
 
 
 class Choice(object):
@@ -51,16 +83,19 @@ class Choice(object):
         return self._hash[key]
 
 
-class CSVField(models.CharField):
+class CsvField(models.CharField):
 
     __metaclass__ = models.SubfieldBase
 
     def to_python(self, value):
         if isinstance(value, basestring):
+            splited = value.split(',')
+            if len(splited) == 1 and len(splited[0]) < 1:
+                return []
             try:
-                return [element.strip() for element in value.split(',')]
+                return [element.strip() for element in splited]
             except:
-                logger.exception(u'Failed to convert CSV field ' +
+                logger.exception(u'failed to convert CSV field ' +
                                  u'to python: %s' % value)
                 raise ModelException(_(u'Could not evaluate CSV field.'))
         else:
@@ -68,25 +103,27 @@ class CSVField(models.CharField):
 
     def get_prep_value(self, value):
         try:
+            if len(value) < 1:
+                return ''
             return ', '.join(value)
         except:
-            logger.exception(u'Failed to prep data for CSV field: ' +
+            logger.exception(u'failed to prep data for CSV field: ' +
                              u'%s' % value)
             raise ModelException(_(u'Invalid value detected for CSV field.'))
 
 
-class JSONField(models.TextField):
+class JsonField(models.TextField):
 
     __metaclass__ = models.SubfieldBase
 
     def to_python(self, value):
         if isinstance(value, basestring):
             if len(value) < 1:
-                return None
+                return {}
             try:
                 return json.loads(value)
             except:
-                logger.exception(u'Failed to convert JSON field ' +
+                logger.exception(u'failed to convert JSON field ' +
                                  u'to python: %s' % value)
                 raise ModelException(_(u'Could not evaluate JSON field.'))
         else:
@@ -94,9 +131,11 @@ class JSONField(models.TextField):
 
     def get_prep_value(self, value):
         try:
+            if len(value.keys()) < 1:
+                return ''
             return json.dumps(value)
         except:
-            logger.exception(u'Failed to prep data for JSON field: ' +
+            logger.exception(u'failed to prep data for JSON field: ' +
                              u'%s' % value)
             raise ModelException(_(u'Invalid value detected for JSON field.'))
 
@@ -139,7 +178,7 @@ class Name(Model):
         return self.name
 
 
-class Subject(models.Model):
+class Attributable(models.Model):
 
     class Meta:
 
@@ -152,7 +191,8 @@ class Attribute(Model):
         abstract = True
         ordering = ('name__name',)
 
-    # name field must be specified as a foreign key to the Name
+    # name field must be specified as a foreign key to the Name model
+    # related name to the attributable must be "attributes"
     value = models.CharField(max_length=512,
                          blank=False,
                          null=False)
@@ -162,34 +202,11 @@ class Attribute(Model):
                             self.value,)
 
 
-class Logger(models.Model):
+class Logger(Attributable):
 
     class Meta:
 
         abstract = True
-
-    auto_initial_event = True
-
-    def __init__(self, *args, **kwargs):
-        if getattr(self, 'event_model', None) is None:
-            self.event_model = getattr(import_module(self.__module__),
-                                       '%sEvent' % self.__class__.__name__)
-        return super(Logger, self).__init__(*args, **kwargs)
-
-    @property
-    def latest(self):
-        try:
-            return self.events.all()[0]
-        except:
-            return None
-
-    def track(self, name, **kwargs):
-        self.events.create(name=name, **kwargs)
-
-    def save(self, *args, **kwargs):
-        super(Logger, self).save(*args, **kwargs)
-        if self.event_model and self.auto_initial_event and self.latest is None:
-            self.track(1) # TODO
 
 
 class Event(Model):
@@ -197,29 +214,17 @@ class Event(Model):
     class Meta:
 
         abstract = True
+        ordering = ('-id',)
 
-    # name field must be specified as a foreign key to the Name
-    message = JSONField(blank=True,
+    # name field must be specified as a foreign key to the Name model
+    # related name to the logger must be "events"
+    message = JsonField(blank=True,
                          null=False,
                          verbose_name=_(u'Message'))
 
-    def __init__(self, *args, **kwargs):
-        if getattr(self, 'logger_model', None) is None:
-            self.logger_model = getattr(import_module(self.__module__),
-                                        self.__class__.__name__[:-5])
-        return super(Event, self).__init__(*args, **kwargs)
-
     def __unicode__(self):
-        return u'%s: %s' % (self.ctime,
-                           self.get_event_display(),)
-
-    def save(self, *args, **kwargs):
-        if not self.id:
-            try:
-                self.id = self.__class__.objects.all()[0].id -1
-            except:
-                self.id = -1
-        return super(Event, self).save(*args, **kwargs)
+        return u'%s: %s' % (self.name.name,
+                            self.utime,)
 
 
 class Stateful(Logger):
@@ -228,11 +233,6 @@ class Stateful(Logger):
 
         abstract = True
 
-    @property
-    def state(self):
-
-        return self.latest
-
 
 class Notifier(Logger):
 
@@ -240,28 +240,10 @@ class Notifier(Logger):
 
         abstract = True
 
-    auto_initial_event = False
-
     hmac_key = models.CharField(max_length=64,
-                         default=generate_hmac_digest,
-                         verbose_name=_(u'HMAC key'))
-    notification_url = models.CharField(max_length=255,
-                         blank=True,
-                         null=True,
-                         verbose_name=_(u'Notification URL'))
-
-    def __init__(self, *args, **kwargs):
-        if getattr(self, 'notification_model', None) is None:
-            self.notification_model = getattr(import_module(self.__module__),
-                                              '%sNotification' % self.__class__.__name__)
-        return super(Notifier, self).__init__(*args, **kwargs)
-
-    def track(self, event, **kwargs):
-        event = super(Notifier, self).track(event, **kwargs)
-        if self.notification_url and len(self.notification_url):
-            from core.common.tasks import notify
-            notify.delay(self, event, self.notification_model)
-        return event
+                         default=generate_hmac_digest)
+    notification_urls = CsvField(max_length=1024,
+                                 help_text=_('Urls can be specified as comma separated value.'))
 
 
 class Notification(Model):
@@ -271,39 +253,22 @@ class Notification(Model):
         abstract = True
 
     # foreign key to the event must be specified
-
     url = models.CharField(max_length=255,
                          blank=True,
-                         null=False,
-                         verbose_name=_(u'Notification URL'))
-    status_code = models.IntegerField(default=200,
-                         verbose_name=_(u'HTTP status code'))
+                         null=False)
+    status_code = models.IntegerField(default=200)
     content = models.TextField(blank=True,
-                         null=False,
-                         verbose_name=_(u'Content of the response'))
+                         null=False)
 
     def __unicode__(self):
         return '%s: Event（%s）' % (self.ctime, self.event,)
 
 
-class Localizable(models.Model):
+class Localizable(Model):
 
     class Meta:
 
         abstract = True
-
-    def localize(self, language_code=None):
-        manager = getattr(self,
-                          '%slocalization_set' % self.__class__.__name__.lower())
-        if language_code:
-            localizations = manager.filter(language_code=language_code.lower())
-        if len(localizations) < 1:
-            localizations = manager.filter(
-                language_code=get_default_language_code())
-        if len(localizations) < 1:
-            return getattr(import_module(self.__module__),
-                           '%sLocalization' % self.__class__.__name__)()
-        return localizations[0]
 
 
 class Localization(Model):
@@ -313,11 +278,9 @@ class Localization(Model):
         abstract = True
 
     language_code = models.CharField(max_length=2,
-                         choices=settings.LANGUAGES,
+                         choices=settings_get('LANGUAGES'),
                          blank=False,
-                         null=False,
-                         verbose_name=_(u'Language code'),
-                         help_text=_(u'Language code'))
+                         null=False)
 
 
 class User(Model):
@@ -327,52 +290,16 @@ class User(Model):
         abstract = True
 
     user = models.OneToOneField(AuthUser,
-                         primary_key=True,
-                         verbose_name=_(u'Django auth user'))
+                         primary_key=True)
 
 
-class Service(User, Notifier, Subject):
+class Service(User, Notifier, Attributable):
 
     class Meta:
 
         abstract = True
 
     token_key = models.CharField(max_length=255,
-                         default=transcoder.algorithm.generate_key,
-                         verbose_name=_(u'Key for the SSO auth token'))
+                         default=transcoder.algorithm.generate_key)
     token_iv = models.CharField(max_length=255,
-                         default=transcoder.algorithm.generate_iv,
-                         verbose_name=_(u'IV for the SSO auth token'))
-
-    def generate_token(self, data={}):
-        try:
-            return Transcoder(
-                       key=self.token_key,
-                       iv=self.token_iv).algorithm.encrypt(
-                           json.dumps((
-                               time.time() + settings.FICUSPUMILA['TOKEN_TIMEOUT'],
-                               data,)))
-        except:
-            return None
-
-    def update_token(self, token):
-        try:
-            return self.generate_token(json.dumps(
-                       self.decrypt_token(token)[1]))
-        except:
-            return None
-
-    def decrypt_token(self, token):
-        try:
-            return json.loads(Transcoder(
-                       key=self.token_key,
-                       iv=self.token_iv).algorithm.decrypt(token))
-        except:
-            return None
-
-    def generate_sso_params(self, data={}):
-        try:
-            return urlencode({self.__class__.name__.lower(): self.user.id,
-                              SSOAuthenticator.TOKEN_PARAM: self.generate_token(data),})
-        except:
-            return None
+                         default=transcoder.algorithm.generate_iv)

@@ -1,15 +1,25 @@
 # -*- coding: utf-8 -*-
 import dateutil
+import django
 import hashlib
 import hmac
 import logging
 import os
+import sys
 import time
+import urlparse
 
 from datetime import datetime
-from django.conf import settings
 from django.utils.importlib import import_module
-from random import randrange
+from functools import wraps
+from random import random, randrange
+
+from ficuspumila.settings import (
+    get as settings_get,
+    ficuspumila as settings,
+)
+
+from .exceptions import RemotelyUncallableException
 
 
 logger = logging.getLogger(__name__)
@@ -26,25 +36,27 @@ class Singleton(object):
         return cls._instance
 
 
-# class inheritence
-def extend(instance, new_class, attrs={}, base=False, **kwargs):
-    name = kwargs.get('name', '%s_extended_with_%s' % (
-                                  instance.__class__.__name__,
-                                  new_class.__name__))
-    if base:
-        if new_class not in instance.__class__.__bases__:
-            instance.__class__.__bases__ = (new_class,) + instance.__class__.__bases__
+# environment
+def local_required(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs):
+        if settings('API_URL'):
+            raise RemotelyUncallableException(func.__name__)
+        return func(*args, **kwargs)
+    return wrapper
+
+
+# django
+def get_raw_post_data(request):
+    if django.VERSION >= (1, 4):
+        return request.body
     else:
-        instance.__class__ = type(name, 
-                                  (instance.__class__, new_class), 
-                                  attrs)
-    instance.__module__ = new_class.__module__
-    return instance
+        return request.raw_post_data
 
 
 # locale
 def get_default_language_code():
-    return settings.LANGUAGE_CODE.split('-')[0].lower()
+    return settings_get('LANGUAGE_CODE').split('-')[0].lower()
 
 def get_default_currency_code():
     return 'JPY'
@@ -58,6 +70,41 @@ def later_than(date, base=datetime.utcnow()):
 
 def earlier_than(date, base=datetime.now()):
     return not later_than(date, base)
+
+
+# module
+def refresh(module):
+    try:
+        del(sys.modules[import_module(module).__name__])
+    except:
+        pass
+
+# class
+def extend(instance, new_class, attrs={}, replace_module=False):
+    name = '%s_extended_with_%s' % (instance.__class__.__name__,
+                                    new_class.__name__)
+    module = instance.__module__
+    if replace_module:
+        name = new_class.__name__
+        module = new_class.__module__
+
+    instance.__class__ = type(name, 
+                              (instance.__class__, new_class), 
+                              attrs)
+    instance.__class__.__module__ = module
+    instance.__module__ = new_class.__module__
+    return instance
+
+def mixin(cls, mixin):
+    if mixin not in cls.__bases__:
+        cls.__bases__ = (mixin,) + cls.__bases__
+
+def curtail(cls, mixedin):
+    bases = list(cls.__bases__)
+    for base in bases:
+        if issubclass(base, mixedin):
+            bases.remove(base)
+    cls.__bases__ = tuple(bases)
 
 
 # random
@@ -84,7 +131,7 @@ def hex2bit(hex_value):
 def generate_hmac_digest(key=None, text=None):
     key = '%s%s%s' % (str(time.time()),
                       str(randrange(0, 999)),
-                      settings.SECRET_KEY) if not key else str(key)
+                      settings_get('SECRET_KEY', random())) if not key else str(key)
     text = '%s%s' % (str(time.time()),
                         str(randrange(0, 999))) if not text else text
     return hmac.new(key, text, hashlib.sha256).hexdigest()
@@ -98,3 +145,30 @@ def generate_file_hash_digest(location, blocksize=65536):
             buf = file.read(blocksize)
         return sha1.hexdigest()
 
+
+# url
+def parse_qs(query):
+    return dict((k, v if len(v)>1 else v[0])
+                for k, v in urlparse.parse_qs(query).iteritems())
+
+
+# eval
+def to_python(value):
+    # simple values
+    if value in ['true', 'True', True]:
+        value = True
+    elif value in ['false', 'False', False]:
+        value = False
+    elif value in ('nil', 'none', 'None', None):
+        value = None
+    return value
+
+def from_python(value):
+    # simple values
+    if value is True:
+        value = 'True'
+    elif value is False:
+        value = 'False'
+    elif value is None:
+        value = 'None'
+    return value

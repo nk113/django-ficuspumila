@@ -24,19 +24,13 @@ DATABASES = {
 INSTALLED_APPS += (
     'django_nose',
 )
+INSTALLED_APPS = tuple(app for app in INSTALLED_APPS if not app == 'djcelery')
 
 
 # logging
-LOGGING['handlers'] = {
-    'console': {
-        'level': 'INFO',
-        'class': 'logging.StreamHandler',
-        'formatter': 'normal',
-    },
-}
 LOGGING['loggers'] = {
     '': {
-        'handlers': ('console',),
+        'handlers': ('test_log',),
         'level': 'INFO',
         'propagate': True,
     },

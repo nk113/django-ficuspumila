@@ -3,12 +3,12 @@ import hashlib
 import logging
 import sys
 
-from django.conf import settings
 from django.core.cache import cache as djcache
 from functools import wraps
 
+from ficuspumila.settings import ficuspumila as settings
 
-TIMEOUT = settings.FICUSPUMILA['CACHE_TIMEOUT']
+TIMEOUT = settings('CACHE_TIMEOUT', 60 * 15)
 
 logger = logging.getLogger(__name__)
 
@@ -55,14 +55,15 @@ def get_or_set(key, value=None, expiration=TIMEOUT, **kwargs):
     set(key, value, expiration, **kwargs)
     return value
 
-def cache(**decorator_kwargs):
+def cache(**params):
 
     def decorator(func):
+        @wraps(func)
         def wrapper(*args, **kwargs):
-            keyargs  = decorator_kwargs.get('keyargs', [])
-            keyarg   = decorator_kwargs.get('keyarg', None)
-            breakson = decorator_kwargs.get('breakson', None)
-            nocacheonbreak = decorator_kwargs.get('nocacheonbreak', False)
+            keyargs  = params.get('keyargs', [])
+            keyarg   = params.get('keyarg', None)
+            breakson = params.get('breakson', None)
+            nocacheonbreak = params.get('nocacheonbreak', False)
             donothing = False
 
             if keyarg is not None:
@@ -81,8 +82,8 @@ def cache(**decorator_kwargs):
 
             donothing = len(key) < 1
 
-            key = '%s:%s:%s' % (func.func_globals.get('__name__', ''),
-                                func.func_name,
+            key = '%s:%s:%s' % (func.__module__,
+                                func.__name__,
                                 key,)
 
             if (breakson is not None and
@@ -105,7 +106,7 @@ def cache(**decorator_kwargs):
 
             return get_or_set(key,
                               func(*args, **kwargs),
-                              decorator_kwargs.get('timeout', TIMEOUT))
-        return wraps(func)(wrapper)
+                              params.get('timeout', TIMEOUT))
+        return wrapper
 
     return decorator

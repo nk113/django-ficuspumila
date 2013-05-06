@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from django.conf import settings
 from django.db import models
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
 
 from ficuspumila.core.models import (
-    Attribute, Choice, CSVField, Event,
+    Attributable, Attribute, Choice, CsvField, Event,
     Localizable, Localization,
     Logger, Model, Name, Notification, Notifier,
-    Service, Subject, User,
+    Service, User,
 )
+from ficuspumila.core.utils import get_default_language_code
 
 
 MODULE = __name__.split('.')[-2].lower()
@@ -34,15 +34,13 @@ class Genre(Localizable):
 
         db_table = '%s_genre' % MODULE
 
-    type = models.SmallIntegerField(default=Categories.AUDIO,
-                         choices=Categories,
-                         verbose_name=_(u'Genre type'))
+    category = models.SmallIntegerField(default=Categories.AUDIO,
+                         choices=Categories)
+    name = models.CharField(max_length=128)
 
     def __unicode__(self):
-        localization = self.localize()
-        return '%s (%s): %s' % (self.get_type_display(),
-                                localization.language_code,
-                                localization.name,)
+        return '%s (%s)' % (self.name,
+                            self.get_category_display())
 
 
 class GenreLocalization(Localization):
@@ -51,8 +49,7 @@ class GenreLocalization(Localization):
         db_table = '%s_genrelocalization' % MODULE
 
     genre = models.ForeignKey(Genre)
-    name = models.CharField(max_length=128,
-                            verbose_name=_(u'Genre name'))
+    name = models.CharField(max_length=128)
 
     def __unicode__(self):
         return '(%s): %s' % (self.language_code,
@@ -91,8 +88,7 @@ class SourceAttribute(Attribute):
         unique_together = ('source', 'name',)
 
     source = models.ForeignKey(Source,
-                         related_name='attributes',
-                         verbose_name=_(u'Content source'))
+                         related_name='attributes')
     name = models.ForeignKey(SourceAttributeName)
 
 
@@ -109,8 +105,7 @@ class SourceEvent(Event):
         db_table = '%s_sourceevent' % MODULE
 
     source = models.ForeignKey(Source,
-                         related_name='events',
-                         verbose_name=_(u'Content source'))
+                         related_name='events')
     name = models.ForeignKey(SourceEventName)
 
 
@@ -146,14 +141,14 @@ class FileType(Model):
         ordering = ('name',)
 
     name = models.CharField(max_length=128)
-    mime = CSVField(max_length=128)
-    extension = models.CharField(max_length=5)
+    mime_types = CsvField(max_length=128)
+    extensions = CsvField(max_length=128)
 
     def __unicode__(self):
         return self.name
 
 
-class FileSpecification(Model, Subject):
+class FileSpecification(Model, Attributable):
 
     class Meta:
 
@@ -274,8 +269,7 @@ class ResourceType(Model):
 #         return self.localize().description
 
 #     item  = models.OneToOneField(Item,
-#                          primary_key=True,
-#                          verbose_name=_(u'Item'))
+#                          primary_key=True)
 
 
 # class MetadataLocalization(Localization):

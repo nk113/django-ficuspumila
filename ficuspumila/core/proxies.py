@@ -3,26 +3,46 @@ import copy
 import inspect
 import json
 import logging
+import time
 
 from dateutil import parser
-from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-from django.db import models
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext as _
 from queryset_client import client
+from urllib import urlencode
 from urlparse import urlparse
 
+from ficuspumila.core.utils import get_default_language_code
+from ficuspumila.settings import ficuspumila as settings
 from . import cache
+from .auth.sso import Authenticator as SsoAuthenticator
+from .crypto import Transcoder
 from .exceptions import ProxyException
 from .models import Attribute, Choice, Model
-from .utils import extend
-
+from .tasks import notify_event
+from .utils import (
+    curtail, extend, from_python, mixin,
+    refresh, to_python
+)
 
 PK_ID = ('pk', 'id',)
 
 logger = logging.getLogger(__name__)
 
+
+def invalidate():
+    for name, proxy in ProxyClient._proxies.items():
+        refresh(proxy.__module__)
+
+    for name, model in ProxyClient._models.items():
+        curtail(model, Proxy)
+        if getattr(model, '__init__original'):
+            model.__init__ = model.__init__original
+
+    ProxyClient._instances = {}
+    ProxyClient._proxies = {}
+    ProxyClient._models = {}
 
 def get(name, model_module=None, proxy_module=None):
     if isinstance(proxy_module, str):
@@ -39,20 +59,29 @@ def get(name, model_module=None, proxy_module=None):
 
     proxy = getattr(proxy_module, '%sProxy' % name)
 
-    if 'API_URL' in settings.FICUSPUMILA:
-        return proxy(auth=(settings.FICUSPUMILA['SYSTEM_USERNAME'],
-                           settings.FICUSPUMILA['SYSTEM_PASSWORD']))
+    if settings('API_URL'):
+        if name.lower() in ProxyClient._proxies:
+            return ProxyClient._proxies[name.lower()]
+
+        return proxy(auth=(settings('SYSTEM_USERNAME'),
+                           settings('SYSTEM_PASSWORD')))
     else:
-        model = getattr(import_module(model_module), name)
+        if name not in ProxyClient._models.keys():
+            model = getattr(import_module(model_module), name)
 
-        # implement proxy mixin
-        def __init__(obj, *args, **kwargs):
-            super(obj.__class__, obj).__init__(*args, **kwargs)
-            extend(obj, proxy, None, True)
+            # implement proxy mixin
+            def __init__(obj, *args, **kwargs):
+                obj.__init__original(*args, **kwargs)
+                mixin(obj.__class__, proxy)
+                obj.__module__ = proxy.__module__
+                obj.__init_proxy__()
 
-        model.__init__ = __init__
+            model.__init__original = model.__init__
+            model.__init__ = __init__
 
-        return model
+            ProxyClient._models[name] = model
+
+        return ProxyClient._models[name]
 
 def get_pk(obj):
     """
@@ -60,8 +89,7 @@ def get_pk(obj):
 
     TODO: think better way
     """
-    foreign_keys = ('user',)
-    for key in foreign_keys:
+    for key in ('user',):
         if hasattr(obj, key):
             try:
                 return getattr(obj, key).id
@@ -81,6 +109,18 @@ class QuerySet(client.QuerySet):
                                     dictionary,
                                     _to_many_class=ManyToManyManager)
 
+    def create(self, **kwargs):
+        # FIXME: think better way
+        obj = super(QuerySet, self).create(**kwargs)
+        return self.get(id=obj.id)
+
+    def get_or_create(self, **kwargs):
+        # FIXME: think better way
+        obj, created = super(QuerySet, self).get_or_create(**kwargs)
+        if not created:
+            return obj, created
+        return self.get(id=obj.id), created
+
 
 class Response(client.Response):
 
@@ -88,7 +128,9 @@ class Response(client.Response):
 
         # implement proxy mixin
         if model._model_name in model._base_client._proxies:
-            extend(self, model._base_client._proxies[model._model_name].__class__)
+            proxy = model._base_client._proxies[model._model_name].__class__
+            extend(self, proxy, replace_module=True)
+            self.__init_proxy__()
 
         super(Response, self).__init__(model, response, url, **kwargs)
 
@@ -176,8 +218,7 @@ class Response(client.Response):
         if self._url is not None:
             cached = cache.get(self._url)
             if cached:
-                self.__response = json.loads(cached)
-                self.model = self.model(**self.__response)
+                self.refresh(json.loads(cached))
                 return self.__response
 
         response = super(Response, self)._response
@@ -189,9 +230,16 @@ class Response(client.Response):
 
         return response
 
+    def refresh(self, data):
+        self.__response = data
+        try:
+            self.model = self.model(**self.__response)
+        except:
+            self.model = self.model.__class__(**self.__response)
+
     def invalidate(self):
         resource = getattr(self.model._main_client, self.model._model_name)
-        self.__response = resource(client.parse_id(self.resource_uri)).get()
+        self.refresh(resource(client.parse_id(self.resource_uri)).get())
 
 
 class Manager(client.Manager):
@@ -221,23 +269,22 @@ class ProxyClient(client.Client):
 
     _instances = {}
     _proxies = {}
+    _models = {}
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(*args, **kwargs):
         if len(args): 
-            key = ProxyClient.build_base_url(args[0], **kwargs)
+            key = ProxyClient.build_base_url(args[1], **kwargs)
 
-            if not key in cls._instances:
-                cls._instances[key] = super(ProxyClient,
-                                            cls).__new__(cls,
-                                                         *args,
-                                                         **kwargs)
+            if not key in ProxyClient._instances:
+                ProxyClient._instances[key] = super(ProxyClient,
+                                                    ProxyClient).__new__(*args, **kwargs)
 
             proxy = kwargs.get('proxy')
             if proxy:
-                cls._proxies[proxy.__class__.__name__.lower().replace('proxy', '')] = proxy
+                ProxyClient._proxies[proxy.__class__.__name__.lower().replace('proxy', '')] = proxy
 
-            return cls._instances[key]
-        return cls._instances[cls._instances.keys()[0]]
+            return ProxyClient._instances[key]
+        return ProxyClient._instances[ProxyClient._instances.keys()[0]]
 
     def __init__(self, base_url, auth=None, strict_field=True, client=None, **kwargs):
 
@@ -262,23 +309,37 @@ class ProxyClient(client.Client):
                                                     strict_field,
                                                     self)
  
-        # overwrite manager
+        # overwrite manager and model members
         model.objects = Manager(model)
+
+        model._setfield_original = model._setfield
         model.save_original = model.save
         model.delete_original = model.delete
 
+        def _setfield(obj, name, value):
+            try:
+                obj._setfield_original(name, value)
+            except client.FieldTypeError, e:
+                error = '%s' % e
+                if '\'datetime\'' in error:
+                    obj._fields[name] = parser.parse(value)
+                elif '\'list\'' in error:
+                    obj._fields[name] = value 
+                elif '\'json\'' in error:
+                    obj._fields[name] = value
+                else:
+                    raise e
+            super(obj.__class__, obj).__setattr__(name, value)
+
         def break_cache(obj):
-            url = '%s%s/' % (obj._base_client._api_path,
-                             obj._client._store['base_url'].replace(
-                                 obj._base_client._api_url,
-                                 ''))
+            cache.delete(getattr(obj,
+                                 'resource_uri',
+                                 '%s%s/' % (obj._base_client._api_path,
+                                            obj._client._store['base_url'].replace(
+                                                obj._base_client._api_url,
+                                                ''))))
 
-            if hasattr(obj, 'id'):
-                url = '%s%s/' % (url, obj.id,)
-
-            cache.delete(url)
-
-        def save(obj): 
+        def save(obj):
             break_cache(obj) 
             model.save_original(obj)                
 
@@ -286,6 +347,7 @@ class ProxyClient(client.Client):
             break_cache(obj)
             model.delete_original(obj)
 
+        model._setfield = _setfield
         model.save = save
         model.delete = delete
 
@@ -343,8 +405,7 @@ class Proxy(object):
             super(Proxy, self).__init__(*args, **kwargs)
             return
 
-        api_url = kwargs.get('api_url', None) or settings.FICUSPUMILA['API_URL'] if (
-                      'API_URL' in settings.FICUSPUMILA) else None
+        api_url = kwargs.get('api_url', None) or settings('API_URL') if settings('API_URL') else None
 
         if not api_url:
             raise ProxyException(_(u'"API_URL" not found in settings or ' +
@@ -372,22 +433,8 @@ class Proxy(object):
             raise ProxyException(_(u'API seems not to have endpoint ' +
                                    u'for the resource (%s).' % resource_name))
 
-        # support special fields
-        def _setfield(obj, name, value):
-            try:
-                obj._setfield_original(name, value)
-            except client.FieldTypeError, e:
-                error = '%s' % e
-                if '\'datetime\'' in error:
-                    obj._fields[name] = parser.parse(value)
-                elif '\'list\'' in error:
-                    obj._fields[name] = value
-                else:
-                    raise e
-            super(obj.__class__, obj).__setattr__(name, value)
-
-        self._resource._setfield_original = self._resource._setfield
-        self._resource._setfield = _setfield
+    def __init_proxy__(self):
+        pass
 
     def __getattr__(self, name):
         if name in PK_ID:
@@ -412,35 +459,24 @@ class Proxy(object):
             return self.model._model_name
 
 
-class SubjectProxy(Proxy):
+class AttributableProxy(Proxy):
 
-    class Attributes(Choice):
+    _attribute_names = ('attribute',)
 
-        NAME = 0
-        DEFAULT = NAME
+    def __init_proxy__(self):
+        super(AttributableProxy, self).__init_proxy__()
 
-    _attribute = None
-    _attribute_name = None
-
-    def _seek_related_fields(self):
         class_name = self.__class__.__name__
         if isinstance(self, Proxy):
-            class_name = class_name.replace('Response_extended_with_',
-                                            '').replace('Proxy', '')
-        self._attribute = get('%sAttribute' % class_name, proxy_module=self.__module__)
-        self._attribute_name = get('%sAttributeName' % class_name, proxy_module=self.__module__)
-
-    @property
-    def attribute(self):
-        if self._attribute is None:
-            self._seek_related_fields()
-        return self._attribute
-
-    @property
-    def attribute_name(self):
-        if self._attribute_name is None:
-            self._seek_related_fields()
-        return self._attribute_name
+            class_name = class_name.replace('Proxy', '')
+        for name in self._attribute_names:
+            setattr(self, '%s' % name, get('%s%s' % (class_name, name.title(),),
+                                           proxy_module=self.__module__))
+            try:
+                setattr(self, '%s_name' % name, get('%s%sName' % (class_name, name.title(),),
+                                                    proxy_module=self.__module__))
+            except AttributeError, e:
+                pass
 
     def get_attribute(self, name):
         kwargs = {
@@ -451,7 +487,7 @@ class SubjectProxy(Proxy):
 
     def getattr(self, name, default=None):
         try:
-            return self.get_attribute(name).value
+            return to_python(self.get_attribute(name).value)
         except (client.ObjectDoesNotExist,
                 ObjectDoesNotExist) as e:
             return default
@@ -469,12 +505,12 @@ class SubjectProxy(Proxy):
             kwargs = {
                 self.model_name: self,
                 'name': attribute_name,
-                'value': value,
+                'value': from_python(value),
             }
             attribute = self.attribute.objects.create(**kwargs)
             self.invalidate()
         else:
-            attribute.value = value
+            attribute.value = from_python(value)
             attribute.save()
 
     def delattr(self, name):
@@ -490,21 +526,129 @@ class SubjectProxy(Proxy):
 
 class AttributeProxy(Proxy):
 
-    _logger = None
+    @property
+    def attribute(self):
+        return self.name.name
 
-    def _seek_related_fields(self):
-        class_name = self.__class__.__name__
-        if isinstance(self, Model):
-            self._logger = get(self.__class__.__name__.replace('Attribute', ''),
-                               proxy_module=self.__module__)
-        else:
-            self._logger = get(self.__class__.__name__.replace(
-                                   'Response_extended_with_',
-                                   '').replace('AttributeProxy', ''),
-                               proxy_module=self.__module__)
+
+class LoggerProxy(AttributableProxy):
+
+    _attribute_names = ('event',)
 
     @property
-    def logger(self):
-        if self._logger is None:
-            self._seek_related_fields()
-        return self._logger
+    def latest(self):
+        try:
+            return self.events.latest('id')
+        except:
+            return None
+
+    def fire(self, name, message=''):
+        try:
+            event_name = self.event_name.objects.get(name=name)
+        except (client.ObjectDoesNotExist,
+                ObjectDoesNotExist) as e:
+            raise e
+        kwargs = {
+            self.model_name: self,
+            'name': event_name,
+        }
+        if message:
+            kwargs['message'] = message
+        event = self.event.objects.create(**kwargs)
+        self.invalidate()
+        return event
+
+
+class EventProxy(Proxy):
+
+    @property
+    def event(self):
+        return self.name.name
+
+
+class StatefulProxy(LoggerProxy):
+
+    @property
+    def state(self):
+
+        return self.latest
+
+
+class NotifierProxy(LoggerProxy):
+
+    _attribute_names = ('event', 'notification',)
+
+
+class LocalizableProxy(AttributableProxy):
+
+    _attribute_names = ('localization',)
+
+    def localize(self, language_code=None):
+        self.__init_proxy__()
+
+        localizations = []
+        if language_code:
+            localizations = self.localization.objects.filter(language_code=language_code.lower())
+        if len(localizations) < 1:
+            localizations = self.localization.objects.filter(
+                language_code=get_default_language_code())
+        if len(localizations) < 1:
+            return self.localization()
+        return localizations[0]
+
+
+class ServiceProxy(NotifierProxy):
+
+    _attribute_names = ('attribute', 'event', 'notification',)
+
+    def generate_token(self, data={}, format='json'):
+        try:
+            if format == 'json':
+                data = json.dumps((
+                           time.time() + settings('TOKEN_TIMEOUT'),
+                           data,))
+            else:
+                raise ProxyException(_(u'Format not supported: %s') % format)
+
+            return Transcoder(
+                       key=self.token_key,
+                       iv=self.token_iv).algorithm.encrypt(data)
+
+        except Exception, e:
+            logger.exception(u'an error has occurred during generating token: %s' % e)
+            raise e
+
+    def decrypt_token(self, token, format='json', expiration=False):
+        try:
+            token = Transcoder(
+                        key=self.token_key,
+                        iv=self.token_iv).algorithm.decrypt(token)
+
+            if format == 'json':
+                token = json.loads(token)
+            else:
+                raise ProxyException(_(u'Format not supported: %s') % format)
+
+            if expiration:
+                return token
+
+            return token[1]
+
+        except Exception, e:
+            logger.exception(u'an error has occurred during decrypting token: %s' % e)
+            raise e
+
+    def update_token(self, token, format='json'):
+        try:
+            return self.generate_token(self.decrypt_token(token, format), format)
+        except Exception, e:
+            logger.exception(u'an error has occurred during updating token: %s' % e)
+            raise e
+
+    def generate_sso_params(self, data={}, format='json'):
+        try:
+            return urlencode({self.model_name: self.user.id,
+                              SsoAuthenticator.TOKEN_PARAM: self.generate_token(data, format),})
+        except Exception, e:
+            logger.exception(u'an error has occurred during generating sso params: %s' % e)
+            raise e

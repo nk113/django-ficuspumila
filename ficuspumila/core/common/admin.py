@@ -1,18 +1,18 @@
 # -*- encoding: utf-8 -*-
 import logging
 
-from django.conf import settings
 from django.contrib import admin
 from django.template.defaultfilters import date
 from django.utils.translation import ugettext as _
 
+from ficuspumila.core.admin import ModelAdmin
 from .models import Country
 
 
 logger = logging.getLogger(__name__)
 
 
-class CountryAdmin(admin.ModelAdmin):
+class CountryAdmin(ModelAdmin):
 
     list_display  = ('name', 'alpha2', 'currency_code', '_languages',
                      '_neighbours',)

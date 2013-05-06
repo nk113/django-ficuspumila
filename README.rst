@@ -124,7 +124,7 @@ core.transaction
 api
 ---
 
-Each core application has its API endpoint and resources. Ficuspumila is fully integrated with `django-tastypie <https://github.com/toastdriven/django-tastypie>`_ to implement internal RPC and to provide external interface so you can easily allow users to access there resources.
+Each core application has its API endpoint and resources. Ficuspumila is fully integrated with `django-tastypie <https://github.com/toastdriven/django-tastypie>`_ to implement internal RPC and to provide external interfaces so you can easily allow users to access their resources.
 
 Getting Started with Ficuspumila
 ================================

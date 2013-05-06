@@ -2,16 +2,16 @@
 import logging
 
 from ficuspumila.core.proxies import (
-    AttributeProxy,
-    get, Proxy,
-    SubjectProxy,
+    AttributableProxy, AttributeProxy, EventProxy,
+    get, LocalizableProxy, Proxy,
+    ServiceProxy,
 )
 
 
 logger = logging.getLogger(__name__)
 
 
-class GenreProxy(Proxy):
+class GenreProxy(LocalizableProxy):
 
     pass
 
@@ -21,7 +21,7 @@ class GenreLocalizationProxy(Proxy):
     pass
 
 
-class SourceProxy(SubjectProxy):
+class SourceProxy(ServiceProxy):
 
     pass
 
@@ -41,7 +41,7 @@ class SourceEventNameProxy(Proxy):
     pass
 
 
-class SourceEventProxy(Proxy):
+class SourceEventProxy(EventProxy):
 
     pass
 
@@ -58,10 +58,22 @@ class OwnerProxy(Proxy):
 
 class FileTypeProxy(Proxy):
 
-    pass
+    @property
+    def mime_type(self):
+        try:
+            return self.mime_types[0]
+        except IndexError, e:
+            return None
+
+    @property
+    def extension(self):
+        try:
+            return self.extensions[0]
+        except IndexError, e:
+            return None
 
 
-class FileSpecificationProxy(Proxy):
+class FileSpecificationProxy(AttributableProxy):
 
     pass
 
@@ -81,9 +93,8 @@ class ResourceTypeProxy(Proxy):
     pass
 
 
-# FIXME: uncomment the line below causes maximum recursion error...
-# Genre               = get('Genre')
-GenreLocaliazation  = get('GenreLocalization')
+Genre               = get('Genre')
+GenreLocalization   = get('GenreLocalization')
 Source              = get('Source')
 SourceAttributeName = get('SourceAttributeName')
 SourceAttribute     = get('SourceAttribute')

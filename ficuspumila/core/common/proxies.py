@@ -2,12 +2,11 @@
 import logging
 import requests
 
-from django.conf import settings
-
 from ficuspumila.core.cache import cache
 from ficuspumila.core.exceptions import ProxyException
 from ficuspumila.core.models import Choice
 from ficuspumila.core.proxies import get, Proxy
+from ficuspumila.settings import ficuspumila as settings
 
 
 logger = logging.getLogger(__name__)
@@ -19,12 +18,12 @@ class CountryProxy(Proxy):
     @cache(keyarg=1)
     def query_country_code(cls, ip):
 
-        if 'IPINFODB_API_KEY' not in settings.FICUSPUMILA:
+        if settings('IPINFODB_API_KEY') is None:
             raise ProxyException(u'"IPINFODB_API_KEY" is not defiend in settings.')
 
         try:
-            response = requests.get(settings.FICUSPUMILA['IPINFODB_API_URL'],
-                                    params={'key': settings.FICUSPUMILA['IPINFODB_API_KEY'],
+            response = requests.get(settings('IPINFODB_API_URL'),
+                                    params={'key': settings('IPINFODB_API_KEY'),
                                             'ip': ip,
                                             'format': 'json'})
 

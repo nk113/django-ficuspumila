@@ -15,6 +15,7 @@ class CoreException(Exception):
         super(CoreException, self).__init__(message, *args, **kwargs)
 
 
+# generic exceptions
 class AuthException(CoreException):
 
     pass
@@ -34,3 +35,15 @@ class ProxyException(CoreException):
 
     pass
 
+
+class ResourceException(CoreException):
+
+    pass
+
+
+# common exceptions
+class RemotelyUncallableException(CoreException):
+
+    def __init__(self, name, *args, **kwargs):
+        super(CoreException, self).__init__(_(u'"%s" can\'t be called remotely.') % name,
+                                            *args, **kwargs)

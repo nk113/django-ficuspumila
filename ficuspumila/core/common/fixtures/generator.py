@@ -5,11 +5,10 @@ import os
 import requests
 import StringIO
 
-from django.conf import settings
 from django.utils import timezone
 
 from ficuspumila.core import fixture
-
+from ficuspumila.settings import ficuspumila as settings
 
 logger = logging.getLogger(__name__)
 
@@ -100,7 +99,7 @@ class Country(object):
             })
 
         # update objects in fixture
-        response = requests.get(settings.FICUSPUMILA['GEONAMES_COUNTRY_INFO'])
+        response = requests.get(settings('GEONAMES_COUNTRY_INFO'))
 
         if response.status_code == 200:
             tsv = StringIO.StringIO(response.text)

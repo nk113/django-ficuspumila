@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from django.conf import settings
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from ficuspumila.core.models import Choice, CSVField, Model
+from ficuspumila.core.models import Choice, CsvField, Model
 from ficuspumila.core.cache import cache
 
 
@@ -60,10 +59,10 @@ class Country(Model):
                          blank=True)
     postal_code_regex = models.CharField(max_length=255,
                          blank=True)
-    languages = CSVField(max_length=128,
+    languages = CsvField(max_length=128,
                          blank=True)
     geonameid = models.IntegerField(null=True)
-    neighbours = CSVField(max_length=64,
+    neighbours = CsvField(max_length=64,
                          blank=True)
     equivalent_fips_code = models.CharField(max_length=2,
                          blank=True)

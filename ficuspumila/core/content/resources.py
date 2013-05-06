@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from django.conf import settings
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext_lazy as _
+from functools import wraps
 from tastypie import fields
 from tastypie.api import Api
 from tastypie.exceptions import (
@@ -23,7 +23,14 @@ from ficuspumila.core.resources import (
     EXACT_IN_GTE_LTE,
     EXACT_IN_GET_LTE_DATE,
     EXACT_IN_STARTSWITH,
-    Meta, ModelResource, ServiceMeta,
+    JsonField, LimitedToManyField,
+    Meta, ModelResource,
+    ServiceMeta,
+)
+from ficuspumila.core.exceptions import ResourceException
+from ficuspumila.settings import (
+    get as settings_get,
+    ficuspumila as settings,
 )
 from .models import (
     FileSpecification, FileSpecificationAttribute, FileSpecificationAttributeName,
@@ -71,6 +78,7 @@ class GenreResource(ContentResource):
         queryset = Genre.objects.all()
         resource_name = 'genre'
         filtering = {
+            'name': EXACT_IN_STARTSWITH,
             'type': EXACT_IN,
         }
 
@@ -83,7 +91,7 @@ class GenreLocalizationResource(ContentResource):
         resource_name = 'genrelocalization'
         filtering = {
             'genre'   : ALL_WITH_RELATIONS,
-            'language': EXACT_IN,
+            'language_code': EXACT_IN,
             'name'    : EXACT_IN_STARTSWITH,
         }
 
@@ -100,15 +108,18 @@ class SourceResource(ContentResource):
             'user': ALL_WITH_RELATIONS,
             'name': EXACT_IN_CONTAINS,
             'source_owener_id': EXACT_IN_STARTSWITH,
+            'attributes': ALL_WITH_RELATIONS,
+            'events': ALL_WITH_RELATIONS,
         }
 
     user = fields.ForeignKey(UserResource, 'user')
     attributes = fields.ToManyField(
                          'ficuspumila.core.content.resources.SourceAttributeResource',
                          'attributes')
-    events = fields.ToManyField(
+    events = LimitedToManyField(
                          'ficuspumila.core.content.resources.SourceEventResource',
-                         'events')
+                         'events', order_by='-id',)
+    notification_urls = fields.ListField('notification_urls')
 
 
 class SourceAttributeNameResource(ContentResource):
@@ -165,6 +176,10 @@ class SourceEventResource(ContentResource):
 
     source = fields.ForeignKey(SourceResource, 'source')
     name = fields.ForeignKey(SourceEventNameResource, 'name')
+    message = JsonField('message', null=False, blank=True)
+    notifications = LimitedToManyField(
+                         'ficuspumila.core.content.resources.SourceNotificationResource',
+                         'notifications', order_by='-id')
 
 
 class SourceNotificationResource(ContentResource):
@@ -213,6 +228,9 @@ class FileTypeResource(ContentResource):
             'mimetype' : EXACT_IN_CONTAINS,
             'extention': EXACT_IN_STARTSWITH,
         }
+
+    mime_types = fields.ListField('mime_types')
+    extensions = fields.ListField('extensions')
 
 
 class FileSpecificationResource(ContentResource):

@@ -3,7 +3,6 @@ import json
 import logging
 import time
 
-from django.conf import settings
 from django.contrib.auth import authenticate
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext as _
@@ -11,7 +10,7 @@ from django.utils.translation import ugettext as _
 from ficuspumila.core.crypto import Transcoder
 from ficuspumila.core.exceptions import AuthException
 from ficuspumila.core.utils import generate_hmac_digest
-
+from ficuspumila.settings import ficuspumila as settings
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +21,7 @@ class Authenticator(object):
 
     format: json
       [
-        <timestamp, now + settings.FICUSPUMILA['TOKEN_TIMEOUT']>
+        <timestamp, now + settings('TOKEN_TIMEOUT')>
         (, {
           ("<service>_<user>_id": "<service user id>")
           (, "username": "<Django Auth username>")
@@ -52,7 +51,7 @@ class Authenticator(object):
         try:
             # import modules
             services = {}
-            for k, v in settings.FICUSPUMILA['SERVICES'].iteritems():
+            for k, v in settings('SERVICES').iteritems():
                 service = k.split('.')
                 user = v['user'].split('.')
                 services[get_name(k)] = {
@@ -115,12 +114,7 @@ class Authenticator(object):
         logger.debug(u'token: %s' % token)
 
         try:
-            decrypted = service.decrypt_token(token)
-            if format == 'json':
-                token = json.loads(decrypted)
-            else:
-                raise AuthException(_(u'Format not supported.'))
-
+            token = service.decrypt_token(token, format, True)
         except AuthException, e:
             raise e
 
@@ -132,10 +126,10 @@ class Authenticator(object):
         logger.debug(u'token decrypted: %s' % token)
 
         if token[0]:
-            if token[0] > time.time() + settings.FICUSPUMILA['TOKEN_TIMEOUT']:
+            if token[0] > time.time() + settings('TOKEN_TIMEOUT'):
                 logger.debug(u'token expiration is bigger than expected: token %s > %s' % (
                                  token[0],
-                                 timezone.now() + settings.FICUSPUMILA['TOKEN_TIMEOUT'],))
+                                 timezone.now() + settings('TOKEN_TIMEOUT'),))
 
                 raise AuthException(_(u'Expiration specified in token is '
                                       u'bigger than expected.'))

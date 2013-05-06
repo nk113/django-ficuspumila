@@ -1,8 +1,9 @@
-# -*- coding: utf-8 -*-                                                
+# -*- coding: utf-8 -*-
+import json
 import logging
 
-from django.conf import settings
 from django.contrib.auth.models import User as AuthUser
+from django.core.exceptions import FieldError
 from tastypie.authentication import BasicAuthentication
 from tastypie.authorization import DjangoAuthorization
 from tastypie.cache import SimpleCache
@@ -13,7 +14,12 @@ from tastypie.resources import ModelResource as TastypieModelResource
 from tastypie.throttle import CacheThrottle
 from tastypie.validation import CleanedDataFormValidation
 
+from ficuspumila.settings import (
+    get as settings_get,
+    ficuspumila as settings,
+)
 from .auth.sso import Authenticator as SsoAuthenticator
+from .utils import parse_qs
 
 
 ALL_METHODS = ('get', 'post', 'put', 'patch', 'delete',)
@@ -26,6 +32,29 @@ EXACT_IN_STARTSWITH = EXACT_IN + ('startswith',)
 
 
 logger = logging.getLogger(__name__)
+
+
+def limit_queryset(manager, **kwargs):
+
+    def queryset(bundle, manager, **kwargs):
+        filters  = kwargs.get('filters', {})
+        order_by = kwargs.get('order_by', None)
+        limit    = kwargs.get('limit',
+                              settings_get('API_LIMIT_PER_PAGE', 20))
+        offset   = kwargs.get('offset', kwargs.get('offset', 0))
+
+        try:
+            manager = getattr(bundle.obj, manager)
+        except:
+            raise ResourceException(u'Manger not found.')
+
+        filtered = manager.filter(**filters)
+
+        if order_by:
+            filtered = filtered.order_by(order_by)
+        return filtered[offset:limit]
+
+    return lambda bundle: queryset(bundle, manager, **kwargs)
 
 
 class Authentication(BasicAuthentication):
@@ -104,6 +133,39 @@ class FormValidation(CleanedDataFormValidation):
         return errors
 
 
+class LimitedToManyField(fields.ToManyField):
+    """
+    A wrapper of ToMany field that has large number of objects.
+    """
+    def __init__(self, to, attribute, related_name=None, default=fields.NOT_PROVIDED,
+                 null=False, blank=False, readonly=False, full=False,
+                 unique=False, help_text=None, use_in='all', full_list=True, full_detail=True,
+                 order_by=None, limit=settings('TO_MANY_FIELD_LIMIT', 10), filters={}):
+        attribute = limit_queryset(attribute, order_by=order_by, limit=limit, filters=filters)
+        readonly = True
+        null = True
+        super(LimitedToManyField, self).__init__(
+            to, attribute, related_name=related_name, default=default,
+            null=null, blank=blank, readonly=readonly, full=full,
+            unique=unique, help_text=help_text, use_in=use_in,
+            full_list=full_list, full_detail=full_detail
+        )
+
+
+class JsonField(fields.ApiField):
+    """
+    A json field.
+    """
+    dehydrated_type = 'json'
+    help_text = 'A json of data. Ex: {"price": 26.73, "name": "Daniel"}'
+
+    def convert(self, value):
+        if value is None or len(value) < 1:
+            return None
+
+        return json.loads(json.dumps(value))
+
+
 class ModelResource(TastypieModelResource):
 
     def __init__(self):
@@ -113,26 +175,35 @@ class ModelResource(TastypieModelResource):
         })
         super(ModelResource, self).__init__()
 
+    def _handle_500(self, request, exception):
+        response = super(ModelResource, self)._handle_500(request, exception)
+        self.debug(request, response, logger.exception)
+        return response
+
     def debug(self, request, response, log=logger.debug):
         info = log if log == logger.exception else logger.info
 
-        info(u'API (%s): %s %s %s' % (
+        info(u'API (%s): %s %s %s%s' % (
              request.user,
              request.method, response.status_code,
-             request.META.get('PATH_INFO')))
+             request.META.get('PATH_INFO'),
+             '?%s' % request.META.get('QUERY_STRING') if len(request.META.get('QUERY_STRING', '')) else ''))
 
         if len(request.raw_post_data):
             log(u'API (%s): Data: %s' % (
-                request.user, request.raw_post_data,))
+                request.user, request.raw_post_data.decode('utf-8'),))
 
         if len(response.content):
             log(u'API (%s): Content: %s' % (request.user,
-                                           response.content,))
+                                            response.content.decode('utf-8'),))
 
     def dispatch(self, request_type, request, **kwargs):
+        # this needs to be called before method check
+        self.is_authenticated(request)
+ 
         response = super(ModelResource, self).dispatch(request_type,
-                                                  request,
-                                                  **kwargs)
+                                                       request,
+                                                       **kwargs)
 
         self.debug(request, response)
 
@@ -144,7 +215,7 @@ class ModelResource(TastypieModelResource):
         # allow superuser all operations dynamically
         if request.user.is_superuser:
 
-            logger.debug(u'hello superuser you can do anything with this resource...')
+            logger.debug(u'hello superuser you can do anything with this resource (%s)' % request.META['PATH_INFO'])
 
             self._meta.list_allowed_methods = ALL_METHODS
             self._meta.detail_allowed_methods = ALL_METHODS
@@ -152,16 +223,12 @@ class ModelResource(TastypieModelResource):
             for field in self._meta.excludes:
                 self.fields[field] = fields.CharField(attribute=field,
                                                       blank=True,
-                                                      null=True)
+                                                      null=True,
+                                                      readonly=True)
 
-    def _handle_500(self, request, exception):
-        response = super(ModelResource, self)._handle_500(request, exception)
-        self.debug(request, response, logger.exception)
-        return response
+            self._meta.excludes = []
 
-    def build_filters(self, filters=None):
-        if filters is None:
-            filters = {}
+    def build_filters(self, filters={}):
         orm_filters = super(ModelResource, self).build_filters(filters)
 
         if('Q' in filters):
@@ -205,6 +272,7 @@ class Meta(object):
     authentication = Authentication()
     authorization = Authorization()
     cache = SimpleCache()
+    ordering = ('id',)
     throttle = Throttle()
 
 
@@ -217,4 +285,4 @@ class SuperuserMeta(Meta):
 
 class ServiceMeta(Meta):
 
-    excludes = ['notification_url', 'hmac_key', 'token_key', 'token_iv',]
+    excludes = ['hmac_key', 'token_key', 'token_iv',]

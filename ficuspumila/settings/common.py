@@ -13,14 +13,12 @@ FICUSPUMILA = {
     'APP_ROOT': os.environ.get('APP_ROOT',
                                os.path.abspath(os.path.join(os.path.dirname(__file__),
                                                             '../..'))),
+    # admin
+    'ADMIN_PREFIX': 'admin/',
     # database
-    'DATABASES_FOR_READ' : ('default',),
-    'DATABASES_FOR_WRITE': ('default',),
-    'SYNCDB_ALLOWED'     : ('south',),
+    'SYNCDB_DISABLED': (),
     # core
     #'API_URL': '<url of the api server, https connection is strongly recommended for security>',
-    'SYSTEM_USERNAME': '<django auth username>',
-    'SYSTEM_PASSWORD': '<django auth password>',
     'SERVICES': {
         'ficuspumila.core.content.proxies.Source': {
             'user': 'ficuspumila.core.content.proxies.Owner',
@@ -32,14 +30,13 @@ FICUSPUMILA = {
         #     'user': 'core.playready.models.Licency',
         # },
     },
-    'CACHE_TIMEOUT' : 60 * 15,
-    'TOKEN_TIMEOUT' : 60 * 2,
-    'GC_DAYS_BEFORE': 60,
-    'GC_PROBABILITY': 0.1,
+    'SYSTEM_PASSWORD': '<django auth password>',
+    'SYSTEM_USERNAME': '<django auth username>',
+    'TOKEN_TIMEOUT' : 60 * 2, # the smaller this is, the more secure
     # core.common
-    'IPINFODB_API_URL': 'http://api.ipinfodb.com/v3/ip-country/',
-    'IPINFODB_API_KEY': '<api key for ipinfodb>',
     'GEONAMES_COUNTRY_INFO': 'http://download.geonames.org/export/dump/countryInfo.txt',
+    'IPINFODB_API_KEY': '<api key for ipinfodb>',
+    'IPINFODB_API_URL': 'http://api.ipinfodb.com/v3/ip-country/',
     # core.content
     # core.product
     # core.playready
@@ -63,7 +60,7 @@ MANAGERS = ADMINS
 
 
 # locale
-TIME_ZONE = 'Asia/Tokyo'
+TIME_ZONE = 'UTC'
 LANGUAGES = (
     ('ja', gettext('Japanese')),
     ('en', gettext('English')),
@@ -72,17 +69,6 @@ LANGUAGES = (
 
 # database
 DATABASE_ROUTERS = ('settings.database.routers.Default',)
-
-
-# cache
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
-        'LOCATION': 'localhost:11211',
-        'TIMEOUT': FICUSPUMILA['CACHE_TIMEOUT'],
-        'VERSION': FICUSPUMILA['APP_VERSION'],
-    }
-}
 
 
 # secrets
@@ -194,4 +180,7 @@ warnings.filterwarnings(action='ignore',
                         module=r'tastypie.*')
 warnings.filterwarnings(action='ignore',
                         category=DeprecationWarning,
-                        module=r'core.*')
+                        module=r'django.*')
+warnings.filterwarnings(action='ignore',
+                        category=DeprecationWarning,
+                        module=r'ficuspumila.core.proxies.*')

@@ -1,4 +1,6 @@
-# -*- coding: utf-8 -*-        
+# -*- coding: utf-8 -*-
+import djcelery
+
 from .common import *
 
 
@@ -25,12 +27,23 @@ DATABASES = {
 }
 
 
+# cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': 'localhost:11211',
+        'VERSION': FICUSPUMILA['APP_VERSION'],
+    }
+}
+
+
 # urls
 ROOT_URLCONF = 'urls.vagrant'
 
 
 # apps
 INSTALLED_APPS += (
+    'djcelery',
     'ficuspumila.core.auth',
     'ficuspumila.core.common',
     'ficuspumila.core.content',
@@ -44,14 +57,13 @@ LOGGING['loggers'] = {
         'level': 'DEBUG',
         'propagate': True,
     },
-    'django.request': {
-        'handlers': ('mail_admins',),
-        'level': 'DEBUG',
-        'propagate': True,
-    },
     'django.db.backends': {
         'handlers': ('console', 'sql_log',),
         'level': 'DEBUG',
         'propagate': False,
     },
 }
+
+
+# celery
+djcelery.setup_loader()

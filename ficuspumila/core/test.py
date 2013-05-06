@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 import base64
+import django
 import inspect
 import json
 import logging
 import requests
 import types
 
-from django.conf import settings
 from django.core.management import call_command
-from django.utils.importlib import import_module
-from django_nose import FastFixtureTestCase as DjangoTestCase
+from django_nose import FastFixtureTestCase
 from functools import wraps
 from mock import patch
 from operator import itemgetter
@@ -17,6 +16,9 @@ from tastypie.test import (
     TestApiClient as TastypieTestApiClient,
     ResourceTestCase as TastypieResourceTestCase
 )
+
+from ficuspumila.settings import ficuspumila as settings
+from .proxies import invalidate
 
 
 INITIAL_DATA = ('initial_data', 'ficuspumila',)
@@ -26,11 +28,11 @@ API_PATH = '/api/v1/core/'
 logger = logging.getLogger(__name__)
 
 
-def mock_request(self, method, url, **kwargs):
+def mock_request(obj, method, url, **kwargs):
     client = TastypieTestApiClient()
     authentication = 'Basic %s' % base64.b64encode(':'.join([
-        settings.FICUSPUMILA['SYSTEM_USERNAME'],
-        settings.FICUSPUMILA['SYSTEM_PASSWORD'],
+        settings('SYSTEM_USERNAME'),
+        settings('SYSTEM_PASSWORD'),
     ]))
 
     if method == 'GET':
@@ -63,9 +65,14 @@ def mock_request(self, method, url, **kwargs):
 
     return response
 
+def mock_cache_set(key, value, timeout=None):
+    # do nothing
+    pass
+
 def mock_api(func, **decorator_kwargs):
-    @patch.dict(settings.FICUSPUMILA, API_URL='/api/')
+    @patch.dict(django.conf.settings.FICUSPUMILA, API_URL='/api/')
     @patch('requests.sessions.Session.request', mock_request)
+    @patch('tastypie.cache.SimpleCache.set', mock_cache_set)
     @wraps(func)
     def wrapper(*args, **kwargs):
         return func(*args, **kwargs)
@@ -84,11 +91,12 @@ def mock_api_testcase(testcase=None):
             setattr(testcase, name, mock_api(func))
 
 
-class TestCase(DjangoTestCase):
+class TestCase(FastFixtureTestCase):
 
     fixtures = INITIAL_DATA
 
     def setUp(self):
+        invalidate()
         call_command('loaddata', *TEST_DATA)
         super(TestCase, self).setUp()
 
@@ -100,7 +108,6 @@ class ProxyTestCase(TestCase):
 
 class ResourceTestCase(TestCase, TastypieResourceTestCase):
 
-    version  = 1
     api_name = 'auth'
     resource_name = 'user'
 
@@ -113,8 +120,8 @@ class ResourceTestCase(TestCase, TastypieResourceTestCase):
         self.detail_endpoint = '%s1/' % self.list_endpoint
 
     def get_credentials(self):
-        return self.create_basic(username=settings.FICUSPUMILA['SYSTEM_USERNAME'],
-                                 password=settings.FICUSPUMILA['SYSTEM_PASSWORD'])
+        return self.create_basic(username=settings('SYSTEM_USERNAME'),
+                                 password=settings('SYSTEM_PASSWORD'))
 
     def test_get_list_unauthorzied(self):
         r = self.api_client.get(self.list_endpoint)
@@ -137,14 +144,3 @@ class ResourceTestCase(TestCase, TastypieResourceTestCase):
                                 authentication=self.get_credentials())
         self.assertValidJSONResponse(r)
         return r
-
-
-class AuthTestCase(TestCase):
-
-    def setUp(self):
-
-        self.service = getattr(import_module('core.content.models'),
-                               'Source').objects.get(pk=1)
-        self.token = self.service.generate_token({'source_owner_id': ''})
-
-        super(AuthTestCase, self).setup()
