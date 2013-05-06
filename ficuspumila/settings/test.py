@@ -28,9 +28,16 @@ INSTALLED_APPS = tuple(app for app in INSTALLED_APPS if not app == 'djcelery')
 
 
 # logging
+LOGGING['handlers'] = {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'normal',
+        },
+}
 LOGGING['loggers'] = {
     '': {
-        'handlers': ('test_log',),
+        'handlers': ('console',),
         'level': 'INFO',
         'propagate': True,
     },
