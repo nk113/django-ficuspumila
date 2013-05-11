@@ -2,6 +2,60 @@
   {
     "fields": {
       "ctime": "2013-02-17T03:24:43Z", 
+      "name": "WIDTH",
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "content.filespecificationattributename", 
+    "pk": 1
+  },
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "name": "HEIGHT",
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "content.filespecificationattributename", 
+    "pk": 2
+  },
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "name": "CANVAS_COLOR",
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "content.filespecificationattributename", 
+    "pk": 3
+  },
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "name": "LETTERBOX",
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "content.filespecificationattributename", 
+    "pk": 4
+  },
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "name": "QUALITY",
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "content.filespecificationattributename", 
+    "pk": 5
+  },
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "name": "HEIGHT",
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "content.filespecificationattributename", 
+    "pk": 2
+  },
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
       "extensions": "bmp", 
       "mime_types": "image/bmp", 
       "name": "Windows Bitmap", 

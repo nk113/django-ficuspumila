@@ -8,6 +8,7 @@ from functools import wraps
 
 from ficuspumila.settings import ficuspumila as settings
 
+
 TIMEOUT = settings('CACHE_TIMEOUT', 60 * 15)
 
 logger = logging.getLogger(__name__)

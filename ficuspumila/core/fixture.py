@@ -17,11 +17,13 @@ class Generator(object):
     fixtures = ('initial_data.json',)
     data = None
 
-    def __init__(self, fixtures=None):
+    def __init__(self, fixture_dir=None, fixtures=None):
+        self.fixture_dir = fixture_dir if fixture_dir is not None else self.fixture_dir
+        self.fixtures = fixtures if fixtures is not None else self.fixtures
+
         if self.fixture_dir is None:
             raise FixtureException(u'"fixture_dir" needs to be specified ' +
                                    u'in subclasses.')
-        self.fixtures = fixtures if fixtures is not None else self.fixtures
 
     def generate(self):
         logger.info(u'generating fixtures...')

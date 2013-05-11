@@ -92,6 +92,9 @@ def mock_api_testcase(testcase=None):
 
 
 class TestCase(FastFixtureTestCase):
+    """
+    Don't be smart so much in test cases!
+    """
 
     fixtures = INITIAL_DATA
 
@@ -102,11 +105,17 @@ class TestCase(FastFixtureTestCase):
 
 
 class ProxyTestCase(TestCase):
+    """
+    Don't be smart so much in test cases!
+    """
 
     pass
 
 
 class ResourceTestCase(TestCase, TastypieResourceTestCase):
+    """
+    Don't be smart so much in test cases!
+    """
 
     api_name = 'auth'
     resource_name = 'user'

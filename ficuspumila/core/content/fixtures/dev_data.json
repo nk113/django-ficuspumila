@@ -1,6 +1,39 @@
 [
   {
     "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "name": "SCREENSHOT", 
+      "owner": 1, 
+      "type": 4, 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "content.filespecification", 
+    "pk": 1
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "filespecification": 1, 
+      "name": 1, 
+      "utime": "2013-02-17T03:24:43Z", 
+      "value": "100"
+    }, 
+    "model": "content.filespecificationattribute", 
+    "pk": 1
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "filespecification": 1, 
+      "name": 2, 
+      "utime": "2013-02-17T03:24:43Z", 
+      "value": "100"
+    }, 
+    "model": "content.filespecificationattribute", 
+    "pk": 2
+  }, 
+  {
+    "fields": {
       "category": 0, 
       "ctime": "2013-02-17T11:55:40Z", 
       "name": "Pop", 
@@ -8,7 +41,7 @@
     }, 
     "model": "content.genre", 
     "pk": 1
-  },
+  }, 
   {
     "fields": {
       "category": 0, 
@@ -18,71 +51,71 @@
     }, 
     "model": "content.genre", 
     "pk": 2
-  },
+  }, 
   {
     "fields": {
       "ctime": "2013-02-17T11:55:40Z", 
-      "genre": 1,
-      "language_code": "en",
-      "name": "Pop",
+      "genre": 1, 
+      "language_code": "en", 
+      "name": "Pop", 
       "utime": "2013-02-17T11:55:40Z"
     }, 
     "model": "content.genrelocalization", 
     "pk": 1
-  },
+  }, 
   {
     "fields": {
       "ctime": "2013-02-17T11:55:40Z", 
-      "genre": 1,
-      "language_code": "ja",
-      "name": "ポップ",
+      "genre": 1, 
+      "language_code": "ja", 
+      "name": "\u30dd\u30c3\u30d7", 
       "utime": "2013-02-17T11:55:40Z"
     }, 
     "model": "content.genrelocalization", 
     "pk": 2
-  },
+  }, 
   {
     "fields": {
       "ctime": "2013-02-17T11:55:40Z", 
-      "genre": 2,
-      "language_code": "en",
-      "name": "Rock",
+      "genre": 2, 
+      "language_code": "en", 
+      "name": "Rock", 
       "utime": "2013-02-17T11:55:40Z"
     }, 
     "model": "content.genrelocalization", 
     "pk": 3
-  },
+  }, 
   {
     "fields": {
       "ctime": "2013-02-17T11:55:40Z", 
-      "genre": 2,
-      "language_code": "ja",
-      "name": "ロック",
+      "genre": 2, 
+      "language_code": "ja", 
+      "name": "\u30ed\u30c3\u30af", 
       "utime": "2013-02-17T11:55:40Z"
     }, 
     "model": "content.genrelocalization", 
     "pk": 4
-  },
+  }, 
   {
     "fields": {
       "ctime": "2013-02-17T11:55:40Z", 
       "source": 1, 
       "source_owner_id": "dev", 
-      "user": 1,
+      "user": 1, 
       "utime": "2013-02-17T11:55:40Z"
     }, 
     "model": "content.owner", 
     "pk": 1
-  },
+  }, 
   {
     "fields": {
       "ctime": "2013-02-17T11:55:40Z", 
-      "hmac_key": "a34ae9c337ac6f68933b76bdee3840f50b2fba79ec72b29bed9f5cb48b3660e0",
-      "name": "dev",
-      "notification_urls": "http://dev:8000/event_receiver/",
-      "token_iv": "eb3d5b10321a131869e67688979964a1",
-      "token_key": "b3ff64dba4fae71bc718481cc12d998fc27d66d2632658cd7a742c923fd9fcfe",
-      "user": 1,
+      "hmac_key": "a34ae9c337ac6f68933b76bdee3840f50b2fba79ec72b29bed9f5cb48b3660e0", 
+      "name": "dev", 
+      "notification_urls": "http://dev:8000/event_receiver/", 
+      "token_iv": "eb3d5b10321a131869e67688979964a1", 
+      "token_key": "b3ff64dba4fae71bc718481cc12d998fc27d66d2632658cd7a742c923fd9fcfe", 
+      "user": 1, 
       "utime": "2013-02-17T11:55:40Z"
     }, 
     "model": "content.source", 

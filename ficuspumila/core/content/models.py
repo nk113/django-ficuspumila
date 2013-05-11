@@ -158,11 +158,14 @@ class FileSpecification(Model, Attributable):
     owner = models.ForeignKey(Owner,
                          blank=True,
                          null=True)
+    parent = models.ForeignKey('FileSpecification',
+                         related_name='children',
+                         null=True)
     name = models.CharField(max_length=128)
     type = models.ForeignKey(FileType)
 
     def __unicode__(self):
-        return '%s: %s' % (self.source, self.name,)
+        return '(%s): %s' % (self.owner, self.name,)
 
 
 class FileSpecificationAttributeName(Name):
@@ -177,9 +180,10 @@ class FileSpecificationAttribute(Attribute):
 
         db_table = '%s_filespecificationatteibute' % MODULE
         ordering = ('name__name',)
-        unique_together = ('spec', 'name',)
+        unique_together = ('filespecification', 'name',)
 
-    spec = models.ForeignKey(FileSpecification)
+    filespecification = models.ForeignKey(FileSpecification,
+                                          related_name='attributes')
     name = models.ForeignKey(FileSpecificationAttributeName)
 
 

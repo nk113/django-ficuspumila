@@ -1,6 +1,50 @@
 [
   {
     "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "name": "SCREENSHOT", 
+      "owner": 1, 
+      "type": 4, 
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "content.filespecification", 
+    "pk": 1
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "filespecification": 1, 
+      "name": 1, 
+      "utime": "2013-02-17T03:24:43Z", 
+      "value": "100"
+    }, 
+    "model": "content.filespecificationattribute", 
+    "pk": 1
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "filespecification": 1, 
+      "name": 2, 
+      "utime": "2013-02-17T03:24:43Z", 
+      "value": "100"
+    }, 
+    "model": "content.filespecificationattribute", 
+    "pk": 2
+  }, 
+  {
+    "fields": {
+      "ctime": "2013-02-17T03:24:43Z", 
+      "name": "SCREENSHOT",
+      "owner": 1,
+      "type": 4,
+      "utime": "2013-02-17T03:24:43Z"
+    }, 
+    "model": "content.filespecification", 
+    "pk": 1
+  },
+  {
+    "fields": {
       "category": 0, 
       "ctime": "2013-02-17T11:55:40Z",
       "name": "Pop", 

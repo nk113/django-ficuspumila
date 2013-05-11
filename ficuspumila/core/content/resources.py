@@ -242,10 +242,20 @@ class FileSpecificationResource(ContentResource):
         filtering = {
             'owner': ALL_WITH_RELATIONS,
             'name' : EXACT_IN_STARTSWITH,
+            'parent' : ALL_WITH_RELATIONS,
+            'children' : ALL_WITH_RELATIONS,
             'type' : ALL_WITH_RELATIONS,
         }
 
-    owner = fields.ForeignKey(SourceResource, 'owner')
+    owner = fields.ForeignKey(OwnerResource, 'owner')
+    parent = fields.ForeignKey('ficuspumila.core.content.resources.FileSpecificationResource',
+                               'parent',
+                               null=True)
+    children = fields.ToManyField('ficuspumila.core.content.resources.FileSpecificationResource',
+                                  'children')
+    attributes = fields.ToManyField(
+                         'ficuspumila.core.content.resources.FileSpecificationAttributeResource',
+                         'attributes')
     type = fields.ForeignKey(FileTypeResource, 'type')
 
 
@@ -267,12 +277,12 @@ class FileSpecificationAttributeResource(ContentResource):
         queryset = FileSpecificationAttribute.objects.all()
         resource_name = 'filespecificationattribute'
         filtering = {
-            'spec' : ALL_WITH_RELATIONS,
+            'filespecification' : ALL_WITH_RELATIONS,
             'name' : ALL_WITH_RELATIONS,
             'value': EXACT_IN_STARTSWITH,
         }
 
-    spec = fields.ForeignKey(FileSpecificationResource, 'spec')
+    filespecification = fields.ForeignKey(FileSpecificationResource, 'filespecification')
     name = fields.ForeignKey(FileSpecificationAttributeNameResource, 'name')
 
 

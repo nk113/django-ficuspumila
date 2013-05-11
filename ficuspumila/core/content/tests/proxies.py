@@ -35,6 +35,7 @@ class GenreProxyTestCase(ProxyTestCase):
         g = self.test_get()
 
         self.assertEqual(g.localize('ja').name, u'ポップ')
+        self.assertEqual(g.localize('en').name, u'Pop')
 
 
 class GenreApiProxyTestCase(GenreProxyTestCase):
@@ -96,18 +97,8 @@ class SourceProxyTestCase(ProxyTestCase):
         s = self.test_setattr()
 
         s.delattr('DELETE_SOURCE_RESOURCE_ON_ITEM_READY')
-        self.test_getattr()
-
-        self.assertRaises(KeyError, lambda: s.delattr('SHITHEAD'))
-
-        return s
-
-    def test_delattr(self):
-        s = self.test_setattr()
-
-        s.delattr('DELETE_SOURCE_RESOURCE_ON_ITEM_READY')
-        self.test_getattr()
-
+        self.assertEqual(s.getattr('DELETE_SOURCE_RESOURCE_ON_ITEM_READY'),
+                         None)
         self.assertRaises(KeyError, lambda: s.delattr('SHITHEAD'))
 
         return s
@@ -195,3 +186,57 @@ class OwnerApiProxyTestCase(OwnerProxyTestCase):
     pass
 
 mock_api_testcase(OwnerApiProxyTestCase)
+
+
+class FileSpecificationProxyTestCase(ProxyTestCase):
+
+    def test_get(self):
+        FileSpecification = get_proxy('FileSpecification', proxy_module=PROXY_MODULE)
+        Owner = get_proxy('Owner', proxy_module=PROXY_MODULE)
+
+
+        o = Owner.objects.get(user__username=settings('SYSTEM_USERNAME'))
+        fs = FileSpecification.objects.get(owner=o,
+                                           name='SCREENSHOT')
+        self.assertEqual(fs.name, 'SCREENSHOT')
+        self.assertEqual(fs.owner.user.username, settings('SYSTEM_USERNAME'))
+
+        self.assertRaises((client.ObjectDoesNotExist, ObjectDoesNotExist),
+                          lambda: FileSpecification.objects.get(name='crazymonkey'))
+
+        return fs
+
+    def test_getattr(self):
+        fs = self.test_get()
+        self.assertEqual(fs.getattr('WIDTH'), '100')
+        self.assertEqual(fs.getattr('HEIGHT'), '100')
+        self.assertEqual(fs.getattr('LETTERBOX', True), True)
+        self.assertEqual(fs.getattr('QUALITY', 75), 75)
+        return fs
+
+    def test_setattr(self):
+        fs = self.test_get()
+
+        self.assertRaises((client.ObjectDoesNotExist, ObjectDoesNotExist),
+                          lambda: fs.setattr('SHITHEAD', 'blah'))
+
+        fs.setattr('WIDTH', '120')
+        self.assertEqual(fs.getattr('WIDTH'), '120')
+
+        return fs
+
+    def test_delattr(self):
+        fs = self.test_setattr()
+
+        fs.delattr('WIDTH')
+        self.assertEqual(fs.getattr('WIDTH'), None)
+        self.assertRaises(KeyError, lambda: fs.delattr('SHITHEAD'))
+
+        return fs
+
+
+class FileSpecificationApiProxyTestCase(FileSpecificationProxyTestCase):
+
+    pass
+
+mock_api_testcase(FileSpecificationApiProxyTestCase)

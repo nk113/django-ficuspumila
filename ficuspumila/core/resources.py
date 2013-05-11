@@ -4,6 +4,7 @@ import logging
 
 from django.contrib.auth.models import User as AuthUser
 from django.core.exceptions import FieldError
+from functools import wraps
 from tastypie.authentication import BasicAuthentication
 from tastypie.authorization import DjangoAuthorization
 from tastypie.cache import SimpleCache
@@ -165,6 +166,14 @@ class JsonField(fields.ApiField):
 
         return json.loads(json.dumps(value))
 
+try:
+    from django.views.decorators.csrf import csrf_exempt
+except ImportError:
+    def csrf_exempt(func):
+        return func
+from tastypie.exceptions import NotFound, BadRequest, InvalidFilterError, HydrationError, InvalidSortError, ImmediateHttpResponse, Unauthorized
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned, ValidationError
+from django.utils.cache import patch_cache_control, patch_vary_headers
 
 class ModelResource(TastypieModelResource):
 
@@ -199,11 +208,15 @@ class ModelResource(TastypieModelResource):
 
     def dispatch(self, request_type, request, **kwargs):
         # this needs to be called before method check
-        self.is_authenticated(request)
- 
-        response = super(ModelResource, self).dispatch(request_type,
-                                                       request,
-                                                       **kwargs)
+        try:
+            self.is_authenticated(request)
+
+            response = super(ModelResource, self).dispatch(request_type,
+                                                           request,
+                                                           **kwargs)
+        except Exception, e:
+            logger.exception(u'a fatal error has occurred during processing dispatch: %s' % e)
+            raise e
 
         self.debug(request, response)
 

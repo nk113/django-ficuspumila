@@ -53,9 +53,12 @@ def get(name, model_module=None, proxy_module=None):
         proxy_module = inspect.getmodule(frame[0])
 
     if model_module is None:
-        splitted = proxy_module.__name__.split('.')
-        splitted[-1] = 'models'
-        model_module = '.'.join(splitted)
+        try:
+            splitted = proxy_module.__name__.split('.')
+            splitted[-1] = 'models'
+            model_module = '.'.join(splitted)
+        except AttributeError, e:
+            logger.exception(u'seems not to be imported in django application context')
 
     proxy = getattr(proxy_module, '%sProxy' % name)
 
@@ -103,6 +106,16 @@ class QuerySet(client.QuerySet):
     def __init__(self, model, responses=None, query=None, **kwargs):
         super(QuerySet, self).__init__(model, responses, query, **kwargs)
         self._response_class = Response
+
+    def _filter(self, *args, **kwargs):
+        for key, value in kwargs.items():
+            try:
+                # convert resource_uri to numeric id
+                id = client.parse_id('%s' % value)
+                kwargs[key] = id
+            except Exception, e:
+                pass
+        return super(QuerySet, self)._filter(*args, **kwargs)
 
     def _wrap_response(self, dictionary):
         return self._response_class(self.model,
@@ -465,17 +478,18 @@ class AttributableProxy(Proxy):
 
     def __init_proxy__(self):
         super(AttributableProxy, self).__init_proxy__()
-
         class_name = self.__class__.__name__
         if isinstance(self, Proxy):
             class_name = class_name.replace('Proxy', '')
         for name in self._attribute_names:
-            setattr(self, '%s' % name, get('%s%s' % (class_name, name.title(),),
-                                           proxy_module=self.__module__))
             try:
+                setattr(self, '%s' % name, get('%s%s' % (class_name, name.title(),),
+                                           proxy_module=self.__module__))
                 setattr(self, '%s_name' % name, get('%s%sName' % (class_name, name.title(),),
                                                     proxy_module=self.__module__))
             except AttributeError, e:
+                # FIXME: 
+                logger.exception(u'unexpected __init_proxy__ call (%s)' % e)
                 pass
 
     def get_attribute(self, name):
