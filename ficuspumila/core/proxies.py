@@ -636,7 +636,7 @@ class LocalizableProxy(AttributableProxy):
 
 class ServiceProxy(NotifierProxy):
 
-    _attribute_names = ('attribute', 'event',)
+    _attribute_names = ('attribute', 'event', 'notification',)
 
     def generate_token(self, data={}, format='json'):
         try:
