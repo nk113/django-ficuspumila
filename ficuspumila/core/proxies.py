@@ -140,8 +140,8 @@ class Response(client.Response):
     def __init__(self, model, response=None, url=None, **kwargs):
 
         # implement proxy mixin
-        if model._model_name in model._base_client._proxies:
-            proxy = model._base_client._proxies[model._model_name].__class__
+        if model._model_name in ProxyClient._proxies:
+            proxy = ProxyClient._proxies[model._model_name].__class__
             extend(self, proxy, replace_module=True)
             self.__init_proxy__()
 
@@ -153,75 +153,91 @@ class Response(client.Response):
         return super(Response, self).__repr__()
 
     def __getattr__(self, name):
-        base_client = self.model._base_client
-
+        """
+        Overrides to support api namespace and to_one class diversity
+        """
         try:
-            return super(Response, self).__getattr__(name)
+            if not name in self._response:
+                raise AttributeError(name)
+
+            elif not 'related_type' in self._schema['fields'][name]:
+                return self.__getitem__(name)
+
         except AttributeError, e:
             if name in PK_ID:
                 return get_pk(self)
             return getattr(self.model, name)
+
         except KeyError, e:
-            # resolves foreign key references in another api namespace
-            # expects to be called with detail url like /api/v1/<resource>/<id>|schema/
-            #
-            # CAVEAT: resource_uri of referred resource has to have the same version
+            logger.debug(u'')
+
+        # resolves foreign key references in another api namespace
+        # expects to be called with detail url like /api/v1/<resource>/<id>|schema/
+        #
+        # CAVEAT: resource_uri of referred resource has to have the same version 
+        base_client = self.model._base_client
+
+        if name in self._schema['fields']:
             schema = self._schema['fields'][name]
-            if schema['related_type'] in ('to_one', 'to_many',):
+
+            if ('related_type' in schema and
+                schema['related_type'] in ('to_one', 'to_many',)):
                 if schema.get('schema'):
-                    resource_uri = schema.get('schema')
+                    schema_uri = schema.get('schema')
                 else:
                     try:
-                        resource_uri = self._response[name]
-                        resource_uri = resource_uri[0] if (
-                            isinstance(resource_uri, list)) else resource_uri
+                        schema_uri = self._response[name]
+                        schema_uri = schema_uri[0] if (
+                            isinstance(schema_uri, list)) else schema_uri
 
                         logger.debug(u'trying to identify schema info from ' +
-                                     u'resource_uri (%s).' % resource_uri)
+                                     u'schema_uri (%s).' % schema_uri)
                     except Exception, e:
                         raise ProxyException(u'Couldn\'t identify related ' +
                                              u'field schema (%s).' % name)
-            else:
-                raise ProxyException(u'The field "%s" seems not to be defined ' +
-                                     u'in the schema.')
+        else:
+            raise ProxyException(u'The field "%s" seems not to be defined ' +
+                                 u'in the schema.')
 
-            api_url = base_client._api_url
-            version = base_client._version
-            paths   = resource_uri.replace(
-                          base_client._api_path, '')[:-1].split('/')
+        api_url = base_client._api_url
+        version = base_client._version
+        paths   = schema_uri.replace(
+                      base_client._api_path, '')[:-1].split('/')
 
-            # strip <id> or ``schema`` part and extract resource_name
-            paths.pop()
-            resource_name = paths.pop()
+        # strip <id> or ``schema`` part and extract resource_name
+        paths.pop()
+        resource_name = paths.pop()
 
-            if version in paths: paths.remove(version)
-            namespace = '/'.join(paths)
+        if version in paths: paths.remove(version)
+        namespace = '/'.join(paths)
 
-            logger.debug(u'%s, need namespace schema (%s)' % (
-                self._response[name],
-                ProxyClient.build_base_url(base_client._api_url, **{
-                    'version': base_client._version,
-                    'namespace': namespace
-                })))
+        logger.debug(u'%s, need namespace schema (%s)' % (
+            self._response[name],
+            ProxyClient.build_base_url(base_client._api_url, **{
+                'version': base_client._version,
+                'namespace': namespace
+            })))
 
-            client = ProxyClient.get(base_client._api_url,
-                                     version=base_client._version,
-                                     namespace=namespace,
-                                     auth=base_client._auth)
-            client.schema()
+        proxy_client = ProxyClient.get(base_client._api_url,
+                                       version=base_client._version,
+                                       namespace=namespace,
+                                       auth=base_client._auth)
+        proxy_client.schema()
 
-            # set manager alias
-            if name is not resource_name:
-                setattr(self.model, resource_name, getattr(self.model, name))
+        model = proxy_client._model_gen(resource_name)
 
-            clone_original = self.model.clone
-            self.model.clone = lambda model_name: client._model_gen(resource_name)
+        # set manager alias
+        if name is not resource_name:
+            setattr(self.model, resource_name, getattr(self.model, name))
 
-            model = super(Response, self).__getattr__(name)
+        if schema['related_type'] == 'to_many':
+            return ManyToManyManager(
+                       model=model,
+                       query={'id__in': [client.parse_id(resource_uri) for resource_uri in self._response[name]]},
+                       instance=self.model)
 
-            self.model.clone = clone_original
-
-            return model
+        elif schema['related_type'] == 'to_one':
+            return Response(model=model, url=self._response[name])
 
     @property
     def _response(self):
@@ -386,19 +402,26 @@ class ProxyClient(client.Client):
                    '%s/' % kwargs.get('version') if kwargs.get('version') else '',
                    '%s/' % kwargs.get('namespace') if kwargs.get('namespace') else '')
 
-    def schema(self, model_name=None, namespace=None):
-        namespace = namespace or '.'.join(
-                        self._base_url.replace(self._api_url,
+    def schema(self, model_name=None):
+        path = '.'.join(self._base_url.replace(self._api_url,
                                                '').split('/')[:-1])
 
         if model_name is None:
-            model_name = namespace
+            model_name = path
             url = self._base_url
         else:
             url = self._url_gen('%s/schema/' % model_name)
 
         if not model_name in self._schema_store:
             self._schema_store[model_name] = self.request(url)
+
+        # try to import proxies
+        try:
+            module = '%s.%s.proxies' % (self.__module__.split('.')[0],
+                                        self._namespace.replace('/', '.'))
+            import_module(module)
+        except Exception, e:
+            logger.debug(u'failed to import proxies module (%s)' % module)
 
         return self._schema_store[model_name]
 
@@ -478,18 +501,21 @@ class AttributableProxy(Proxy):
 
     def __init_proxy__(self):
         super(AttributableProxy, self).__init_proxy__()
+
         class_name = self.__class__.__name__
         if isinstance(self, Proxy):
             class_name = class_name.replace('Proxy', '')
+ 
         for name in self._attribute_names:
-            try:
-                setattr(self, '%s' % name, get('%s%s' % (class_name, name.title(),),
+            attribute_class_name = '%s%s' % (class_name, name.title(),)
+            setattr(self, '%s' % name, get(attribute_class_name,
                                            proxy_module=self.__module__))
-                setattr(self, '%s_name' % name, get('%s%sName' % (class_name, name.title(),),
+            # set the name proxy if the attribute has its name field as foreign key
+            try:
+                setattr(self, '%s_name' % name, get('%sName' % attribute_class_name,
                                                     proxy_module=self.__module__))
             except AttributeError, e:
-                # FIXME: 
-                logger.exception(u'unexpected __init_proxy__ call (%s)' % e)
+                # could occur
                 pass
 
     def get_attribute(self, name):
@@ -613,7 +639,7 @@ class LocalizableProxy(AttributableProxy):
 
 class ServiceProxy(NotifierProxy):
 
-    _attribute_names = ('attribute', 'event', 'notification',)
+    _attribute_names = ('attribute', 'event',)
 
     def generate_token(self, data={}, format='json'):
         try:

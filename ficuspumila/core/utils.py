@@ -106,6 +106,16 @@ def curtail(cls, mixedin):
             bases.remove(base)
     cls.__bases__ = tuple(bases)
 
+def subclasses(module, cls):
+    module = import_module(module)
+    for name in dir(module):
+        member = getattr(module, name)
+        try:
+            if member != cls and issubclass(member, cls):
+                yield name, member
+        except TypeError:
+            pass
+
 
 # random
 def random(rate=1):
