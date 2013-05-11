@@ -168,9 +168,6 @@ class Response(client.Response):
                 return get_pk(self)
             return getattr(self.model, name)
 
-        except KeyError, e:
-            logger.debug(u'')
-
         # resolves foreign key references in another api namespace
         # expects to be called with detail url like /api/v1/<resource>/<id>|schema/
         #
