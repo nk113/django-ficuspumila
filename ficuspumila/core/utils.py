@@ -88,8 +88,8 @@ def extend(instance, new_class, attrs={}, replace_module=False):
         name = new_class.__name__
         module = new_class.__module__
 
-    instance.__class__ = type(name, 
-                              (instance.__class__, new_class), 
+    instance.__class__ = type(name,
+                              (instance.__class__, new_class),
                               attrs)
     instance.__class__.__module__ = module
     instance.__module__ = new_class.__module__

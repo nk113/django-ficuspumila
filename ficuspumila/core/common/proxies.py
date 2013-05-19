@@ -2,17 +2,16 @@
 import logging
 import requests
 
+from ficuspumila.core import proxies
 from ficuspumila.core.cache import cache
 from ficuspumila.core.exceptions import ProxyException
-from ficuspumila.core.models import Choice
-from ficuspumila.core.proxies import get, Proxy
 from ficuspumila.settings import ficuspumila as settings
 
 
 logger = logging.getLogger(__name__)
 
 
-class CountryProxy(Proxy):
+class Country(proxies.Proxy):
 
     @classmethod
     @cache(keyarg=1)
@@ -48,6 +47,3 @@ class CountryProxy(Proxy):
     @classmethod
     def get_by_ip(cls, ip):
         return Country.objects.get(alpha2=cls.query_country_code(ip))
-
-
-Country = get('Country', 'ficuspumila.core.common.models')

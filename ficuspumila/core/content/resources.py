@@ -14,36 +14,20 @@ from tastypie.exceptions import (
 from tastypie.http import HttpForbidden
 from tastypie.resources import ALL, ALL_WITH_RELATIONS
 
-from ficuspumila.core.auth.resources import UserResource
-from ficuspumila.core.resources import (
-    ALL_METHODS,
-    EXACT,
-    EXACT_IN,
-    EXACT_IN_CONTAINS,
-    EXACT_IN_GTE_LTE,
-    EXACT_IN_GET_LTE_DATE,
-    EXACT_IN_STARTSWITH,
-    JsonField, LimitedToManyField,
-    Meta, ModelResource,
-    ServiceMeta,
-)
+from ficuspumila.core import resources
+from ficuspumila.core.content import models
+from ficuspumila.core.auth import resources as auth_resources
 from ficuspumila.core.exceptions import ResourceException
 from ficuspumila.settings import (
     get as settings_get,
     ficuspumila as settings,
-)
-from .models import (
-    FileSpecification, FileSpecificationAttribute, FileSpecificationAttributeName,
-    FileType, Genre, GenreLocalization,
-    Owner, ResourceType, Source, SourceAttribute, SourceAttributeName,
-    SourceEvent, SourceEventName, SourceNotification,
 )
 
 
 logger = logging.getLogger(__name__)
 
 
-class ContentResource(ModelResource):
+class Content(resources.ModelResource):
 
     def obj_create(self, bundle, **kwargs):
         if hasattr(bundle.request.user, 'owner'):
@@ -53,7 +37,7 @@ class ContentResource(ModelResource):
                 kwargs['owner'] = bundle.request.user.owner
             if hasattr(self._meta.object_class, 'event'):
                 kwargs['event__source'] = bundle.request.user.owner.source
-            return super(ContentResource, self).obj_create(bundle,
+            return super(Content, self).obj_create(bundle,
                                                         **kwargs)
 
         raise ImmediateHttpResponse(response=HttpForbidden())
@@ -71,232 +55,233 @@ class ContentResource(ModelResource):
         raise ImmediateHttpResponse(response=HttpForbidden())
 
 
-class GenreResource(ContentResource):
+class Genre(Content):
 
-    class Meta(Meta):
+    class Meta(resources.Meta):
 
-        queryset = Genre.objects.all()
+        queryset = models.Genre.objects.all()
         resource_name = 'genre'
         filtering = {
-            'name': EXACT_IN_STARTSWITH,
-            'type': EXACT_IN,
+            'name': resources.EXACT_IN_STARTSWITH,
+            'type': resources.EXACT_IN,
         }
 
 
-class GenreLocalizationResource(ContentResource):
+class GenreLocalization(Content):
 
-    class Meta(Meta):
+    class Meta(resources.Meta):
 
-        queryset = GenreLocalization.objects.all()
+        queryset = models.GenreLocalization.objects.all()
         resource_name = 'genrelocalization'
         filtering = {
             'genre'   : ALL_WITH_RELATIONS,
-            'language_code': EXACT_IN,
-            'name'    : EXACT_IN_STARTSWITH,
+            'language_code': resources.EXACT_IN,
+            'name'    : resources.EXACT_IN_STARTSWITH,
         }
 
-    genre = fields.ForeignKey(GenreResource, 'genre')
+    genre = fields.ForeignKey(Genre, 'genre')
 
 
-class SourceResource(ContentResource):
+class Source(Content):
 
-    class Meta(ServiceMeta):
+    class Meta(resources.ServiceMeta):
 
-        queryset = Source.objects.all()
+        queryset = models.Source.objects.all()
         resource_name = 'source'
         filtering = {
             'user': ALL_WITH_RELATIONS,
-            'name': EXACT_IN_CONTAINS,
-            'source_owener_id': EXACT_IN_STARTSWITH,
+            'name': resources.EXACT_IN_CONTAINS,
+            'source_owener_id': resources.EXACT_IN_STARTSWITH,
             'attributes': ALL_WITH_RELATIONS,
             'events': ALL_WITH_RELATIONS,
         }
 
-    user = fields.ForeignKey(UserResource, 'user')
+    user = fields.ForeignKey(auth_resources.User, 'user')
     attributes = fields.ToManyField(
-                         'ficuspumila.core.content.resources.SourceAttributeResource',
+                         'ficuspumila.core.content.resources.SourceAttribute',
                          'attributes')
-    events = LimitedToManyField(
-                         'ficuspumila.core.content.resources.SourceEventResource',
+    events = resources.LimitedToManyField(
+                         'ficuspumila.core.content.resources.SourceEvent',
                          'events', order_by='-id',)
     notification_urls = fields.ListField('notification_urls')
 
 
-class SourceAttributeNameResource(ContentResource):
+class SourceAttributeName(Content):
 
-    class Meta(Meta):
+    class Meta(resources.Meta):
 
-        queryset = SourceAttributeName.objects.all()
+        queryset = models.SourceAttributeName.objects.all()
         resource_name = 'sourceattributename'
         filtering = {
-            'name'  : EXACT_IN,
+            'name'  : resources.EXACT_IN,
         }
 
 
-class SourceAttributeResource(ContentResource):
+class SourceAttribute(Content):
 
-    class Meta(Meta):
+    class Meta(resources.Meta):
 
-        queryset = SourceAttribute.objects.all()
+        queryset = models.SourceAttribute.objects.all()
         resource_name = 'sourceattribute'
         filtering = {
             'source': ALL_WITH_RELATIONS,
             'name'  : ALL_WITH_RELATIONS,
-            'value' : EXACT_IN_STARTSWITH,
+            'value' : resources.EXACT_IN_STARTSWITH,
         }
 
-    source = fields.ForeignKey(SourceResource, 'source')
-    name = fields.ForeignKey(SourceAttributeNameResource, 'name')
+    source = fields.ForeignKey(Source, 'source')
+    name = fields.ForeignKey(SourceAttributeName, 'name')
 
 
-class SourceEventNameResource(ContentResource):
+class SourceEventName(Content):
 
-    class Meta(Meta):
+    class Meta(resources.Meta):
 
-        queryset = SourceEventName.objects.all()
+        queryset = models.SourceEventName.objects.all()
         resource_name = 'sourceeventname'
         filtering = {
-            'name'  : EXACT_IN,
+            'name'  : resources.EXACT_IN,
         }
 
 
-class SourceEventResource(ContentResource):
+class SourceEvent(Content):
 
-    class Meta(Meta):
+    class Meta(resources.Meta):
 
-        queryset = SourceEvent.objects.all()
+        queryset = models.SourceEvent.objects.all()
         resource_name = 'sourceevent'
         filtering = {
             'source' : ALL_WITH_RELATIONS,
             'name'   : ALL_WITH_RELATIONS,
-            'message': EXACT_IN_CONTAINS,
-            'ctime'  : EXACT_IN_GET_LTE_DATE,
-            'utime'  : EXACT_IN_GET_LTE_DATE,
+            'message': resources.EXACT_IN_CONTAINS,
+            'ctime'  : resources.EXACT_IN_GET_LTE_DATE,
+            'utime'  : resources.EXACT_IN_GET_LTE_DATE,
         }
 
-    source = fields.ForeignKey(SourceResource, 'source')
-    name = fields.ForeignKey(SourceEventNameResource, 'name')
-    message = JsonField('message', null=False, blank=True)
-    notifications = LimitedToManyField(
-                         'ficuspumila.core.content.resources.SourceNotificationResource',
+    source = fields.ForeignKey(Source, 'source')
+    name = fields.ForeignKey(SourceEventName, 'name')
+    message = resources.JsonField('message', null=False, blank=True)
+    notifications = resources.LimitedToManyField(
+                         'ficuspumila.core.content.resources.SourceNotification',
                          'notifications', order_by='-id')
 
 
-class SourceNotificationResource(ContentResource):
+class SourceNotification(Content):
 
-    class Meta(Meta):
+    class Meta(resources.Meta):
 
-        queryset = SourceNotification.objects.all()
+        queryset = models.SourceNotification.objects.all()
         resource_name = 'sourcenotification'
         filtering = {
             'event'      : ALL_WITH_RELATIONS,
-            'url'        : EXACT_IN_CONTAINS,
-            'status_code': EXACT_IN,
-            'content'    : EXACT_IN_CONTAINS,
-            'ctime'      : EXACT_IN_GET_LTE_DATE,
-            'utime'      : EXACT_IN_GET_LTE_DATE,
+            'url'        : resources.EXACT_IN_CONTAINS,
+            'status_code': resources.EXACT_IN,
+            'content'    : resources.EXACT_IN_CONTAINS,
+            'ctime'      : resources.EXACT_IN_GET_LTE_DATE,
+            'utime'      : resources.EXACT_IN_GET_LTE_DATE,
         }
 
-    event = fields.ForeignKey(SourceEventResource, 'event')
+    event = fields.ForeignKey(SourceEvent, 'event')
 
 
-class OwnerResource(ContentResource):
+class Owner(Content):
 
-    class Meta(Meta):
+    class Meta(resources.Meta):
 
-        queryset = Owner.objects.all()
+        queryset = models.Owner.objects.all()
         resource_name = 'owner'
         filtering = {
             'user'  : ALL_WITH_RELATIONS,
             'source': ALL_WITH_RELATIONS,
-            'source_owner_id': EXACT_IN_STARTSWITH,
+            'source_owner_id': resources.EXACT_IN_STARTSWITH,
         }
 
-    user = fields.ForeignKey(UserResource, 'user')
-    source = fields.ForeignKey(SourceResource,
-                               'source')
+    user = fields.ForeignKey(auth_resources.User, 'user')
+    source = fields.ForeignKey(Source, 'source')
 
 
-class FileTypeResource(ContentResource):
+class FileType(Content):
 
-    class Meta(Meta):
+    class Meta(resources.Meta):
 
-        queryset = FileType.objects.all()
+        queryset = models.FileType.objects.all()
         resource_name = 'filetype'
         filtering = {
-            'name'     : EXACT_IN_STARTSWITH,
-            'mimetype' : EXACT_IN_CONTAINS,
-            'extention': EXACT_IN_STARTSWITH,
+            'name'     : resources.EXACT_IN_STARTSWITH,
+            'mimetype' : resources.EXACT_IN_CONTAINS,
+            'extention': resources.EXACT_IN_STARTSWITH,
         }
 
     mime_types = fields.ListField('mime_types')
     extensions = fields.ListField('extensions')
 
 
-class FileSpecificationResource(ContentResource):
+class FileSpecification(Content):
 
-    class Meta(Meta):
+    class Meta(resources.Meta):
 
-        queryset = FileSpecification.objects.all()
+        queryset = models.FileSpecification.objects.all()
         resource_name = 'filespecification'
         filtering = {
             'owner': ALL_WITH_RELATIONS,
-            'name' : EXACT_IN_STARTSWITH,
+            'name' : resources.EXACT_IN_STARTSWITH,
             'parent' : ALL_WITH_RELATIONS,
             'children' : ALL_WITH_RELATIONS,
             'type' : ALL_WITH_RELATIONS,
         }
 
-    owner = fields.ForeignKey(OwnerResource, 'owner')
-    parent = fields.ForeignKey('ficuspumila.core.content.resources.FileSpecificationResource',
-                               'parent',
-                               null=True)
-    children = fields.ToManyField('ficuspumila.core.content.resources.FileSpecificationResource',
-                                  'children')
+    owner = fields.ForeignKey(Owner, 'owner')
+    parent = fields.ForeignKey(
+                         'ficuspumila.core.content.resources.FileSpecification',
+                         'parent',
+                         null=True)
+    children = fields.ToManyField(
+                         'ficuspumila.core.content.resources.FileSpecification',
+                         'children')
     attributes = fields.ToManyField(
-                         'ficuspumila.core.content.resources.FileSpecificationAttributeResource',
+                         'ficuspumila.core.content.resources.FileSpecificationAttribute',
                          'attributes')
-    type = fields.ForeignKey(FileTypeResource, 'type')
+    type = fields.ForeignKey(FileType, 'type')
 
 
-class FileSpecificationAttributeNameResource(ContentResource):
+class FileSpecificationAttributeName(Content):
 
-    class Meta(Meta):
+    class Meta(resources.Meta):
 
-        queryset = FileSpecificationAttributeName.objects.all()
+        queryset = models.FileSpecificationAttributeName.objects.all()
         resource_name = 'filespecificationattributename'
         filtering = {
-            'name'  : EXACT_IN,
+            'name'  : resources.EXACT_IN,
         }
 
 
-class FileSpecificationAttributeResource(ContentResource):
+class FileSpecificationAttribute(Content):
 
-    class Meta(Meta):
+    class Meta(resources.Meta):
 
-        queryset = FileSpecificationAttribute.objects.all()
+        queryset = models.FileSpecificationAttribute.objects.all()
         resource_name = 'filespecificationattribute'
         filtering = {
             'filespecification' : ALL_WITH_RELATIONS,
             'name' : ALL_WITH_RELATIONS,
-            'value': EXACT_IN_STARTSWITH,
+            'value': resources.EXACT_IN_STARTSWITH,
         }
 
-    filespecification = fields.ForeignKey(FileSpecificationResource, 'filespecification')
-    name = fields.ForeignKey(FileSpecificationAttributeNameResource, 'name')
+    filespecification = fields.ForeignKey(FileSpecification, 'filespecification')
+    name = fields.ForeignKey(FileSpecificationAttributeName, 'name')
 
 
-class ResourceTypeResource(ContentResource):
+class ResourceType(Content):
 
-    class Meta(Meta):
+    class Meta(resources.Meta):
 
-        queryset = ResourceType.objects.all()
+        queryset = models.ResourceType.objects.all()
         resource_name = 'resourcetype'
         filtering = {
-            'name'      : EXACT_IN_STARTSWITH,
-            'category'  : EXACT_IN,
-            'limited'   : EXACT,
-            'streamable': EXACT,
+            'name'      : resources.EXACT_IN_STARTSWITH,
+            'category'  : resources.EXACT_IN,
+            'limited'   : resources.EXACT,
+            'streamable': resources.EXACT,
         }
 
 
@@ -304,20 +289,20 @@ def get_urls(version=1):
     api = Api(api_name='content')
 
     if version == 1:
-        api.register(GenreResource())
-        api.register(GenreLocalizationResource())
-        api.register(SourceResource())
-        api.register(SourceAttributeNameResource())
-        api.register(SourceAttributeResource())
-        api.register(SourceEventNameResource())
-        api.register(SourceEventResource())
-        api.register(SourceNotificationResource())
-        api.register(FileTypeResource())
-        api.register(FileSpecificationResource())
-        api.register(FileSpecificationAttributeNameResource())
-        api.register(FileSpecificationAttributeResource())
-        api.register(ResourceTypeResource())
+        api.register(Genre())
+        api.register(GenreLocalization())
+        api.register(Source())
+        api.register(SourceAttributeName())
+        api.register(SourceAttribute())
+        api.register(SourceEventName())
+        api.register(SourceEvent())
+        api.register(SourceNotification())
+        api.register(FileType())
+        api.register(FileSpecification())
+        api.register(FileSpecificationAttributeName())
+        api.register(FileSpecificationAttribute())
+        api.register(ResourceType())
 
-        api.register(OwnerResource())
+        api.register(Owner())
 
     return api.urls

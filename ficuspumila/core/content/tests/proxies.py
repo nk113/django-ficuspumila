@@ -4,24 +4,19 @@ import logging
 from django.core.exceptions import ObjectDoesNotExist
 from queryset_client import client
 
+from ficuspumila.core import test
 from ficuspumila.core.exceptions import ProxyException
-from ficuspumila.core.proxies import get as get_proxy
-from ficuspumila.core.test import (
-    mock_api_testcase, ProxyTestCase,
-)
 from ficuspumila.core.utils import parse_qs
 from ficuspumila.settings import ficuspumila as settings
 
 
-PROXY_MODULE = 'ficuspumila.core.content.proxies'
-
 logger = logging.getLogger(__name__)
 
 
-class GenreProxyTestCase(ProxyTestCase):
+class GenreProxy(test.Proxy):
 
     def test_get(self):
-        Genre = get_proxy('Genre', proxy_module=PROXY_MODULE)
+        from ficuspumila.core.content.proxies import Genre
 
         g = Genre.objects.get(name='Pop')
         self.assertEqual(g.name, 'Pop')
@@ -38,17 +33,17 @@ class GenreProxyTestCase(ProxyTestCase):
         self.assertEqual(g.localize('en').name, u'Pop')
 
 
-class GenreApiProxyTestCase(GenreProxyTestCase):
+class GenreApiProxy(GenreProxy):
 
     pass
 
-mock_api_testcase(GenreApiProxyTestCase)
+test.mock_api_testcase(GenreApiProxy)
 
 
-class SourceProxyTestCase(ProxyTestCase):
+class SourceProxy(test.Proxy):
 
     def test_get(self):
-        Source = get_proxy('Source', proxy_module=PROXY_MODULE)
+        from ficuspumila.core.content.proxies import Source
 
         s = Source.objects.get(user__username=settings('SYSTEM_USERNAME'))
         self.assertEqual(s.user.username, settings('SYSTEM_USERNAME'))
@@ -159,17 +154,17 @@ class SourceProxyTestCase(ProxyTestCase):
         self.assertEqual(s.decrypt_token(params['token'])['test'], 'def')
 
 
-class SourceApiProxyTestCase(SourceProxyTestCase):
+class SourceApiProxy(SourceProxy):
 
     pass
 
-mock_api_testcase(SourceApiProxyTestCase)
+test.mock_api_testcase(SourceApiProxy)
 
 
-class OwnerProxyTestCase(ProxyTestCase):
+class OwnerProxy(test.Proxy):
 
     def test_get(self):
-        Owner = get_proxy('Owner', proxy_module=PROXY_MODULE)
+        from ficuspumila.core.content.proxies import Owner
 
         o = Owner.objects.get(user__username=settings('SYSTEM_USERNAME'))
         self.assertEqual(o.user.username, settings('SYSTEM_USERNAME'))
@@ -181,19 +176,17 @@ class OwnerProxyTestCase(ProxyTestCase):
         return o
 
 
-class OwnerApiProxyTestCase(OwnerProxyTestCase):
+class OwnerApiProxy(OwnerProxy):
 
     pass
 
-mock_api_testcase(OwnerApiProxyTestCase)
+test.mock_api_testcase(OwnerApiProxy)
 
 
-class FileSpecificationProxyTestCase(ProxyTestCase):
+class FileSpecificationProxy(test.Proxy):
 
     def test_get(self):
-        FileSpecification = get_proxy('FileSpecification', proxy_module=PROXY_MODULE)
-        Owner = get_proxy('Owner', proxy_module=PROXY_MODULE)
-
+        from ficuspumila.core.content.proxies import FileSpecification, Owner
 
         o = Owner.objects.get(user__username=settings('SYSTEM_USERNAME'))
         fs = FileSpecification.objects.get(owner=o,
@@ -235,8 +228,8 @@ class FileSpecificationProxyTestCase(ProxyTestCase):
         return fs
 
 
-class FileSpecificationApiProxyTestCase(FileSpecificationProxyTestCase):
+class FileSpecificationApiProxy(FileSpecificationProxy):
 
     pass
 
-mock_api_testcase(FileSpecificationApiProxyTestCase)
+test.mock_api_testcase(FileSpecificationApiProxy)

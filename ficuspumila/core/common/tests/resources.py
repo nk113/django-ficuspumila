@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from ficuspumila.core.test import ResourceTestCase
+from ficuspumila.core import test
 
 
 logger = logging.getLogger(__name__)
 
 
-class CountryResourceTestCase(ResourceTestCase):
+class CountryResource(test.Resource):
 
     api_name = 'common'
     resource_name = 'country'
 
     def setUp(self):
 
-        super(CountryResourceTestCase, self).setUp()
+        super(CountryResource, self).setUp()
 
         self.detail_endpoint = '%sJP/' % self.list_endpoint

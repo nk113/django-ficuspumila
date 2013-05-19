@@ -1,62 +1,58 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from ficuspumila.core.proxies import (
-    AttributableProxy, AttributeProxy, EventProxy,
-    get, LocalizableProxy, Proxy,
-    ServiceProxy,
-)
+from ficuspumila.core import proxies
 
 
 logger = logging.getLogger(__name__)
 
 
-class GenreProxy(LocalizableProxy):
+class Genre(proxies.Localizable):
 
     pass
 
 
-class GenreLocalizationProxy(Proxy):
+class GenreLocalization(proxies.Proxy):
 
     pass
 
 
-class SourceProxy(ServiceProxy):
+class Source(proxies.Service):
 
     pass
 
 
-class SourceAttributeNameProxy(Proxy):
+class SourceAttributeName(proxies.Proxy):
 
     pass
 
 
-class SourceAttributeProxy(AttributeProxy):
+class SourceAttribute(proxies.Attribute):
 
     pass
 
 
-class SourceEventNameProxy(Proxy):
+class SourceEventName(proxies.Proxy):
 
     pass
 
 
-class SourceEventProxy(EventProxy):
+class SourceEvent(proxies.Event):
 
     pass
 
 
-class SourceNotificationProxy(Proxy):
+class SourceNotification(proxies.Proxy):
 
     pass
 
 
-class OwnerProxy(Proxy):
+class Owner(proxies.Proxy):
 
     pass
 
 
-class FileTypeProxy(Proxy):
+class FileType(proxies.Proxy):
 
     @property
     def mime_type(self):
@@ -73,37 +69,21 @@ class FileTypeProxy(Proxy):
             return None
 
 
-class FileSpecificationProxy(AttributableProxy):
+class FileSpecification(proxies.Attributable):
 
     pass
 
 
-class FileSpecificationAttributeNameProxy(Proxy):
+class FileSpecificationAttributeName(proxies.Proxy):
 
     pass
 
 
-class FileSpecificationAttributeProxy(Proxy):
+class FileSpecificationAttribute(proxies.Proxy):
 
     pass
 
 
-class ResourceTypeProxy(Proxy):
+class ResourceType(proxies.Proxy):
 
     pass
-
-
-Genre               = get('Genre')
-GenreLocalization   = get('GenreLocalization')
-Source              = get('Source')
-SourceAttributeName = get('SourceAttributeName')
-SourceAttribute     = get('SourceAttribute')
-SourceEventName     = get('SourceEventName')
-SourceEvent         = get('SourceEvent')
-SourceNotification  = get('SourceNotification')
-Owner               = get('Owner')
-FileType            = get('FileType')
-FileSpecification   = get('FileSpecification')
-FileSpecificationAttributeName = get('FileSpecificationAttributeName')
-FileSpecificationAttribute = get('FileSpecificationAttribute')
-ResourceType        = get('ResourceType')

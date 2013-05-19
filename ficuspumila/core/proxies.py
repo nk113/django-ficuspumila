@@ -3,6 +3,7 @@ import copy
 import inspect
 import json
 import logging
+import sys
 import time
 
 from dateutil import parser
@@ -32,59 +33,21 @@ logger = logging.getLogger(__name__)
 
 
 def invalidate():
+    """
+    For unit test purpose only
+    """
     for name, proxy in ProxyClient._proxies.items():
         refresh(proxy.__module__)
 
     for name, model in ProxyClient._models.items():
         curtail(model, Proxy)
-        if getattr(model, '__init__original'):
+        if getattr(model, '__init__original', None):
             model.__init__ = model.__init__original
 
     ProxyClient._instances = {}
     ProxyClient._proxies = {}
     ProxyClient._models = {}
 
-def get(name, model_module=None, proxy_module=None):
-    if isinstance(proxy_module, str):
-        proxy_module = import_module(proxy_module)
-
-    if proxy_module is None:
-        frame = inspect.stack()[1]
-        proxy_module = inspect.getmodule(frame[0])
-
-    if model_module is None:
-        try:
-            splitted = proxy_module.__name__.split('.')
-            splitted[-1] = 'models'
-            model_module = '.'.join(splitted)
-        except AttributeError, e:
-            logger.exception(u'seems not to be imported in django application context')
-
-    proxy = getattr(proxy_module, '%sProxy' % name)
-
-    if settings('API_URL'):
-        if name.lower() in ProxyClient._proxies:
-            return ProxyClient._proxies[name.lower()]
-
-        return proxy(auth=(settings('SYSTEM_USERNAME'),
-                           settings('SYSTEM_PASSWORD')))
-    else:
-        if name not in ProxyClient._models.keys():
-            model = getattr(import_module(model_module), name)
-
-            # implement proxy mixin
-            def __init__(obj, *args, **kwargs):
-                obj.__init__original(*args, **kwargs)
-                mixin(obj.__class__, proxy)
-                obj.__module__ = proxy.__module__
-                obj.__init_proxy__()
-
-            model.__init__original = model.__init__
-            model.__init__ = __init__
-
-            ProxyClient._models[name] = model
-
-        return ProxyClient._models[name]
 
 def get_pk(obj):
     """
@@ -138,7 +101,6 @@ class QuerySet(client.QuerySet):
 class Response(client.Response):
 
     def __init__(self, model, response=None, url=None, **kwargs):
-
         # implement proxy mixin
         if model._model_name in ProxyClient._proxies:
             proxy = ProxyClient._proxies[model._model_name].__class__
@@ -190,11 +152,11 @@ class Response(client.Response):
                         logger.debug(u'trying to identify schema info from ' +
                                      u'schema_uri (%s).' % schema_uri)
                     except Exception, e:
-                        raise ProxyException(u'Couldn\'t identify related ' +
-                                             u'field schema (%s).' % name)
+                        raise ProxyException(_(u'Couldn\'t identify related ' +
+                                               u'field schema (%s).') % name)
         else:
-            raise ProxyException(u'The field "%s" seems not to be defined ' +
-                                 u'in the schema.')
+            raise ProxyException(_(u'The field seems not to be defined ' +
+                                 u'in the schema (%s).') % name)
 
         api_url = base_client._api_url
         version = base_client._version
@@ -430,30 +392,111 @@ class ProxyClient(client.Client):
         return super(ProxyClient, self).request(url, method)
 
 
+class ProxyOptions(object):
+
+    abstract = False
+    api_url = None
+    auth = (settings('SYSTEM_USERNAME'),
+            settings('SYSTEM_PASSWORD'))
+    version = None
+    namespace = None
+    resource_name = None
+    model = None
+
+    def __new__(cls, meta=None):
+        overrides = {}
+
+        # handle overrides
+        if meta:
+            for override_name in dir(meta):
+                # no internals please
+                if not override_name.startswith('_'):
+                    overrides[override_name] = getattr(meta, override_name)
+
+        return object.__new__(type('ProxyOptions', (cls,), overrides))
+
+
+class ProxyMeta(type):
+
+    def __new__(cls, name, bases, attrs):
+        declarative = Response not in bases
+
+        if declarative and name.lower() in ProxyClient._proxies:
+            # returns existing proxy object
+            return ProxyClient._proxies[name.lower()]
+
+        meta = attrs.pop('Meta', None)
+        abstract = getattr(meta, 'abstract', False)
+
+        # create new proxy class
+        proxy = super(ProxyMeta, cls).__new__(cls, name, bases, attrs)
+        proxy._meta = ProxyOptions(meta)
+        proxy._meta.abstract = abstract
+
+        if abstract:
+            return proxy
+
+        if settings('API_URL'):
+            # return proxy class or object
+            return proxy() if declarative else proxy
+        else:
+            # return model class which implements proxy interfaces
+            if name not in ProxyClient._models.keys():
+                model = proxy._meta.model
+
+                if not model:
+                    try:
+                        model = getattr(import_module('%s.models' % proxy.__module__.rpartition('.')[0]), name)
+                    except (ImportError, AttributeError) as e:
+                        logger.exception(u'seems not to be imported within' +
+                                         u'django application context')
+                        raise ProxyException(_(u'Module seems not to be imported ' +
+                                               u'within django application context ' +
+                                               u'("%s" model not found). Specify '+
+                                               u'proper model in Meta class.') % name)
+
+                # implement proxy mixin
+                def __init__(obj, *args, **kwargs):
+                    obj.__init__original(*args, **kwargs)
+                    mixin(obj.__class__, proxy)
+                    obj.__module__ = proxy.__module__
+                    obj.__init_proxy__()
+
+                model.__init__original = model.__init__
+                model.__init__ = __init__
+
+                ProxyClient._models[name] = model
+
+        return ProxyClient._models[name]
+
+
 class Proxy(object):
+
+    __metaclass__ = ProxyMeta
+
+    class Meta:
+
+        abstract = True
 
     def __init__(self, *args, **kwargs):
 
-        if isinstance(self, Model):
+        if (self._meta.abstract or
+            isinstance(self, Model)):
             super(Proxy, self).__init__(*args, **kwargs)
             return
 
-        api_url = kwargs.get('api_url', None) or settings('API_URL') if settings('API_URL') else None
+        self._api_url = getattr(self._meta, 'api_url') or settings('API_URL')
 
-        if not api_url:
+        if not self._api_url:
             raise ProxyException(_(u'"API_URL" not found in settings or ' +
                                    u'"api_url" not found in kwargs.'))
 
-        version   = kwargs.get('version', 'v1')
-        namespace = kwargs.get('namespace',
-                               '/'.join(self.__module__.split('.')[1:-1]))
-        auth      = kwargs.get('auth', None)
+        auth      = self._meta.auth or None
+        version   = self._meta.version or 'v1' 
+        namespace = self._meta.namespace or '/'.join(self.__module__.split('.')[1:-1])
+        resource_name = self._meta.resource_name or self.__class__.__name__.lower()
 
-        resource_name = kwargs.get('resource_name',
-                                   self.__class__.__name__[:-5].lower())
-
-
-        self._client = ProxyClient.get(api_url,
+        self._client = ProxyClient.get(self._api_url,
                                        version=version,
                                        namespace=namespace,
                                        auth=auth,
@@ -492,25 +535,27 @@ class Proxy(object):
             return self.model._model_name
 
 
-class AttributableProxy(Proxy):
+class Attributable(Proxy):
+
+    class Meta:
+
+        abstract = True
 
     _attribute_names = ('attribute',)
 
     def __init_proxy__(self):
-        super(AttributableProxy, self).__init_proxy__()
+        super(Attributable, self).__init_proxy__()
 
         class_name = self.__class__.__name__
-        if isinstance(self, Proxy):
-            class_name = class_name.replace('Proxy', '')
  
         for name in self._attribute_names:
             attribute_class_name = '%s%s' % (class_name, name.title(),)
-            setattr(self, '%s' % name, get(attribute_class_name,
-                                           proxy_module=self.__module__))
+            setattr(self, '%s' % name, getattr(import_module(self.__module__),
+                                               attribute_class_name))
             # set the name proxy if the attribute has its name field as foreign key
             try:
-                setattr(self, '%s_name' % name, get('%sName' % attribute_class_name,
-                                                    proxy_module=self.__module__))
+                setattr(self, '%s_name' % name, getattr(import_module(self.__module__),
+                                                        '%sName' % attribute_class_name))
             except AttributeError, e:
                 # could occur
                 pass
@@ -561,14 +606,22 @@ class AttributableProxy(Proxy):
             self.invalidate()
 
 
-class AttributeProxy(Proxy):
+class Attribute(Proxy):
+
+    class Meta:
+
+        abstract = True
 
     @property
     def attribute(self):
         return self.name.name
 
 
-class LoggerProxy(AttributableProxy):
+class Logger(Attributable):
+
+    class Meta:
+
+        abstract = True
 
     _attribute_names = ('event',)
 
@@ -596,14 +649,22 @@ class LoggerProxy(AttributableProxy):
         return event
 
 
-class EventProxy(Proxy):
+class Event(Proxy):
+
+    class Meta:
+
+        abstract = True
 
     @property
     def event(self):
         return self.name.name
 
 
-class StatefulProxy(LoggerProxy):
+class Stateful(Logger):
+
+    class Meta:
+
+        abstract = True
 
     @property
     def state(self):
@@ -611,12 +672,20 @@ class StatefulProxy(LoggerProxy):
         return self.latest
 
 
-class NotifierProxy(LoggerProxy):
+class Notifier(Logger):
+
+    class Meta:
+
+        abstract = True
 
     _attribute_names = ('event', 'notification',)
 
 
-class LocalizableProxy(AttributableProxy):
+class Localizable(Attributable):
+
+    class Meta:
+
+        abstract = True
 
     _attribute_names = ('localization',)
 
@@ -634,7 +703,11 @@ class LocalizableProxy(AttributableProxy):
         return localizations[0]
 
 
-class ServiceProxy(NotifierProxy):
+class Service(Notifier):
+
+    class Meta:
+
+        abstract = True
 
     _attribute_names = ('attribute', 'event', 'notification',)
 

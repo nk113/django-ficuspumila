@@ -12,10 +12,7 @@ from django_nose import FastFixtureTestCase
 from functools import wraps
 from mock import patch
 from operator import itemgetter
-from tastypie.test import (
-    TestApiClient as TastypieTestApiClient,
-    ResourceTestCase as TastypieResourceTestCase
-)
+from tastypie.test import ResourceTestCase, TestApiClient 
 
 from ficuspumila.settings import ficuspumila as settings
 from .proxies import invalidate
@@ -29,7 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 def mock_request(obj, method, url, **kwargs):
-    client = TastypieTestApiClient()
+    client = TestApiClient()
     authentication = 'Basic %s' % base64.b64encode(':'.join([
         settings('SYSTEM_USERNAME'),
         settings('SYSTEM_PASSWORD'),
@@ -104,7 +101,7 @@ class TestCase(FastFixtureTestCase):
         super(TestCase, self).setUp()
 
 
-class ProxyTestCase(TestCase):
+class Proxy(TestCase):
     """
     Don't be smart so much in test cases!
     """
@@ -112,7 +109,7 @@ class ProxyTestCase(TestCase):
     pass
 
 
-class ResourceTestCase(TestCase, TastypieResourceTestCase):
+class Resource(TestCase, ResourceTestCase):
     """
     Don't be smart so much in test cases!
     """
@@ -121,7 +118,7 @@ class ResourceTestCase(TestCase, TastypieResourceTestCase):
     resource_name = 'user'
 
     def setUp(self):
-        super(ResourceTestCase, self).setUp()
+        super(Resource, self).setUp()
 
         self.list_endpoint = '%s%s/%s/' % (API_PATH,
                                  self.api_name,

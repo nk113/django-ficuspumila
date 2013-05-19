@@ -169,6 +169,7 @@ class Model(models.Model):
 class Name(Model):
 
     class Meta:
+
         abstract = True
         ordering = ('name',)
 

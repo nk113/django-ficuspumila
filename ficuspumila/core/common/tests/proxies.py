@@ -7,17 +7,12 @@ from mock import patch
 from queryset_client import client
 
 from ficuspumila.core.exceptions import ProxyException
-from ficuspumila.core.proxies import get as get_proxy
-from ficuspumila.core.test import (
-    mock_api_testcase, ProxyTestCase,
-)
+from ficuspumila.core import test
 from ficuspumila.settings import (
     get as settings_get,
     ficuspumila as settings,
 )
 
-
-PROXY_MODULE = 'ficuspumila.core.common.proxies'
 
 logger = logging.getLogger(__name__)
 
@@ -26,7 +21,7 @@ def query_country_code(ip):
     return 'JP'
 
 
-class CountryProxyTestCase(ProxyTestCase):
+class CountryProxy(test.Proxy):
 
     # FIXME: how do I get this decorator to work?
     # @skipIf(settings('IPINFODB_API_KEY') is None,
@@ -40,7 +35,7 @@ class CountryProxyTestCase(ProxyTestCase):
     # pass
 
     def test_get(self):
-        Country = get_proxy('Country', proxy_module=PROXY_MODULE)
+        from ficuspumila.core.common.proxies import Country
 
         c = Country.objects.get(alpha2='ZW')
         self.assertEqual(c.name, 'Zimbabwe')
@@ -68,8 +63,8 @@ class CountryProxyTestCase(ProxyTestCase):
         self.assertEqual(c.neighbours.pop(), 'JP')
 
 
-class CountryApiProxyTestCase(CountryProxyTestCase):
+class CountryApiProxy(CountryProxy):
 
     pass
 
-mock_api_testcase(CountryApiProxyTestCase)
+test.mock_api_testcase(CountryApiProxy)

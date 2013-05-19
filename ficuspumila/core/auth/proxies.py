@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from ficuspumila.core.proxies import get, Proxy
+from django.contrib.auth import models
+
+from ficuspumila.core import proxies
 
 
 logger = logging.getLogger(__name__)
 
 
-class UserProxy(Proxy):
+class User(proxies.Proxy):
 
-    pass
+    class Meta:
 
-
-User = get('User', 'django.contrib.auth.models')
+        model = models.User

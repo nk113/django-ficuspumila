@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 import logging
 
-from ficuspumila.core.test import ResourceTestCase
+from ficuspumila.core import test
 
 
 logger = logging.getLogger(__name__)
 
 
-class ContentResourceTestCase(ResourceTestCase):
+class ContentResource(test.Resource):
 
     api_name = 'content'
     resource_name = 'genre'
@@ -17,22 +17,22 @@ class ContentResourceTestCase(ResourceTestCase):
         pass
 
 
-class GenreLocalizationResourceTestCase(ContentResourceTestCase):
+class GenreLocalizationResource(ContentResource):
 
     resource_name = 'genrelocalization'
 
 
-class SourceResourceTestCase(ContentResourceTestCase):
+class SourceResource(ContentResource):
 
     resource_name = 'source'
 
 
-class SourceAttributeNameResourceTestCase(ContentResourceTestCase):
+class SourceAttributeNameResource(ContentResource):
 
     resource_name = 'sourceattributename'
 
 
-class SourceAttributeResourceTestCase(ContentResourceTestCase):
+class SourceAttributeResource(ContentResource):
 
     resource_name = 'sourceattribute'
 
@@ -41,12 +41,12 @@ class SourceAttributeResourceTestCase(ContentResourceTestCase):
         pass
 
 
-class SourceEventNameResourceTestCase(ContentResourceTestCase):
+class SourceEventNameResource(ContentResource):
 
     resource_name = 'sourceeventname'
 
 
-class SourceEventResourceTestCase(ContentResourceTestCase):
+class SourceEventResource(ContentResource):
 
     resource_name = 'sourceevent'
 
@@ -55,7 +55,7 @@ class SourceEventResourceTestCase(ContentResourceTestCase):
         pass
 
 
-class SourceNotificationResourceTestCase(ContentResourceTestCase):
+class SourceNotificationResource(ContentResource):
 
     resource_name = 'sourcenotification'
 
@@ -64,17 +64,17 @@ class SourceNotificationResourceTestCase(ContentResourceTestCase):
         pass
 
 
-class OwnerResourceTestCase(ContentResourceTestCase):
+class OwnerResource(ContentResource):
 
     resource_name = 'owner'
 
 
-class FileTypeResourceTestCase(ContentResourceTestCase):
+class FileTypeResource(ContentResource):
 
     resource_name = 'filetype'
 
 
-class FileSpecificationAttributeNameResourceTestCase(ContentResourceTestCase):
+class FileSpecificationAttributeNameResource(ContentResource):
 
     resource_name = 'filespecificationattributename'
 
@@ -83,7 +83,7 @@ class FileSpecificationAttributeNameResourceTestCase(ContentResourceTestCase):
         pass
 
 
-class FileSpecificationAttributeResourceTestCase(ContentResourceTestCase):
+class FileSpecificationAttributeResource(ContentResource):
 
     api_name = 'content'
     resource_name = 'filespecificationattribute'
@@ -93,7 +93,7 @@ class FileSpecificationAttributeResourceTestCase(ContentResourceTestCase):
         pass
 
 
-class FileSpecificationResourceTestCase(ContentResourceTestCase):
+class FileSpecificationResource(ContentResource):
 
     resource_name = 'filespecification'
 
@@ -102,7 +102,7 @@ class FileSpecificationResourceTestCase(ContentResourceTestCase):
         pass
 
 
-class ResourceTypeResourceTestCase(ContentResourceTestCase):
+class ResourceTypeResource(ContentResource):
 
     resource_name = 'resourcetype'
 
