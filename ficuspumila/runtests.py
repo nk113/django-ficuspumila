@@ -2,9 +2,13 @@
 import os
 import sys
 
-DJANGO_SETTINGS_MODULE = sys.argv[1] if len(sys.argv) > 1 else 'settings.test'
 
-sys.path.insert(0, os.path.dirname(__file__))
+APP_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+APP_DIR = os.path.abspath(os.path.dirname(__file__))
+DJANGO_SETTINGS_MODULE = sys.argv[1] if sys.argv[0] != 'setup.py' and len(sys.argv) > 1 else 'settings.test'
+
+sys.path.insert(0, APP_ROOT)
+sys.path.insert(0, APP_DIR)
 os.environ['DJANGO_SETTINGS_MODULE'] = os.environ.get('DJANGO_SETTINGS_MODULE',
                                                       DJANGO_SETTINGS_MODULE)
 

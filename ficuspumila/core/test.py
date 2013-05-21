@@ -15,7 +15,6 @@ from operator import itemgetter
 from tastypie.test import ResourceTestCase, TestApiClient 
 
 from ficuspumila.settings import ficuspumila as settings
-from .proxies import invalidate
 
 
 INITIAL_DATA = ('initial_data', 'ficuspumila',)
