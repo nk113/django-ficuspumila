@@ -75,18 +75,6 @@ def mock_api(func, **decorator_kwargs):
         return func(*args, **kwargs)
     return wrapper
 
-def mock_api_testcase(testcase=None):
-    if testcase is None:
-        return
-
-    try:
-        func_type = types.UnboundMethodType
-    except:
-        func_type = types.FunctionType
-    for name, func in inspect.getmembers(testcase):
-        if isinstance(func, func_type) and name.startswith('test_'):
-            setattr(testcase, name, mock_api(func))
-
 
 class TestCase(FastFixtureTestCase):
     """
@@ -95,8 +83,23 @@ class TestCase(FastFixtureTestCase):
 
     fixtures = INITIAL_DATA
 
+    def __new__(cls, name):
+        testcase = super(TestCase, cls).__new__(cls)
+
+        if settings('API_URL'):
+            try:
+                func_type = types.UnboundMethodType
+            except:
+                func_type = types.FunctionType
+
+            for name, func in inspect.getmembers(testcase):
+                if isinstance(func, func_type) and name.startswith('test_'):
+                    setattr(testcase, name, mock_api(func))
+
+        return testcase
+
     def setUp(self):
-        invalidate()
+        # invalidate()
         call_command('loaddata', *TEST_DATA)
         super(TestCase, self).setUp()
 
@@ -104,8 +107,10 @@ class TestCase(FastFixtureTestCase):
 class Proxy(TestCase):
     """
     Don't be smart so much in test cases!
-    """
 
+    CAVEAT: Proxy classes have to be imported within each test method
+            to mock the requests
+    """
     pass
 
 

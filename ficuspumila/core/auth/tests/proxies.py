@@ -26,10 +26,3 @@ class UserProxy(test.Proxy):
                           lambda: User.objects.get(username='crazymonkey'))
 
         return u
-
-
-class UserProxyApi(UserProxy):
-
-    pass
-
-test.mock_api_testcase(UserProxyApi)

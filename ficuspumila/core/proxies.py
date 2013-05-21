@@ -32,23 +32,6 @@ PK_ID = ('pk', 'id',)
 logger = logging.getLogger(__name__)
 
 
-def invalidate():
-    """
-    For unit test purpose only
-    """
-    for name, proxy in ProxyClient._proxies.items():
-        refresh(proxy.__module__)
-
-    for name, model in ProxyClient._models.items():
-        curtail(model, Proxy)
-        if getattr(model, '__init__original', None):
-            model.__init__ = model.__init__original
-
-    ProxyClient._instances = {}
-    ProxyClient._proxies = {}
-    ProxyClient._models = {}
-
-
 def get_pk(obj):
     """
     For resources that do not have default ``id`` primary key
@@ -128,6 +111,7 @@ class Response(client.Response):
         except AttributeError, e:
             if name in PK_ID:
                 return get_pk(self)
+
             return getattr(self.model, name)
 
         # resolves foreign key references in another api namespace
@@ -259,20 +243,18 @@ class ProxyClient(client.Client):
     _proxies = {}
     _models = {}
 
-    def __new__(*args, **kwargs):
-        if len(args): 
-            key = ProxyClient.build_base_url(args[1], **kwargs)
+    def __new__(cls, url, **kwargs):
+        key = ProxyClient.build_base_url(url, **kwargs)
 
-            if not key in ProxyClient._instances:
-                ProxyClient._instances[key] = super(ProxyClient,
-                                                    ProxyClient).__new__(*args, **kwargs)
+        if not key in ProxyClient._instances:
+            ProxyClient._instances[key] = super(ProxyClient,
+                                                cls).__new__(cls)
 
-            proxy = kwargs.get('proxy')
-            if proxy:
-                ProxyClient._proxies[proxy.__class__.__name__.lower().replace('proxy', '')] = proxy
+        proxy = kwargs.get('proxy')
+        if proxy:
+            ProxyClient._proxies[proxy.__class__.__name__.lower().replace('proxy', '')] = proxy
 
-            return ProxyClient._instances[key]
-        return ProxyClient._instances[ProxyClient._instances.keys()[0]]
+        return ProxyClient._instances[key]
 
     def __init__(self, base_url, auth=None, strict_field=True, client=None, **kwargs):
 
@@ -419,6 +401,7 @@ class ProxyOptions(object):
 class ProxyMeta(type):
 
     def __new__(cls, name, bases, attrs):
+
         declarative = Response not in bases
 
         if declarative and name.lower() in ProxyClient._proxies:

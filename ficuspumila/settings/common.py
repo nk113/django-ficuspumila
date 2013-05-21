@@ -181,6 +181,10 @@ warnings.filterwarnings(action='ignore',
 warnings.filterwarnings(action='ignore',
                         category=DeprecationWarning,
                         module=r'django.*')
-warnings.filterwarnings(action='ignore',
-                        category=DeprecationWarning,
-                        module=r'ficuspumila.core.proxies.*')
+warnings.filterwarnings('error',
+                        r'DateTimeField received a naive datetime',
+                        RuntimeWarning,
+                        r'django\.db\.models\.fields')
+# warnings.filterwarnings(action='ignore',
+#                         category=DeprecationWarning,
+#                         module=r'ficuspumila.core.proxies.*')

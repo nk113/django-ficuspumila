@@ -61,10 +61,3 @@ class CountryProxy(test.Proxy):
         self.assertEqual(type(c.languages), list)
         self.assertEqual(c.languages.pop(), 'ja')
         self.assertEqual(c.neighbours.pop(), 'JP')
-
-
-class CountryApiProxy(CountryProxy):
-
-    pass
-
-test.mock_api_testcase(CountryApiProxy)

@@ -33,13 +33,6 @@ class GenreProxy(test.Proxy):
         self.assertEqual(g.localize('en').name, u'Pop')
 
 
-class GenreApiProxy(GenreProxy):
-
-    pass
-
-test.mock_api_testcase(GenreApiProxy)
-
-
 class SourceProxy(test.Proxy):
 
     def test_get(self):
@@ -154,13 +147,6 @@ class SourceProxy(test.Proxy):
         self.assertEqual(s.decrypt_token(params['token'])['test'], 'def')
 
 
-class SourceApiProxy(SourceProxy):
-
-    pass
-
-test.mock_api_testcase(SourceApiProxy)
-
-
 class OwnerProxy(test.Proxy):
 
     def test_get(self):
@@ -174,13 +160,6 @@ class OwnerProxy(test.Proxy):
                           lambda: Owner.objects.get(source_owner_id='crazymonkey'))
 
         return o
-
-
-class OwnerApiProxy(OwnerProxy):
-
-    pass
-
-test.mock_api_testcase(OwnerApiProxy)
 
 
 class FileSpecificationProxy(test.Proxy):
@@ -226,10 +205,3 @@ class FileSpecificationProxy(test.Proxy):
         self.assertRaises(KeyError, lambda: fs.delattr('SHITHEAD'))
 
         return fs
-
-
-class FileSpecificationApiProxy(FileSpecificationProxy):
-
-    pass
-
-test.mock_api_testcase(FileSpecificationApiProxy)

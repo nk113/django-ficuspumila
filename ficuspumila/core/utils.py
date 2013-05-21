@@ -75,7 +75,10 @@ def earlier_than(date, base=datetime.now()):
 # module
 def refresh(module):
     try:
-        del(sys.modules[import_module(module).__name__])
+        module = import_module(module).__name__
+        logger.error('##### refresh: %s' % module)
+        del(sys.modules[module])
+        import_module(module)
     except:
         pass
 
