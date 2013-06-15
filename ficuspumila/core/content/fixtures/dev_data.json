@@ -34,7 +34,7 @@
   }, 
   {
     "fields": {
-      "category": 0, 
+      "media_type": 0, 
       "ctime": "2013-02-17T11:55:40Z", 
       "name": "Pop", 
       "utime": "2013-02-17T11:55:40Z"
@@ -44,7 +44,7 @@
   }, 
   {
     "fields": {
-      "category": 0, 
+      "media_type": 0, 
       "ctime": "2013-02-17T11:55:40Z", 
       "name": "Rock", 
       "utime": "2013-02-17T11:55:40Z"

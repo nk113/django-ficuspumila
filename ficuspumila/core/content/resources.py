@@ -271,6 +271,26 @@ class FileSpecificationAttribute(Content):
     name = fields.ForeignKey(FileSpecificationAttributeName, 'name')
 
 
+class Item(Content):
+
+    class Meta(resources.Meta):
+
+        queryset = models.Item.objects.all()
+        resource_name = 'item'
+        filtering = {
+            'children': ALL_WITH_RELATIONS,
+            'enabled' : resources.EXACT,
+            'parents' : ALL_WITH_RELATIONS,
+            'source_item_id': resources.EXACT_IN_STARTSWITH,
+        }
+
+    parent = fields.ToManyField(
+                         'ficuspumila.core.content.resources.Item',
+                         'parents')
+    children = fields.ToManyField(
+                         'ficuspumila.core.content.resources.Item',
+                         'children')
+
 class ResourceType(Content):
 
     class Meta(resources.Meta):
@@ -301,6 +321,7 @@ def get_urls(version=1):
         api.register(FileSpecification())
         api.register(FileSpecificationAttributeName())
         api.register(FileSpecificationAttribute())
+        api.register(Item())
         api.register(ResourceType())
 
         api.register(Owner())

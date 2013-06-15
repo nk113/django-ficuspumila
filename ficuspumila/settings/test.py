@@ -20,9 +20,14 @@ DATABASES = {
 }
 
 
+# urls
+ROOT_URLCONF = 'urls.test'
+
+
 # apps
 INSTALLED_APPS += (
     'django_nose',
+    # 'ficuspumila.apps.tests,
 )
 
 

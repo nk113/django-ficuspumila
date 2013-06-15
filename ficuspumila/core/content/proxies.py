@@ -12,7 +12,7 @@ class Genre(proxies.Localizable):
     pass
 
 
-class GenreLocalization(proxies.Proxy):
+class GenreLocalization(proxies.Localization):
 
     pass
 
@@ -80,6 +80,11 @@ class FileSpecificationAttributeName(proxies.Proxy):
 
 
 class FileSpecificationAttribute(proxies.Proxy):
+
+    pass
+
+
+class Item(proxies.Proxy):
 
     pass
 

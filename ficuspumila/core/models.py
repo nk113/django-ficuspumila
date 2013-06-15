@@ -95,7 +95,7 @@ class CsvField(models.CharField):
             try:
                 return [element.strip() for element in splited]
             except:
-                logger.exception(u'failed to convert CSV field ' +
+                logger.exception(u'failed to convert CSV field '
                                  u'to python: %s' % value)
                 raise ModelException(_(u'Could not evaluate CSV field.'))
         else:
@@ -107,7 +107,7 @@ class CsvField(models.CharField):
                 return ''
             return ', '.join(value)
         except:
-            logger.exception(u'failed to prep data for CSV field: ' +
+            logger.exception(u'failed to prep data for CSV field: '
                              u'%s' % value)
             raise ModelException(_(u'Invalid value detected for CSV field.'))
 
@@ -123,7 +123,7 @@ class JsonField(models.TextField):
             try:
                 return json.loads(value)
             except:
-                logger.exception(u'failed to convert JSON field ' +
+                logger.exception(u'failed to convert JSON field '
                                  u'to python: %s' % value)
                 raise ModelException(_(u'Could not evaluate JSON field.'))
         else:
@@ -135,7 +135,7 @@ class JsonField(models.TextField):
                 return ''
             return json.dumps(value)
         except:
-            logger.exception(u'failed to prep data for JSON field: ' +
+            logger.exception(u'failed to prep data for JSON field: '
                              u'%s' % value)
             raise ModelException(_(u'Invalid value detected for JSON field.'))
 

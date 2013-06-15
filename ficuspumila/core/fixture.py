@@ -22,7 +22,7 @@ class Generator(object):
         self.fixtures = fixtures if fixtures is not None else self.fixtures
 
         if self.fixture_dir is None:
-            raise FixtureException(u'"fixture_dir" needs to be specified ' +
+            raise FixtureException(u'"fixture_dir" needs to be specified '
                                    u'in subclasses.')
 
     def generate(self):
@@ -41,7 +41,7 @@ class Generator(object):
                     try:
                         self.data = json.loads(fixture_file.read())
                     except Exception, e:
-                        logger.exception(u'an error occurred during parsing ' +
+                        logger.exception(u'an error occurred during parsing '
                                          u'fixture: %s' % e)
 
                         self.data = json.loads('[]')

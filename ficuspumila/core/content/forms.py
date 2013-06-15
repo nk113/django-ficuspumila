@@ -3,38 +3,57 @@ import logging
 
 from django.utils.translation import ugettext as _
 
-from ficuspumila.core.forms import ModelForm
-from .models import (
-    Genre, Source, SourceEvent,
-)
+from ficuspumila.core import forms
+from ficuspumila.core.content import models
 
 
 logger = logging.getLogger(__name__)
 
 
-class GenreModelForm(ModelForm):
+class GenreModel(forms.ModelForm):
 
     class Meta:
 
-        model = Genre
+        model = models.Genre
 
 
-class SourceModelForm(ModelForm):
-
-    class Meta:
-
-        model = Source
-
-
-class SourceEventModelForm(ModelForm):
+class SourceModel(forms.ModelForm):
 
     class Meta:
 
-        model = SourceEvent
+        model = models.Source
 
 
-class FileTypeModelForm(ModelForm):
+class SourceEventModel(forms.ModelForm):
 
     class Meta:
 
-        model = Source
+        model = models.SourceEvent
+
+
+class OwnerModel(forms.ModelForm):
+
+    class Meta:
+
+        model = models.Owner
+
+
+class FileTypeModel(forms.ModelForm):
+
+    class Meta:
+
+        model = models.Source
+
+
+class FileSpecificationModel(forms.ModelForm):
+
+    class Meta:
+
+        model = models.FileSpecification
+
+
+class ItemModel(forms.ModelForm):
+
+    class Meta:
+
+        model = models.Item

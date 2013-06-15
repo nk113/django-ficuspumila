@@ -7,10 +7,10 @@ from django.contrib.auth import authenticate
 from django.utils.importlib import import_module
 from django.utils.translation import ugettext as _
 
-from ficuspumila.core.crypto import Transcoder
 from ficuspumila.core.exceptions import AuthException
 from ficuspumila.core.utils import generate_hmac_digest
 from ficuspumila.settings import ficuspumila as settings
+
 
 logger = logging.getLogger(__name__)
 

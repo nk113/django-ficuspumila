@@ -95,10 +95,67 @@ Provides fundamental core components including authentication, caching, api reso
 
 **proxy**
 
+Proxy routine allows you to write the code for remote processes that require access to center database as if it's local. Proxy returns an object, works with tastypie remote api, which has similar model and queryset interfaces of django if a settings value *API_URL* is given, otherwise it returns normal django model, thus you don't need to care where the code is ran.
+
+::
+
+    # -- settings.py --------------
+
+    FICUSPUMILA['API_URL'] = "http://example.com/api/"
+
+    # -- proxies.py ---------------
+
+    from django.contrib.auth import models
+    from ficuspumila.core import proxies
+
+    class User(proxies.Proxy):
+        class Meta:
+            model = models.User
+    ...
+
+    # -- resources.py -------------
+
+    from django.contrib.auth import models
+    from ficuspumila.core import resources
+
+    class User(resources.ModelResource):
+        class Meta(resources.Meta):
+            queryset = models.User.objects.filter(is_active=True)
+            resource_name = 'user'
+            filtering = {
+               'username': resources.EXACT_IN,
+            }
+    ...
+
+    # -- urls.py ------------------
+    from django.conf.urls import include, patterns, url
+    from tastypie.api import Api
+
+    api = Api(api_name='auth')
+    api.register(User())
+
+    urlpatterns = patterns('',
+        url(r'^v1/core/', include(api.urls)),
+    )
+    ...
+
+    # -- view.py, what ever --------
+
+    ...
+    from <proxy> import User
+
+    # you can code like this in local and from remote in the same manner
+    u = User.objects.get(username='dev')
+    u.first_name = 'blah'
+    u.save()
+    
+
+No proxy definition - just call remote tastypie api with queryset interface.
+
 ::
 
     >>> from ficuspumila.core import proxies
-    >>> Owner = proxies.Proxy(api_url='http://some.tastypie.api/',
+    >>> Owner = proxies.Proxy(api_url='http://example.com/api/',
     ...                       version='v1',
     ...                       namespace='core/content'
     ...                       resource_name='owner',

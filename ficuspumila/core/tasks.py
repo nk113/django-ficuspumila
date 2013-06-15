@@ -39,10 +39,10 @@ def collect_garbages(model, **kwargs):
     objects = model.objects.filter(**filters)
     count = objects.count()
 
-    logger.debug(u'processing garbage collection (%s, ctime < %s, %s / %s objects)' % (
+    logger.debug(u'processing garbage collection (%s, %s < %s, %s objects)' % (
                      model.__name__,
+                     timestamp_field,
                      date.today()-timedelta(days=days_before),
-                     len(objects),
                      count))
 
     for obj in iterator(objects, max_records):

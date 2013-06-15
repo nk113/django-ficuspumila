@@ -14,18 +14,14 @@ from queryset_client import client
 from urllib import urlencode
 from urlparse import urlparse
 
-from ficuspumila.core.utils import get_default_language_code
 from ficuspumila.settings import ficuspumila as settings
-from . import cache
-from .auth.sso import Authenticator as SsoAuthenticator
-from .crypto import Transcoder
-from .exceptions import ProxyException
-from .models import Attribute, Choice, Model
-from .tasks import notify_event
-from .utils import (
-    curtail, extend, from_python, mixin,
-    refresh, to_python
-)
+from ficuspumila.core import auth
+from ficuspumila.core import cache
+from ficuspumila.core import crypto
+from ficuspumila.core import exceptions
+from ficuspumila.core import models
+from ficuspumila.core import utils
+
 
 PK_ID = ('pk', 'id',)
 
@@ -87,7 +83,7 @@ class Response(client.Response):
         # implement proxy mixin
         if model._model_name in ProxyClient._proxies:
             proxy = ProxyClient._proxies[model._model_name].__class__
-            extend(self, proxy, replace_module=True)
+            utils.extend(self, proxy, replace_module=True)
             self.__init_proxy__()
 
         super(Response, self).__init__(model, response, url, **kwargs)
@@ -133,14 +129,14 @@ class Response(client.Response):
                         schema_uri = schema_uri[0] if (
                             isinstance(schema_uri, list)) else schema_uri
 
-                        logger.debug(u'trying to identify schema info from ' +
+                        logger.debug(u'trying to identify schema info from '
                                      u'schema_uri (%s).' % schema_uri)
                     except Exception, e:
-                        raise ProxyException(_(u'Couldn\'t identify related ' +
-                                               u'field schema (%s).') % name)
+                        raise exceptions.ProxyException(_(u'Couldn\'t identify related '
+                                                          u'field schema (%s).') % name)
         else:
-            raise ProxyException(_(u'The field seems not to be defined ' +
-                                 u'in the schema (%s).') % name)
+            raise exceptions.ProxyException(_(u'The field seems not to be defined '
+                                              u'in the schema (%s).') % name)
 
         api_url = base_client._api_url
         version = base_client._version
@@ -230,8 +226,8 @@ class ManyToManyManager(client.ManyToManyManager):
 
     def filter(self, *args, **kwargs):
         if 'id__in' in kwargs:
-            raise ProxyException(_(u'"id__in" is not supported ' +
-                                   u'in ManyToManyManager.'))
+            raise exceptions.ProxyException(_(u'"id__in" is not supported '
+                                              u'in ManyToManyManager.'))
         return QuerySet(self.model,
                         query=self._query,
                         response_class=Response).filter(*args, **kwargs)
@@ -431,17 +427,17 @@ class ProxyMeta(type):
                     try:
                         model = getattr(import_module('%s.models' % proxy.__module__.rpartition('.')[0]), name)
                     except (ImportError, AttributeError) as e:
-                        logger.exception(u'seems not to be imported within' +
+                        logger.exception(u'seems not to be imported within'
                                          u'django application context')
-                        raise ProxyException(_(u'Module seems not to be imported ' +
-                                               u'within django application context ' +
-                                               u'("%s" model not found). Specify '+
-                                               u'proper model in Meta class.') % name)
+                        raise exceptions.ProxyException(_(u'Module seems not to be imported '
+                                                          u'within django application context '
+                                                          u'("%s" model not found). Specify '
+                                                          u'proper model in Meta class.') % name)
 
                 # implement proxy mixin
                 def __init__(obj, *args, **kwargs):
                     obj.__init__original(*args, **kwargs)
-                    mixin(obj.__class__, proxy)
+                    utils.mixin(obj.__class__, proxy)
                     obj.__module__ = proxy.__module__
                     obj.__init_proxy__()
 
@@ -464,15 +460,15 @@ class Proxy(object):
     def __init__(self, *args, **kwargs):
 
         if (self._meta.abstract or
-            isinstance(self, Model)):
+            isinstance(self, models.Model)):
             super(Proxy, self).__init__(*args, **kwargs)
             return
 
         self._api_url = getattr(self._meta, 'api_url') or settings('API_URL')
 
         if not self._api_url:
-            raise ProxyException(_(u'"API_URL" not found in settings or ' +
-                                   u'"api_url" not found in kwargs.'))
+            raise exceptions.ProxyException(_(u'"API_URL" not found in settings or '
+                                              u'"api_url" not found in kwargs.'))
 
         auth      = self._meta.auth or None
         version   = self._meta.version or 'v1' 
@@ -489,8 +485,8 @@ class Proxy(object):
             self._resource = getattr(self._client,
                                      resource_name)
         except AttributeError, e:
-            raise ProxyException(_(u'API seems not to have endpoint ' +
-                                   u'for the resource (%s).' % resource_name))
+            raise exceptions.ProxyException(_(u'API seems not to have endpoint '
+                                              u'for the resource (%s).' % resource_name))
 
     def __init_proxy__(self):
         pass
@@ -499,20 +495,20 @@ class Proxy(object):
         if name in PK_ID:
             return get_pk(self)
 
-        if not isinstance(self, Model):
+        if not isinstance(self, models.Model):
             if name is not '_resource':
                 return getattr(self._resource, name)
         raise AttributeError()
 
     def invalidate(self):
-        if isinstance(self, Model):
+        if isinstance(self, models.Model):
             pass
         else:
             super(Proxy, self).invalidate()
 
     @property
     def model_name(self):
-        if isinstance(self, Model):
+        if isinstance(self, models.Model):
             return self.__class__.__name__.lower()
         else:
             return self.model._model_name
@@ -535,7 +531,7 @@ class Attributable(Proxy):
             attribute_class_name = '%s%s' % (class_name, name.title(),)
             setattr(self, '%s' % name, getattr(import_module(self.__module__),
                                                attribute_class_name))
-            # set the name proxy if the attribute has its name field as foreign key
+            # set the name proxy if the attribute has its name field as a foreign key
             try:
                 setattr(self, '%s_name' % name, getattr(import_module(self.__module__),
                                                         '%sName' % attribute_class_name))
@@ -552,7 +548,7 @@ class Attributable(Proxy):
 
     def getattr(self, name, default=None):
         try:
-            return to_python(self.get_attribute(name).value)
+            return utils.to_python(self.get_attribute(name).value)
         except (client.ObjectDoesNotExist,
                 ObjectDoesNotExist) as e:
             return default
@@ -570,12 +566,12 @@ class Attributable(Proxy):
             kwargs = {
                 self.model_name: self,
                 'name': attribute_name,
-                'value': from_python(value),
+                'value': utils.from_python(value),
             }
             attribute = self.attribute.objects.create(**kwargs)
             self.invalidate()
         else:
-            attribute.value = from_python(value)
+            attribute.value = utils.from_python(value)
             attribute.save()
 
     def delattr(self, name):
@@ -675,15 +671,22 @@ class Localizable(Attributable):
     def localize(self, language_code=None):
         self.__init_proxy__()
 
-        localizations = []
-        if language_code:
-            localizations = self.localization.objects.filter(language_code=language_code.lower())
+        localizations = self.localization.objects.filter(**{
+            self.__class__.__name__.lower(): self,
+        })
+        if len(localizations):
+            localizations = localizations.filter(
+                language_code=language_code if language_code else utils.get_default_language_code())
         if len(localizations) < 1:
-            localizations = self.localization.objects.filter(
-                language_code=get_default_language_code())
-        if len(localizations) < 1:
-            return self.localization()
+            localizations = (self.localization(),)
         return localizations[0]
+
+
+class Localization(Proxy):
+
+    class Meta:
+
+        abstract = True
 
 
 class Service(Notifier):
@@ -701,9 +704,9 @@ class Service(Notifier):
                            time.time() + settings('TOKEN_TIMEOUT'),
                            data,))
             else:
-                raise ProxyException(_(u'Format not supported: %s') % format)
+                raise exceptions.ProxyException(_(u'Format not supported: %s') % format)
 
-            return Transcoder(
+            return crypto.Transcoder(
                        key=self.token_key,
                        iv=self.token_iv).algorithm.encrypt(data)
 
@@ -713,14 +716,14 @@ class Service(Notifier):
 
     def decrypt_token(self, token, format='json', expiration=False):
         try:
-            token = Transcoder(
+            token = crypto.Transcoder(
                         key=self.token_key,
                         iv=self.token_iv).algorithm.decrypt(token)
 
             if format == 'json':
                 token = json.loads(token)
             else:
-                raise ProxyException(_(u'Format not supported: %s') % format)
+                raise exceptions.ProxyException(_(u'Format not supported: %s') % format)
 
             if expiration:
                 return token
@@ -741,7 +744,7 @@ class Service(Notifier):
     def generate_sso_params(self, data={}, format='json'):
         try:
             return urlencode({self.model_name: self.user.id,
-                              SsoAuthenticator.TOKEN_PARAM: self.generate_token(data, format),})
+                              auth.sso.Authenticator.TOKEN_PARAM: self.generate_token(data, format),})
         except Exception, e:
             logger.exception(u'an error has occurred during generating sso params: %s' % e)
             raise e

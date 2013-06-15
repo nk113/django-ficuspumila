@@ -15,12 +15,11 @@ from tastypie.resources import ModelResource as TastypieModelResource
 from tastypie.throttle import CacheThrottle
 from tastypie.validation import CleanedDataFormValidation
 
+from ficuspumila.core.auth import sso
 from ficuspumila.settings import (
     get as settings_get,
     ficuspumila as settings,
 )
-from .auth.sso import Authenticator as SsoAuthenticator
-from .utils import parse_qs
 
 
 ALL_METHODS = ('get', 'post', 'put', 'patch', 'delete',)
@@ -64,7 +63,7 @@ class Authentication(BasicAuthentication):
         authenticated = super(Authentication,
                               self).is_authenticated(request, **kwargs)
         if not authenticated or isinstance(authenticated, HttpUnauthorized):
-            authenticated = SsoAuthenticator.from_request(
+            authenticated = sso.Authenticator.from_request(
                                 request).is_authenticated()
 
         logger.debug(u'authenticated as (%s%s)' % (
@@ -166,14 +165,6 @@ class JsonField(fields.ApiField):
 
         return json.loads(json.dumps(value))
 
-try:
-    from django.views.decorators.csrf import csrf_exempt
-except ImportError:
-    def csrf_exempt(func):
-        return func
-from tastypie.exceptions import NotFound, BadRequest, InvalidFilterError, HydrationError, InvalidSortError, ImmediateHttpResponse, Unauthorized
-from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned, ValidationError
-from django.utils.cache import patch_cache_control, patch_vary_headers
 
 class ModelResource(TastypieModelResource):
 

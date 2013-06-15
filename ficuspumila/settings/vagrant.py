@@ -7,6 +7,8 @@ from .common import *
 # ficuspumila
 FICUSPUMILA['SYSTEM_USERNAME'] = 'dev'
 FICUSPUMILA['SYSTEM_PASSWORD'] = 'dev'
+FICUSPUMILA['META_TYPES'] = ((0, 'Track',), (1, 'Album',), (2, 'Video',),)
+FICUSPUMILA['META_MODELS_MODULE'] = 'ficuspumila.apps.tests.models',\
 
 
 # debug

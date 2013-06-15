@@ -1,18 +1,17 @@
 # -*- encoding: utf-8 -*-
 import logging
 
-from django.contrib import admin
-from django.template.defaultfilters import date
+from django.contrib import admin as djadmin
 from django.utils.translation import ugettext as _
 
-from ficuspumila.core.admin import ModelAdmin
-from .models import Country
+from ficuspumila.core import admin
+from ficuspumila.core.common import models
 
 
 logger = logging.getLogger(__name__)
 
 
-class CountryAdmin(ModelAdmin):
+class Country(admin.ModelAdmin):
 
     list_display  = ('name', 'alpha2', 'currency_code', '_languages',
                      '_neighbours',)
@@ -30,4 +29,4 @@ class CountryAdmin(ModelAdmin):
     _neighbours.short_desciption = _(u'Neighbours')
 
 
-admin.site.register(Country, CountryAdmin)
+djadmin.site.register(models.Country, Country)

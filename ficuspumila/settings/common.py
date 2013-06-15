@@ -59,14 +59,6 @@ ADMINS = (
 MANAGERS = ADMINS
 
 
-# locale
-TIME_ZONE = 'UTC'
-LANGUAGES = (
-    ('ja', gettext('Japanese')),
-    ('en', gettext('English')),
-)
-
-
 # database
 DATABASE_ROUTERS = ('settings.database.routers.Default',)
 
@@ -81,7 +73,6 @@ WSGI_APPLICATION = 'wsgi.local.application'
 
 # apps
 INSTALLED_APPS += (
-    'django.contrib.admin',
     'queued_storage',
     'south',
 )
