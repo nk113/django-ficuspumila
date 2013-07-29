@@ -1,0 +1,124 @@
+[
+{
+  "pk": 2, 
+  "model": "example.track", 
+  "fields": {
+    "trial_start_position": 20, 
+    "ctime": "2013-06-14T02:04:20Z", 
+    "release_date": "2013-06-14", 
+    "length": 300, 
+    "genre": 1, 
+    "isrc": "ISRC-DEV-DEV-0001", 
+    "trial_duration": 45, 
+    "utime": "2013-06-14T02:45:53Z"
+  }
+},
+{
+  "pk": 3, 
+  "model": "example.track", 
+  "fields": {
+    "trial_start_position": 10, 
+    "ctime": "2013-06-14T02:42:57Z", 
+    "release_date": "2013-06-14", 
+    "length": 120, 
+    "genre": null, 
+    "isrc": "ISRC-DEV-DEV-0002", 
+    "trial_duration": 45, 
+    "utime": "2013-06-14T02:47:30Z"
+  }
+},
+{
+  "pk": 1, 
+  "model": "example.tracklocalization", 
+  "fields": {
+    "description": "Description for the Pop Song 1.", 
+    "artist": "Dev", 
+    "track": 2, 
+    "title": "A Pop Song 1", 
+    "label": "Label Dev", 
+    "language_code": "en", 
+    "utime": "2013-06-14T02:45:53Z", 
+    "ctime": "2013-06-14T02:04:20Z"
+  }
+},
+{
+  "pk": 2, 
+  "model": "example.tracklocalization", 
+  "fields": {
+    "description": "Description for the Pop Song 2.", 
+    "artist": "Dev", 
+    "track": 3, 
+    "title": "A Pop Song 2", 
+    "label": "Label Dev", 
+    "language_code": "en", 
+    "utime": "2013-06-14T02:42:57Z", 
+    "ctime": "2013-06-14T02:42:57Z"
+  }
+},
+{
+  "pk": 3, 
+  "model": "example.tracklocalization", 
+  "fields": {
+    "description": "\u30dd\u30c3\u30d7\u6b4c 1 \u306e\u8a73\u7d30\u3002", 
+    "artist": "\u30c7\u30d6", 
+    "track": 2, 
+    "title": "\u30dd\u30c3\u30d7\u6b4c 1", 
+    "label": "\u30ec\u30fc\u30d9\u30eb\u30fb\u30c7\u30d6", 
+    "language_code": "ja", 
+    "utime": "2013-06-14T02:45:53Z", 
+    "ctime": "2013-06-14T02:45:53Z"
+  }
+},
+{
+  "pk": 4, 
+  "model": "example.tracklocalization", 
+  "fields": {
+    "description": "\u30dd\u30c3\u30d7\u6b4c 2 \u306e\u8a73\u7d30\u3002", 
+    "artist": "\u30c7\u30d6", 
+    "track": 3, 
+    "title": "\u30dd\u30c3\u30d7\u6b4c 2", 
+    "label": "\u30ec\u30fc\u30d9\u30eb\u30fb\u30c7\u30d6", 
+    "language_code": "ja", 
+    "utime": "2013-06-14T02:47:30Z", 
+    "ctime": "2013-06-14T02:46:52Z"
+  }
+},
+{
+  "pk": 1, 
+  "model": "example.album", 
+  "fields": {
+    "genre": 1, 
+    "release_date": "2013-06-14", 
+    "ctime": "2013-06-14T01:09:14Z", 
+    "utime": "2013-06-14T02:48:15Z"
+  }
+},
+{
+  "pk": 1, 
+  "model": "example.albumlocalization", 
+  "fields": {
+    "album": 1, 
+    "description": "Description for the Pop Song.", 
+    "artist": "Dev", 
+    "title": "A Pop Song", 
+    "label": "Label Dev", 
+    "language_code": "en", 
+    "utime": "2013-06-14T01:09:14Z", 
+    "ctime": "2013-06-14T01:09:14Z"
+  }
+},
+{
+  "pk": 2, 
+  "model": "example.albumlocalization", 
+  "fields": {
+    "album": 1, 
+    "description": "\u30dd\u30c3\u30d7\u6b4c\u306e\u8a73\u7d30\u3002", 
+    "artist": "\u30c7\u30d6", 
+    "title": "\u30dd\u30c3\u30d7\u6b4c", 
+    "label": "\u30ec\u30fc\u30d9\u30eb\u30fb\u30c7\u30d6", 
+    "language_code": "ja", 
+    "utime": "2013-06-14T02:48:15Z", 
+    "ctime": "2013-06-14T02:48:15Z"
+  }
+}
+]

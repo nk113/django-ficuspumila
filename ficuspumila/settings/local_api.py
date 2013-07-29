@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
-from .vagrant import *
+from .local import *
 
 
-# locale
-TIME_ZONE = 'Asia/Tokyo'
-
-# apps
-INSTALLED_APPS += (
-    'django.contrib.admin',
-)
+# rpc_prox
+del(TASTYPIE_RPC_PROXY['API_URL'])

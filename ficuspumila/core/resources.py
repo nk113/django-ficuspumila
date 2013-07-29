@@ -2,17 +2,13 @@
 import json
 import logging
 
-from django.contrib.auth.models import User as AuthUser
-from django.core.exceptions import FieldError
-from functools import wraps
+from rpc_proxy import resources
+from rpc_proxy.resources import ALL_METHODS
 from tastypie.authentication import BasicAuthentication
 from tastypie.authorization import DjangoAuthorization
-from tastypie.cache import SimpleCache
-from tastypie.exceptions import ImmediateHttpResponse, InvalidFilterError
+from tastypie.exceptions import InvalidFilterError
 from tastypie import fields
 from tastypie.http import HttpUnauthorized
-from tastypie.resources import ModelResource as TastypieModelResource
-from tastypie.throttle import CacheThrottle
 from tastypie.validation import CleanedDataFormValidation
 
 from ficuspumila.core.auth import sso
@@ -22,7 +18,6 @@ from ficuspumila.settings import (
 )
 
 
-ALL_METHODS = ('get', 'post', 'put', 'patch', 'delete',)
 EXACT = ('exact',)
 EXACT_IN = ('exact', 'in',)
 EXACT_IN_CONTAINS = EXACT_IN + ('contains',)
@@ -46,7 +41,7 @@ def limit_queryset(manager, **kwargs):
         try:
             manager = getattr(bundle.obj, manager)
         except:
-            raise ResourceException(u'Manger not found.')
+            raise ResourceException('Manger not found.')
 
         filtered = manager.filter(**filters)
 
@@ -66,7 +61,7 @@ class Authentication(BasicAuthentication):
             authenticated = sso.Authenticator.from_request(
                                 request).is_authenticated()
 
-        logger.debug(u'authenticated as (%s%s)' % (
+        logger.debug('authenticated as (%s%s)' % (
                          request.user,
                          ' - superuser' if request.user.is_superuser else '',))
 
@@ -87,25 +82,6 @@ class SuperuserAuthentication(Authentication):
         authenticated = super(SuperuserAuthentication,
                               self).is_authenticated(request, **kwargs)
         return request.user.is_superuser
-
-
-class SuperuserAuthorization(Authorization):
-
-    pass
-
-
-class Throttle(CacheThrottle):
-
-    def should_be_throttled(self, identifier, **kwargs):
-        try:
-            user = AuthUser.objects.get(username=identifier)
-            if user.is_superuser:
-                return False
-        except AuthUser.DoesNotExist, e:
-            pass
-
-        return super(Throttle, self).should_be_throttled(identifier,
-                                                         **kwargs)
 
 
 class FormValidation(CleanedDataFormValidation):
@@ -166,7 +142,7 @@ class JsonField(fields.ApiField):
         return json.loads(json.dumps(value))
 
 
-class ModelResource(TastypieModelResource):
+class ModelResource(resources.ModelResource):
 
     def __init__(self):
         # to support to_many related field filtering
@@ -183,18 +159,18 @@ class ModelResource(TastypieModelResource):
     def debug(self, request, response, log=logger.debug):
         info = log if log == logger.exception else logger.info
 
-        info(u'API (%s): %s %s %s%s' % (
+        info('API (%s): %s %s %s%s' % (
              request.user,
              request.method, response.status_code,
              request.META.get('PATH_INFO'),
              '?%s' % request.META.get('QUERY_STRING') if len(request.META.get('QUERY_STRING', '')) else ''))
 
         if len(request.raw_post_data):
-            log(u'API (%s): Data: %s' % (
+            log('API (%s): Data: %s' % (
                 request.user, request.raw_post_data.decode('utf-8'),))
 
         if len(response.content):
-            log(u'API (%s): Content: %s' % (request.user,
+            log('API (%s): Content: %s' % (request.user,
                                             response.content.decode('utf-8'),))
 
     def dispatch(self, request_type, request, **kwargs):
@@ -206,7 +182,7 @@ class ModelResource(TastypieModelResource):
                                                            request,
                                                            **kwargs)
         except Exception, e:
-            logger.exception(u'a fatal error has occurred during processing dispatch: %s' % e)
+            logger.exception('a fatal error has occurred during processing dispatch: %s' % e)
             raise e
 
         self.debug(request, response)
@@ -219,7 +195,7 @@ class ModelResource(TastypieModelResource):
         # allow superuser all operations dynamically
         if request.user.is_superuser:
 
-            logger.debug(u'hello superuser you can do anything with this resource (%s)' % request.META['PATH_INFO'])
+            logger.debug('hello superuser you can do anything with this resource (%s)' % request.META['PATH_INFO'])
 
             self._meta.list_allowed_methods = ALL_METHODS
             self._meta.detail_allowed_methods = ALL_METHODS
@@ -270,21 +246,17 @@ class ModelResource(TastypieModelResource):
         return filtered
 
 
-class Meta(object):
+class Meta(resources.Meta):
 
-    allowed_methods = ('get',)
     authentication = Authentication()
     authorization = Authorization()
-    cache = SimpleCache()
-    ordering = ('id',)
-    throttle = Throttle()
 
 
 class SuperuserMeta(Meta):
 
     allowed_methods = ALL_METHODS
     authentication = SuperuserAuthentication()
-    authorization = SuperuserAuthorization()
+    authorization = resources.SuperuserAuthorization()
 
 
 class ServiceMeta(Meta):

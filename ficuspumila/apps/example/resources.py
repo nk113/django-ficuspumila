@@ -8,8 +8,9 @@ from tastypie.api import Api
 from tastypie.http import HttpForbidden
 from tastypie.resources import ALL, ALL_WITH_RELATIONS
 
-from ficuspumila.apps.tests import models
+from ficuspumila.apps.example import models
 from ficuspumila.core import resources
+from ficuspumila.core.content import resources as content_resources
 from ficuspumila.settings import (
     get as settings_get,
     ficuspumila as settings,
@@ -28,6 +29,8 @@ class Track(resources.ModelResource):
         filtering = {
             'item': ALL_WITH_RELATIONS,
         }
+
+    item = fields.ForeignKey(content_resources.Item, 'item')
 
 
 class TrackLocalization(resources.ModelResource):
@@ -55,6 +58,8 @@ class Album(resources.ModelResource):
             'item': ALL_WITH_RELATIONS,
         }
 
+    item = fields.ForeignKey(content_resources.Item, 'item')
+
 
 class AlbumLocalization(resources.ModelResource):
 
@@ -71,7 +76,6 @@ class AlbumLocalization(resources.ModelResource):
     album = fields.ForeignKey(Album, 'album')
 
 
-
 class Video(resources.ModelResource):
 
     class Meta(resources.Meta):
@@ -82,12 +86,14 @@ class Video(resources.ModelResource):
             'item': ALL_WITH_RELATIONS,
         }
 
+    item = fields.ForeignKey(content_resources.Item, 'item')
+
 
 class VideoLocalization(resources.ModelResource):
 
     class Meta(resources.Meta):
 
-        queryset = models.TrackLocalization.objects.all()
+        queryset = models.VideoLocalization.objects.all()
         resource_name = 'videolocalization'
         filtering = {
             'language_code': resources.EXACT_IN,
@@ -99,7 +105,7 @@ class VideoLocalization(resources.ModelResource):
 
 
 def get_urls(version=1):
-    api = Api(api_name='tests')
+    api = Api(api_name='example')
 
     if version == 1:
         api.register(Track())

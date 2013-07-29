@@ -4,11 +4,14 @@ import djcelery
 from .common import *
 
 
+# rpc_proxy
+TASTYPIE_RPC_PROXY['SUPERUSER_USERNAME'] = 'dev'
+TASTYPIE_RPC_PROXY['SUPERUSER_PASSWORD'] = 'dev'
+
+
 # ficuspumila
-FICUSPUMILA['SYSTEM_USERNAME'] = 'dev'
-FICUSPUMILA['SYSTEM_PASSWORD'] = 'dev'
 FICUSPUMILA['META_TYPES'] = ((0, 'Track',), (1, 'Album',), (2, 'Video',),)
-FICUSPUMILA['META_MODELS_MODULE'] = 'ficuspumila.apps.tests.models',\
+FICUSPUMILA['META_PROXIES_MODULE'] = 'ficuspumila.apps.example.proxies'
 
 
 # debug

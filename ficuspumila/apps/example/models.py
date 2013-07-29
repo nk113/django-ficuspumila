@@ -20,6 +20,9 @@ class BasicLocalizable(models.MetadataLocalizable):
     genre = djmodels.ForeignKey(models.Genre, blank=True, null=True)
     release_date = djmodels.DateField(default=date.today)
 
+    def __unicode__(self):
+        return '%s' % self.item
+
 
 class RecordingLocalizable(djmodels.Model):
 

@@ -5,8 +5,8 @@ from datetime import datetime
 from django.contrib import admin as djadmin
 from django.utils.translation import ugettext as _
 
-from ficuspumila.apps.tests import proxies
-from ficuspumila.apps.tests import forms
+from ficuspumila.apps.example import proxies
+from ficuspumila.apps.example import forms
 from ficuspumila.core import admin as coreadmin
 from ficuspumila.core.content import admin
 from ficuspumila.settings import ficuspumila as settings

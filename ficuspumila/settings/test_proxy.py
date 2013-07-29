@@ -2,5 +2,5 @@
 from .test import *
 
 
-# ficuspumila
-FICUSPUMILA['API_URL'] = '/api/'
+# rpc_proxy
+TASTYPIE_RPC_PROXY['API_URL'] = '/api/'

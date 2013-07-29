@@ -2,9 +2,9 @@
 import logging
 
 from django.core.exceptions import ObjectDoesNotExist
+from rpc_proxy import test
 from queryset_client import client
 
-from ficuspumila.core import test
 from ficuspumila.core.exceptions import ProxyException
 from ficuspumila.core.utils import parse_qs
 from ficuspumila.settings import ficuspumila as settings
@@ -38,9 +38,9 @@ class SourceProxy(test.Proxy):
     def test_get(self):
         from ficuspumila.core.content.proxies import Source
 
-        s = Source.objects.get(user__username=settings('SYSTEM_USERNAME'))
-        self.assertEqual(s.user.username, settings('SYSTEM_USERNAME'))
-        self.assertEqual(s.name, settings('SYSTEM_USERNAME'))
+        s = Source.objects.get(user__username=settings('SUPERUSER_USERNAME'))
+        self.assertEqual(s.user.username, settings('SUPERUSER_USERNAME'))
+        self.assertEqual(s.name, settings('SUPERUSER_USERNAME'))
 
         self.assertRaises((client.ObjectDoesNotExist, ObjectDoesNotExist),
                           lambda: Source.objects.get(name='crazymonkey'))
@@ -152,9 +152,9 @@ class OwnerProxy(test.Proxy):
     def test_get(self):
         from ficuspumila.core.content.proxies import Owner
 
-        o = Owner.objects.get(user__username=settings('SYSTEM_USERNAME'))
-        self.assertEqual(o.user.username, settings('SYSTEM_USERNAME'))
-        self.assertEqual(o.source_owner_id, settings('SYSTEM_USERNAME'))
+        o = Owner.objects.get(user__username=settings('SUPERUSER_USERNAME'))
+        self.assertEqual(o.user.username, settings('SUPERUSER_USERNAME'))
+        self.assertEqual(o.source_owner_id, settings('SUPERUSER_USERNAME'))
 
         self.assertRaises((client.ObjectDoesNotExist, ObjectDoesNotExist),
                           lambda: Owner.objects.get(source_owner_id='crazymonkey'))
@@ -167,11 +167,11 @@ class FileSpecificationProxy(test.Proxy):
     def test_get(self):
         from ficuspumila.core.content.proxies import FileSpecification, Owner
 
-        o = Owner.objects.get(user__username=settings('SYSTEM_USERNAME'))
+        o = Owner.objects.get(user__username=settings('SUPERUSER_USERNAME'))
         fs = FileSpecification.objects.get(owner=o,
                                            name='SCREENSHOT')
         self.assertEqual(fs.name, 'SCREENSHOT')
-        self.assertEqual(fs.owner.user.username, settings('SYSTEM_USERNAME'))
+        self.assertEqual(fs.owner.user.username, settings('SUPERUSER_USERNAME'))
 
         self.assertRaises((client.ObjectDoesNotExist, ObjectDoesNotExist),
                           lambda: FileSpecification.objects.get(name='crazymonkey'))

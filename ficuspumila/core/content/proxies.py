@@ -1,58 +1,91 @@
 # -*- coding: utf-8 -*-
 import logging
 
+from django.utils.importlib import import_module
+from django.utils.translation import ugettext as _
+from rpc_proxy.proxies import Proxy
+
 from ficuspumila.core import proxies
+from ficuspumila.core import exceptions
+from ficuspumila.settings import ficuspumila as settings
 
 
 logger = logging.getLogger(__name__)
 
 
+class ContentMeta:
+
+    namespace = 'core/content'
+
+
 class Genre(proxies.Localizable):
 
-    pass
+    class Meta(ContentMeta):
+
+        pass
 
 
 class GenreLocalization(proxies.Localization):
 
-    pass
+    class Meta(ContentMeta):
+
+        pass
 
 
 class Source(proxies.Service):
 
-    pass
+    class Meta(ContentMeta):
+
+        pass
 
 
-class SourceAttributeName(proxies.Proxy):
+class SourceAttributeName(Proxy):
 
-    pass
+    class Meta(ContentMeta):
+
+        pass
 
 
 class SourceAttribute(proxies.Attribute):
 
-    pass
+    class Meta(ContentMeta):
+
+        pass
 
 
-class SourceEventName(proxies.Proxy):
+class SourceEventName(Proxy):
 
-    pass
+    class Meta(ContentMeta):
+
+        pass
 
 
 class SourceEvent(proxies.Event):
 
-    pass
+    class Meta(ContentMeta):
+
+        pass
 
 
-class SourceNotification(proxies.Proxy):
+class SourceNotification(Proxy):
 
-    pass
+    class Meta(ContentMeta):
 
-
-class Owner(proxies.Proxy):
-
-    pass
+        pass
 
 
-class FileType(proxies.Proxy):
+class Owner(Proxy):
+
+    class Meta(ContentMeta):
+
+        pass
+
+
+class FileType(Proxy):
+
+    class Meta(ContentMeta):
+
+        pass
 
     @property
     def mime_type(self):
@@ -71,24 +104,73 @@ class FileType(proxies.Proxy):
 
 class FileSpecification(proxies.Attributable):
 
-    pass
+    class Meta(ContentMeta):
+
+        pass
 
 
-class FileSpecificationAttributeName(proxies.Proxy):
+class FileSpecificationAttributeName(Proxy):
 
-    pass
+    class Meta(ContentMeta):
 
-
-class FileSpecificationAttribute(proxies.Proxy):
-
-    pass
+        pass
 
 
-class Item(proxies.Proxy):
+class FileSpecificationAttribute(Proxy):
 
-    pass
+    class Meta(ContentMeta):
+
+        pass
 
 
-class ResourceType(proxies.Proxy):
+class Item(Proxy):
 
-    pass
+    class Meta(ContentMeta):
+
+        pass
+
+    @property
+    def item_type_display(self):
+        if 'get_item_type_display' in dir(self):
+            return self.get_item_type_display()
+
+        from ficuspumila.core.content.models import ItemTypes
+        return ItemTypes.get_value(self.item_type)
+
+    @property
+    def meta_type_display(self):
+        if 'get_meta_type_display' in dir(self):
+            return self.get_meta_type_display()
+
+        meta_types = settings('META_TYPES')
+
+        if not meta_types:
+            return None
+
+        try:
+            return meta_types[self.meta_type][1]
+        except IndexError, e:
+            raise exceptions.ProxyException(_('Unexpected meta type detected '
+                                              '(%s, %s).') % (self.meta_type,
+                                                               meta_types,))
+
+    @property
+    def metadata(self):
+        try:
+            meta = getattr(import_module(settings('META_PROXIES_MODULE')),
+                           self.meta_type_display)
+        except Exception, e:
+            logger.exception(e)
+            raise exceptions.ProxyException(_('No metadata model found, check '
+                                              'if META_TYPES and '
+                                              'META_PROXIES_MODULE settings are '
+                                              'correct.'))
+
+        return meta.objects.get(item=self)
+
+
+class ResourceType(Proxy):
+
+    class Meta(ContentMeta):
+
+        pass

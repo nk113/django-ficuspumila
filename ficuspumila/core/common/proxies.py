@@ -2,7 +2,8 @@
 import logging
 import requests
 
-from ficuspumila.core import proxies
+from rpc_proxy import proxies
+
 from ficuspumila.core.cache import cache
 from ficuspumila.core.exceptions import ProxyException
 from ficuspumila.settings import ficuspumila as settings

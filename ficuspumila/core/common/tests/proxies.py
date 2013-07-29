@@ -5,9 +5,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.utils.unittest import skipIf
 from mock import patch
 from queryset_client import client
+from rpc_proxy import test
 
 from ficuspumila.core.exceptions import ProxyException
-from ficuspumila.core import test
 from ficuspumila.settings import (
     get as settings_get,
     ficuspumila as settings,

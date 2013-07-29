@@ -3,7 +3,7 @@ import logging
 
 from django import forms
 
-from ficuspumila.apps.tests import models
+from ficuspumila.apps.example import models
 
 
 logger = logging.getLogger(__name__)

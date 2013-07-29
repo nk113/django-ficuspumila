@@ -2,9 +2,9 @@
 from .vagrant import *
 
 
-# ficuspumila
-FICUSPUMILA['SYSTEM_USERNAME'] = 'test'
-FICUSPUMILA['SYSTEM_PASSWORD'] = 'test'
+# rpc_proxy
+TASTYPIE_RPC_PROXY['SUPERUSER_USERNAME'] = 'test'
+TASTYPIE_RPC_PROXY['SUPERUSER_PASSWORD'] = 'test'
 
 
 # database
@@ -27,21 +27,14 @@ ROOT_URLCONF = 'urls.test'
 # apps
 INSTALLED_APPS += (
     'django_nose',
-    # 'ficuspumila.apps.tests,
+    # 'ficuspumila.apps.example,
 )
 
 
 # logging
-LOGGING['handlers'] = {
-        'console': {
-            'level': 'CRITICAL',
-            'class': 'logging.StreamHandler',
-            'formatter': 'normal',
-        },
-}
 LOGGING['loggers'] = {
     '': {
-        'handlers': ('console',),
+        'handlers': ('test_log',),
         'level': 'CRITICAL',
         'propagate': True,
     },

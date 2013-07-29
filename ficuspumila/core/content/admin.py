@@ -49,6 +49,12 @@ class Genre(admin.ModelAdmin):
     search_fields = ('^name',)
 
 
+class SourceAttributeName(admin.ModelAdmin):
+
+    list_display  = ('name',)
+    readonly_fields = ('id',)
+
+
 class SourceAttributeInline(admin.TabularInline):
 
     model = proxies.SourceAttribute
@@ -210,6 +216,7 @@ class Metadata(admin.ModelAdmin):
 
 
 djadmin.site.register(proxies.Genre, Genre)
+djadmin.site.register(proxies.SourceAttributeName, SourceAttributeName)
 djadmin.site.register(proxies.Source, Source)
 djadmin.site.register(proxies.SourceEventName, SourceEventName)
 djadmin.site.register(proxies.SourceEvent, SourceEvent)

@@ -2,10 +2,10 @@
 import logging
 
 from django.core.exceptions import ObjectDoesNotExist
+from rpc_proxy import test
 from queryset_client import client
 
 from ficuspumila.core.exceptions import ProxyException
-from ficuspumila.core import test
 from ficuspumila.core.utils import to_python
 from ficuspumila.settings import ficuspumila as settings
 
@@ -18,8 +18,8 @@ class UserProxy(test.Proxy):
     def test_get(self):
         from ficuspumila.core.auth.proxies import User
 
-        u = User.objects.get(username=settings('SYSTEM_USERNAME'))
-        self.assertEqual(u.username, settings('SYSTEM_USERNAME'))
+        u = User.objects.get(username=settings('SUPERUSER_USERNAME'))
+        self.assertEqual(u.username, settings('SUPERUSER_USERNAME'))
         self.assertEqual(to_python(u.is_superuser), True)
 
         self.assertRaises((client.ObjectDoesNotExist, ObjectDoesNotExist),

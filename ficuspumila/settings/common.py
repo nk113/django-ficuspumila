@@ -5,6 +5,12 @@ import warnings
 from .settings import *
 
 
+# rpc_proxy
+TASTYPIE_RPC_PROXY = {
+    'NON_DEFAULT_ID_FOREIGNKEYS': ('user', 'item',),
+}
+
+
 # ficuspumila
 FICUSPUMILA = {
     # version
@@ -18,7 +24,6 @@ FICUSPUMILA = {
     # database
     'SYNCDB_DISABLED': (),
     # core
-    #'API_URL': '<url of the api server, https connection is strongly recommended for security>',
     'SERVICES': {
         'ficuspumila.core.content.proxies.Source': {
             'user': 'ficuspumila.core.content.proxies.Owner',
@@ -30,8 +35,6 @@ FICUSPUMILA = {
         #     'user': 'core.playready.models.Licency',
         # },
     },
-    'SYSTEM_PASSWORD': '<django auth password>',
-    'SYSTEM_USERNAME': '<django auth username>',
     'TOKEN_TIMEOUT' : 60 * 2, # the smaller this is, the more secure
     # core.common
     'GEONAMES_COUNTRY_INFO': 'http://download.geonames.org/export/dump/countryInfo.txt',

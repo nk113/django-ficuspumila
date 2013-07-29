@@ -2,8 +2,7 @@
 import logging
 
 from django.contrib.auth import models
-
-from ficuspumila.core import proxies
+from rpc_proxy import proxies
 
 
 logger = logging.getLogger(__name__)

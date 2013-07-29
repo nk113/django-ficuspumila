@@ -10,7 +10,7 @@ MySQL-python
 pycrypto
 python-memcached
 south
-tastypie-queryset-client
+tastypie-rpc-proxy
 tox
 
 # specific revision
