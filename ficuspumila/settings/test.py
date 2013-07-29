@@ -32,13 +32,7 @@ INSTALLED_APPS += (
 
 
 # logging
-LOGGING['loggers'] = {
-    '': {
-        'handlers': ('console',),
-        'level': 'CRITICAL',
-        'propagate': True,
-    },
-}
+LOGGING = {}
 
 
 # celery
