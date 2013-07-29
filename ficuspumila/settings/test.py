@@ -34,7 +34,7 @@ INSTALLED_APPS += (
 # logging
 LOGGING['loggers'] = {
     '': {
-        'handlers': ('test_log',),
+        'handlers': ('console',),
         'level': 'CRITICAL',
         'propagate': True,
     },
